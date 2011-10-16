@@ -14,10 +14,10 @@ public class GameBoardDisplay extends JPanel
 	static Icon oPiece = new ImageIcon("O.png");
 	private GameboardImp boardModel;
 	private JLabel[][] cells;
-	private JPanel board;
+	private JPanel boardPanel;
 	private JFrame frame;
-	private JLabel messages;
-	private JPanel buttons;
+	private JLabel bottomMessage;
+	private JPanel buttonsPanel;
 	private JLabel buttonsMessage;
 	private String player1;
 	private String player2;
@@ -60,29 +60,29 @@ public class GameBoardDisplay extends JPanel
 	
 	private void displayNewPiece(int xPosition, int yPosition, Icon piece) {
 		cells[xPosition][yPosition].setIcon(piece);
-		board.revalidate();
+		boardPanel.revalidate();
 	}
     
 	private void displayMessage(String message){
-		messages.setText(message);
-		board.revalidate();
+		bottomMessage.setText(message);
+		boardPanel.revalidate();
 	}
 	
 	private void displayStatus(String message){
 		buttonsMessage.setText(message);
-		board.revalidate();
+		boardPanel.revalidate();
 	}
 	
     public GameBoardDisplay(String user1, String user2, String modeName)
     {
     	boardModel = new GameboardImp();
+    	setLayout(new BorderLayout());
     	
        // This is the window that will be shown
     	frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
-    	frame.setLayout(new BorderLayout());
         
         // set the size of the window
-        frame.setSize(700, 800);
+        frame.setSize(700, 500);
         
         // get players
         String[] players = Game.getPlayers(user1, user2);
@@ -98,14 +98,14 @@ public class GameBoardDisplay extends JPanel
 
         
         // create the board size 3 by 3
-        board = new JPanel();
-        board.setLayout(new GridLayout(3,3));
+        boardPanel = new JPanel();
+        boardPanel.setLayout(new GridLayout(3,3));
 
         
         // show the board's borders
         Border whiteLine = BorderFactory.createLineBorder(Color.WHITE);
-        board.setBackground(Color.BLACK);
-        board.setPreferredSize(new Dimension(300, 300));
+        boardPanel.setBackground(Color.BLACK);
+        boardPanel.setPreferredSize(new Dimension(300, 300));
         
         cells = new JLabel[3][3];
         
@@ -166,43 +166,43 @@ public class GameBoardDisplay extends JPanel
         
         
         // add cells to the board
-        board.add(cell_00);
-        board.add(cell_01);
-        board.add(cell_02);
-        board.add(cell_10);
-        board.add(cell_11);
-        board.add(cell_12);
-        board.add(cell_20);
-        board.add(cell_21);
-        board.add(cell_22);
+        boardPanel.add(cell_00);
+        boardPanel.add(cell_01);
+        boardPanel.add(cell_02);
+        boardPanel.add(cell_10);
+        boardPanel.add(cell_11);
+        boardPanel.add(cell_12);
+        boardPanel.add(cell_20);
+        boardPanel.add(cell_21);
+        boardPanel.add(cell_22);
         
         
         // add the board label to the lower side of the window
         
-        buttonsMessage = new JLabel();
+        buttonsMessage = new JLabel(player1 + "'s Turn");
         buttonsMessage.setFont(new Font("Serif", Font.BOLD, 28));  
         buttonsMessage.setForeground(Color.WHITE);
         
-        buttons = new JPanel();
-        buttons.setLayout(new GridLayout(3,1));
-        buttons.setBackground(Color.BLACK);
-        buttons.setPreferredSize(new Dimension(300, 100));
+        buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout(3,1));
+        buttonsPanel.setBackground(Color.BLACK);
+        buttonsPanel.setPreferredSize(new Dimension(300, 100));
         
-        buttons.add(buttonsMessage);
-        buttons.add(new JLabel("Add buttons"));
-        buttons.add(new JLabel("to this JPanel"));
+        buttonsPanel.add(buttonsMessage);
+        buttonsPanel.add(new JLabel("Add buttons"));
+        buttonsPanel.add(new JLabel("to this JPanel"));
        
 
         
-        messages = new JLabel();
-        messages.setFont(new Font("Serif", Font.BOLD, 28));  
-        messages.setForeground(Color.WHITE);
+        bottomMessage = new JLabel("Ready to play!");
+        bottomMessage.setFont(new Font("Serif", Font.BOLD, 28));  
+        bottomMessage.setForeground(Color.WHITE);
         
         // add the messages label to the upper side of the window
         add(title, BorderLayout.NORTH); 
-        add(board, BorderLayout.WEST);  
-        add(buttons, BorderLayout.EAST);
-        add(messages, BorderLayout.SOUTH); 
+        add(boardPanel, BorderLayout.CENTER);  
+        add(buttonsPanel, BorderLayout.EAST);
+        add(bottomMessage, BorderLayout.SOUTH); 
         
         
         // Place the window in the middle of the screen
@@ -229,7 +229,7 @@ public class GameBoardDisplay extends JPanel
         // show the window
         frame.setContentPane(this);
         frame.setVisible(true);
-        setBackground(new Color(0,0,0));
+        setBackground(Color.BLACK);
     }
     
 }
