@@ -11,35 +11,41 @@ public class GameBoardDisplay extends JPanel
 {
 	static final long serialVersionUID = 0L; // to shut up Eclipse
 	static Icon xPiece = new ImageIcon("mord.png");
-	static Icon yPiece = new ImageIcon("rigs.jpg");
+	static Icon oPiece = new ImageIcon("rigs.jpg");
 	private GameboardImp boardModel;
 	private JLabel[][] cells;
 	private JPanel board;
 	private JFrame frame;
+	private JLabel messages;
 	
 	public boolean attemptMove(int xPosition, int yPosition){
+		boolean result = false;
 		if(boardModel.getResult() == GameResult.PENDING){
     		if(boardModel.xsTurn()){
-    			return boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
+    			result = boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
+    			if(result){
+        			displayNewPiece(xPosition, yPosition, xPiece);
+    			}
     		}else if(boardModel.osTurn()){
-    			return boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
+    			result = boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
+    			if(result){
+        			displayNewPiece(xPosition, yPosition, oPiece);
+    			}
     		}
     	}
-		return false;
+		return result;
 	}
 	
-	private void displayNewPiece(int xPosition, int yPosition) {
-		if(boardModel.xsTurn()) {
-			cells[xPosition][yPosition].setIcon(xPiece);
+	private void displayNewPiece(int xPosition, int yPosition, Icon piece) {
+			cells[xPosition][yPosition].setIcon(piece);
 			board.revalidate();
-		}
-		else {
-			cells[xPosition][yPosition].setIcon(yPiece);
-			board.revalidate();
-		}
-
 	}
     
+	private void displayMessage(String message){
+		messages.setText(message);
+		board.revalidate();
+	}
+	
     public GameBoardDisplay(String username, String modeName)
     {
     	boardModel = new GameboardImp();
@@ -106,15 +112,15 @@ public class GameBoardDisplay extends JPanel
         
         
         // create a listener for all cells
-        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,0); displayNewPiece(0,0);}};
-        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,1); displayNewPiece(0,1);}};
-        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,2); displayNewPiece(0,2);}};
-        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,0); displayNewPiece(1,0);}};
-        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,1); displayNewPiece(1,1);}};
-        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,2); displayNewPiece(1,2);}};
-        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,0); displayNewPiece(2,0);}};
-        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,1); displayNewPiece(2,1);}};
-        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,2); displayNewPiece(2,2);}};
+        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,0))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,2))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,0))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,1))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,2))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,0))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,1))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
+        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,2))displayMessage("Good move!"); else displayMessage("Can't place a piece there!");}};
          
         
         
@@ -145,6 +151,14 @@ public class GameBoardDisplay extends JPanel
         
         // add the board label to the lower side of the window
         add(board, BorderLayout.SOUTH);         
+        
+        messages = new JLabel();
+        messages.setFont(new Font("Serif", Font.BOLD, 24));  
+        messages.setForeground(Color.WHITE);
+        
+        // add the messages label to the upper side of the window
+        add(messages, BorderLayout.NORTH); 
+        
         
         // Place the window in the middle of the screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
