@@ -73,38 +73,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 		for(int i = 0; i<8; i++){
 			rowStates[i] = 0;
 		}
-		members[0][0].add(rowStates[0]);
-		members[0][0].add(rowStates[3]);
-		members[0][0].add(rowStates[6]);
-		
-		members[1][0].add(rowStates[0]);
-		members[1][0].add(rowStates[4]);
-		
-		members[2][0].add(rowStates[0]);
-		members[2][0].add(rowStates[5]);
-		members[2][0].add(rowStates[7]);
-		
-		members[0][1].add(rowStates[1]);
-		members[0][1].add(rowStates[3]);
-		
-		members[1][1].add(rowStates[1]);
-		members[1][1].add(rowStates[4]);
-		members[1][1].add(rowStates[6]);
-		members[1][1].add(rowStates[7]);
-		
-		members[2][1].add(rowStates[1]);
-		members[2][1].add(rowStates[5]);
-		
-		members[0][2].add(rowStates[2]);
-		members[0][2].add(rowStates[3]);
-		members[0][2].add(rowStates[7]);
-		
-		members[1][2].add(rowStates[2]);
-		members[1][2].add(rowStates[4]);
-		
-		members[2][2].add(rowStates[2]);
-		members[2][2].add(rowStates[3]);
-		members[2][2].add(rowStates[6]);
 		xsTurn = true;
 		osTurn = false;
 		result = GameResult.PENDING;
