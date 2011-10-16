@@ -18,6 +18,9 @@ public class GameBoardDisplay extends JPanel
 	private JFrame frame;
 	private JLabel messages;
 	private JPanel buttons;
+	private JLabel buttonsMessage;
+	private String player1;
+	private String player2;
 	
 	public boolean attemptMove(int xPosition, int yPosition){
 		boolean result = false;
@@ -34,16 +37,24 @@ public class GameBoardDisplay extends JPanel
     			}
     		}
     	}
-//		GameResult status = boardModel.getResult();
-//		if (status == GameResult.CAT) {
-//			gameOverButton("Cat's game!");
-//		}
-//		else if (status == GameResult.OWIN) {
-//			gameOverButton("O Wins!");
-//		}
-//		else if (status == GameResult.XWIN) {
-//			gameOverButton("X Wins!");
-//		}
+		GameResult status = boardModel.getResult();
+		if (status == GameResult.PENDING){
+			if(boardModel.xsTurn()){
+				displayStatus(player1 + "'s Turn");
+			}
+			else {
+				displayStatus(player2 + "'s Turn");
+			}
+		}
+		else if (status == GameResult.CAT) {
+			displayStatus("Cat's game!");
+		}
+		else if (status == GameResult.OWIN) {
+			displayStatus(player1 + " Wins!");
+		}
+		else if (status == GameResult.XWIN) {
+			displayStatus(player2 + " Wins!");
+		}
 		return result;
 	}
 	
@@ -57,20 +68,26 @@ public class GameBoardDisplay extends JPanel
 		board.revalidate();
 	}
 	
+	private void displayStatus(String message){
+		buttonsMessage.setText(message);
+		board.revalidate();
+	}
+	
     public GameBoardDisplay(String user1, String user2, String modeName)
     {
     	boardModel = new GameboardImp();
     	
        // This is the window that will be shown
     	frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
+    	frame.setLayout(new BorderLayout());
         
         // set the size of the window
-        frame.setSize(500, 600);
+        frame.setSize(700, 800);
         
         // get players
         String[] players = Game.getPlayers(user1, user2);
-        String player1 = players[0];
-        String player2 = players[1];
+        player1 = players[0];
+        player2 = players[1];
         
         // add a label to the top of the window
         JLabel title = new JLabel(player1 + " vs " + player2);
@@ -78,7 +95,7 @@ public class GameBoardDisplay extends JPanel
         title.setForeground(Color.WHITE);
         
         // add the title label to the upper side of the window
-        add(title, BorderLayout.NORTH); 
+
         
         // create the board size 3 by 3
         board = new JPanel();
@@ -161,22 +178,30 @@ public class GameBoardDisplay extends JPanel
         
         
         // add the board label to the lower side of the window
-        add(board, BorderLayout.CENTER);         
+        
+        buttonsMessage = new JLabel();
+        buttonsMessage.setFont(new Font("Serif", Font.BOLD, 28));  
+        buttonsMessage.setForeground(Color.WHITE);
         
         buttons = new JPanel();
         buttons.setLayout(new GridLayout(3,1));
-        buttons.setFont(new Font("Serif", Font.BOLD, 24));  
-        buttons.setForeground(Color.WHITE);
+        buttons.setBackground(Color.BLACK);
+        buttons.setPreferredSize(new Dimension(300, 100));
+        
+        buttons.add(buttonsMessage);
         buttons.add(new JLabel("Add buttons"));
         buttons.add(new JLabel("to this JPanel"));
        
-        add(buttons, BorderLayout.EAST);
+
         
         messages = new JLabel();
         messages.setFont(new Font("Serif", Font.BOLD, 28));  
         messages.setForeground(Color.WHITE);
         
         // add the messages label to the upper side of the window
+        add(title, BorderLayout.NORTH); 
+        add(board, BorderLayout.WEST);  
+        add(buttons, BorderLayout.EAST);
         add(messages, BorderLayout.SOUTH); 
         
         
