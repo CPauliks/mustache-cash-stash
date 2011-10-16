@@ -10,7 +10,12 @@ import model.*;
 public class GameBoardDisplay extends JPanel
 {
 	static final long serialVersionUID = 0L; // to shut up Eclipse
+	static Icon xPiece = new ImageIcon("mord.png");
+	static Icon yPiece = new ImageIcon("rigs.jpg");
 	private GameboardImp boardModel;
+	private JLabel[][] cells;
+	private JPanel board;
+	private JFrame frame;
 	
 	public boolean attemptMove(int xPosition, int yPosition){
 		if(boardModel.getResult() == GameResult.PENDING){
@@ -22,16 +27,28 @@ public class GameBoardDisplay extends JPanel
     	}
 		return false;
 	}
+	
+	private void displayNewPiece(int xPosition, int yPosition) {
+		if(boardModel.xsTurn()) {
+			cells[xPosition][yPosition].setIcon(xPiece);
+			board.revalidate();
+		}
+		else {
+			cells[xPosition][yPosition].setIcon(yPiece);
+			board.revalidate();
+		}
+
+	}
     
     public GameBoardDisplay(String username, String modeName)
     {
     	boardModel = new GameboardImp();
     	
        // This is the window that will be shown
-    	JFrame frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
+    	frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
         
         // set the size of the window
-        frame.setSize(450, 400);
+        frame.setSize(500, 500);
         
         // get players
         String[] players = Game.getPlayers(username);
@@ -47,64 +64,57 @@ public class GameBoardDisplay extends JPanel
         add(title, BorderLayout.NORTH); 
         
         // create the board size 3 by 3
-        JPanel board = new JPanel();
+        board = new JPanel();
         board.setLayout(new GridLayout(3,3));
 
         
         // show the board's borders
-        Border whiteLine = BorderFactory.createLineBorder(Color.white);
-        board.setBackground(new Color(0,0,0));
-        board.setPreferredSize(new Dimension(400, 200));
+        Border whiteLine = BorderFactory.createLineBorder(Color.WHITE);
+        board.setBackground(Color.BLACK);
+        board.setPreferredSize(new Dimension(300, 300));
         
-        // create cells
-        JLabel cell_00 = new JLabel ("0,0");
+        cells = new JLabel[3][3];
+        
+        //create cells
+        JLabel cell_00 = new JLabel ();
         cell_00.setBorder(whiteLine);
-        cell_00.setForeground(Color.WHITE);
-        cell_00.setBackground(new Color(0,0,0));        
-        JLabel cell_01 = new JLabel ("0,1");
+        cells[0][0] = cell_00;
+        JLabel cell_01 = new JLabel ();
         cell_01.setBorder(whiteLine);
-        cell_01.setForeground(Color.WHITE);
-        cell_01.setBackground(new Color(0,0,0));        
-        JLabel cell_02 = new JLabel ("0,2");
+        cells[0][1] = cell_01;
+        JLabel cell_02 = new JLabel ();
         cell_02.setBorder(whiteLine);
-        cell_02.setForeground(Color.WHITE);
-        cell_02.setBackground(new Color(0,0,0));        
-        JLabel cell_10 = new JLabel ("1,0");
+        cells[0][2] = cell_02;
+        JLabel cell_10 = new JLabel ();
         cell_10.setBorder(whiteLine);
-        cell_10.setForeground(Color.WHITE);
-        cell_10.setBackground(new Color(0,0,0));        
-        JLabel cell_11 = new JLabel ("1,1");
+        cells[1][0] = cell_10;
+        JLabel cell_11 = new JLabel ();
         cell_11.setBorder(whiteLine);
-        cell_11.setForeground(Color.WHITE);
-        cell_11.setBackground(new Color(0,0,0));        
-        JLabel cell_12 = new JLabel ("1,2");
+        cells[1][1] = cell_11;
+        JLabel cell_12 = new JLabel ();
         cell_12.setBorder(whiteLine);
-        cell_12.setForeground(Color.WHITE);
-        cell_12.setBackground(new Color(0,0,0));        
-        JLabel cell_20 = new JLabel ("2,0");
+        cells[1][2] = cell_12;
+        JLabel cell_20 = new JLabel ();
         cell_20.setBorder(whiteLine);
-        cell_20.setForeground(Color.WHITE);
-        cell_20.setBackground(new Color(0,0,0));        
-        JLabel cell_21 = new JLabel ("2,1");
+        cells[2][0] = cell_20;
+        JLabel cell_21 = new JLabel ();
         cell_21.setBorder(whiteLine);
-        cell_21.setForeground(Color.WHITE);
-        cell_21.setBackground(new Color(0,0,0));        
-        JLabel cell_22 = new JLabel ("2,2");
+        cells[2][1] = cell_21;
+        JLabel cell_22 = new JLabel ();
         cell_22.setBorder(whiteLine);
-        cell_22.setForeground(Color.WHITE);
-        cell_22.setBackground(new Color(0,0,0));        
+        cells[2][2] = cell_22;
         
         
         // create a listener for all cells
-        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,0);}};
-        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,1);}};
-        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,2);}};
-        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,0);}};
-        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,1);}};
-        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,2);}};
-        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,0);}};
-        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,1);}};
-        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,2);}};
+        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,0); displayNewPiece(0,0);}};
+        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,1); displayNewPiece(0,1);}};
+        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,2); displayNewPiece(0,2);}};
+        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,0); displayNewPiece(1,0);}};
+        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,1); displayNewPiece(1,1);}};
+        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,2); displayNewPiece(1,2);}};
+        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,0); displayNewPiece(2,0);}};
+        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,1); displayNewPiece(2,1);}};
+        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,2); displayNewPiece(2,2);}};
          
         
         
