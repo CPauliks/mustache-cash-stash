@@ -111,7 +111,8 @@ public class MainWindow extends JPanel implements ActionListener
 		// if the new game button is clicked
 		if(command.equalsIgnoreCase("New Game"))
 		{
-			String username = "";
+			String user1 = "";
+			String user2 = "";
 			
 			// we assume the username is valid 
 			boolean isValid = false;
@@ -121,11 +122,11 @@ public class MainWindow extends JPanel implements ActionListener
 			while(!isValid)
 			{
 				// show a dialog to get the username
-				username = JOptionPane.showInputDialog(null, "What's Your Name?");
+				user1 = JOptionPane.showInputDialog(null, "What's Your Name?");
 				
 				
 				// if the user click on cancel
-				if(username == null)
+				if(user1 == null)
 				{
 					// simply stop asking for username and break the while loop 
 					isValid = false;
@@ -134,7 +135,7 @@ public class MainWindow extends JPanel implements ActionListener
 				else
 				{
 					// if the username is at least 1 character long, accept the username
-					if(username.length() > 0)
+					if(user1.length() > 0)
 					isValid = true;
 				}
 			}
@@ -143,18 +144,19 @@ public class MainWindow extends JPanel implements ActionListener
 			// if the username supplied is valid, ask about game mode
 			if(isValid)
 			{
+				isValid = false;
 				// an array of selections
 				Object []Options = {"Single Player", "Dual Player"};
 				
 				// user the array of selections to create a dialog box that asks the user for game mode
-				int gametype = JOptionPane.showOptionDialog(null, "Ok " + username + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
+				int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
 				
 				
 				// if single mode is selected
 				if (gametype == 0)
 				{
 					// show game board
-					new GameBoardDisplay(username, "Single");
+					new GameBoardDisplay(user1, "Computer", "Single");
 					
 					// close main window
 					masterFrame.dispose();
@@ -163,8 +165,27 @@ public class MainWindow extends JPanel implements ActionListener
 				// if dual mode is selected
 				else if (gametype == 1)
 				{
+					while(!isValid)
+					{
+						// show a dialog to get the username
+						 user2 = JOptionPane.showInputDialog(null, "What's Your Name?");
+						
+						// if the user click on cancel
+						if(user2 == null)
+						{
+							// simply stop asking for username and break the while loop 
+							isValid = false;
+							break;
+						}
+						else
+						{
+							// if the username is at least 1 character long, accept the username
+							if(user1.length() > 0)
+							isValid = true;
+						}
+					}
 					// show game board
-					new GameBoardDisplay(username, "Dual");
+					new GameBoardDisplay(user1, user2, "Dual");
 					
 					// close main window
 					masterFrame.dispose();

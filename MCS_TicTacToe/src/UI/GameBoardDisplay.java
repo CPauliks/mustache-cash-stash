@@ -10,13 +10,14 @@ import model.*;
 public class GameBoardDisplay extends JPanel
 {
 	static final long serialVersionUID = 0L; // to shut up Eclipse
-	static Icon xPiece = new ImageIcon("mord.png");
-	static Icon oPiece = new ImageIcon("rigs.jpg");
+	static Icon xPiece = new ImageIcon("X.png");
+	static Icon oPiece = new ImageIcon("O.png");
 	private GameboardImp boardModel;
 	private JLabel[][] cells;
 	private JPanel board;
 	private JFrame frame;
 	private JLabel messages;
+	private JPanel buttons;
 	
 	public boolean attemptMove(int xPosition, int yPosition){
 		boolean result = false;
@@ -33,12 +34,22 @@ public class GameBoardDisplay extends JPanel
     			}
     		}
     	}
+//		GameResult status = boardModel.getResult();
+//		if (status == GameResult.CAT) {
+//			gameOverButton("Cat's game!");
+//		}
+//		else if (status == GameResult.OWIN) {
+//			gameOverButton("O Wins!");
+//		}
+//		else if (status == GameResult.XWIN) {
+//			gameOverButton("X Wins!");
+//		}
 		return result;
 	}
 	
 	private void displayNewPiece(int xPosition, int yPosition, Icon piece) {
-			cells[xPosition][yPosition].setIcon(piece);
-			board.revalidate();
+		cells[xPosition][yPosition].setIcon(piece);
+		board.revalidate();
 	}
     
 	private void displayMessage(String message){
@@ -46,7 +57,7 @@ public class GameBoardDisplay extends JPanel
 		board.revalidate();
 	}
 	
-    public GameBoardDisplay(String username, String modeName)
+    public GameBoardDisplay(String user1, String user2, String modeName)
     {
     	boardModel = new GameboardImp();
     	
@@ -54,10 +65,10 @@ public class GameBoardDisplay extends JPanel
     	frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
         
         // set the size of the window
-        frame.setSize(500, 500);
+        frame.setSize(500, 600);
         
         // get players
-        String[] players = Game.getPlayers(username);
+        String[] players = Game.getPlayers(user1, user2);
         String player1 = players[0];
         String player2 = players[1];
         
@@ -152,8 +163,17 @@ public class GameBoardDisplay extends JPanel
         // add the board label to the lower side of the window
         add(board, BorderLayout.CENTER);         
         
+        buttons = new JPanel();
+        buttons.setLayout(new GridLayout(3,1));
+        buttons.setFont(new Font("Serif", Font.BOLD, 24));  
+        buttons.setForeground(Color.WHITE);
+        buttons.add(new JLabel("Add buttons"));
+        buttons.add(new JLabel("to this JPanel"));
+       
+        add(buttons, BorderLayout.EAST);
+        
         messages = new JLabel();
-        messages.setFont(new Font("Serif", Font.BOLD, 24));  
+        messages.setFont(new Font("Serif", Font.BOLD, 28));  
         messages.setForeground(Color.WHITE);
         
         // add the messages label to the upper side of the window
@@ -178,6 +198,8 @@ public class GameBoardDisplay extends JPanel
         
         // set window not resizable
         frame.setResizable(false);    
+        
+        frame.setIconImage(new ImageIcon("mord.png").getImage()); //If we want favicon for our window.
         
         // show the window
         frame.setContentPane(this);
