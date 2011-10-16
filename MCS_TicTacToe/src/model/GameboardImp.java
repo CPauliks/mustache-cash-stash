@@ -10,6 +10,56 @@ public class GameboardImp implements Gameboard, Cloneable {
 	private boolean osTurn;
 	private GameResult result;
 	
+	private LinkedList<Integer> coordToRows(int x, int y){
+		int switchTrick = (x*10)+y;
+		LinkedList<Integer> returnRows = new LinkedList<Integer>();
+		switch(switchTrick){
+			case 0:
+				returnRows.add(0);
+				returnRows.add(3);
+				returnRows.add(6);
+				break;
+			case 1:
+				returnRows.add(0);
+				returnRows.add(4);
+				break;
+			case 2:
+				returnRows.add(0);
+				returnRows.add(5);
+				returnRows.add(7);
+				break;
+			case 10:
+				returnRows.add(1);
+				returnRows.add(3);
+				break;
+			case 11:
+				returnRows.add(1);
+				returnRows.add(4);
+				returnRows.add(6);
+				returnRows.add(7);
+				break;
+			case 12:
+				returnRows.add(1);
+				returnRows.add(5);
+				break;
+			case 20:
+				returnRows.add(2);
+				returnRows.add(3);
+				returnRows.add(7);
+				break;
+			case 21:
+				returnRows.add(2);
+				returnRows.add(4);
+				break;
+			case 22:
+				returnRows.add(2);
+				returnRows.add(3);
+				returnRows.add(6);
+				break;
+		}
+		return returnRows;
+	}
+	
 	public GameboardImp() {
 		currentBoard = new PlaceValue[3][3];
 		members = (LinkedList<Integer>[][]) new LinkedList[3][3];
@@ -111,18 +161,15 @@ public class GameboardImp implements Gameboard, Cloneable {
 		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
 				((pieceToPlace == PlaceValue.X && this.xsTurn())||
 				 (pieceToPlace == PlaceValue.O && this.osTurn()))) {
-			System.out.println("placing piece");
-			for(Integer sum:members[xPosition][yPosition]){
+			for(Integer rowNum:coordToRows(xPosition, yPosition)){
 				if(pieceToPlace == PlaceValue.X){
-					sum++;
+					rowStates[rowNum]++;
 				}else{
-					sum--;
+					rowStates[rowNum]--;
 				}
 			}
 			this.forceMove(xPosition, yPosition, pieceToPlace);
-			System.out.println(this.checkResult());
 			if(this.checkResult() == GameResult.PENDING){
-				System.out.println("turn switch");
 				xsTurn = !xsTurn;
 				osTurn = !osTurn;
 			}else {
@@ -136,22 +183,22 @@ public class GameboardImp implements Gameboard, Cloneable {
 	
 	private GameResult checkResult(){
 		for(Integer sum:rowStates){
-			System.out.println(sum+" ");
 			if(sum.equals(3)){
 				this.result = GameResult.XWIN;
+				return this.result;
 			}else if(sum.equals(-3)){
 				this.result = GameResult.OWIN;
-			}else{
-				for(PlaceValue[] c:currentBoard){
-					for(PlaceValue p:c){
-						if(p == PlaceValue.BLANK){
-							return this.result;
-						}
-					}
-				}
-				this.result = GameResult.CAT;
+				return this.result;
 			}
 		}
+		for(PlaceValue[] c:currentBoard){
+			for(PlaceValue p:c){
+				if(p == PlaceValue.BLANK){
+					return this.result;
+				}
+			}
+		}
+		this.result = GameResult.CAT;
 		return this.result;
 	}
 
