@@ -4,15 +4,29 @@ import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-
+import model.*;
 
 
 public class GameBoardDisplay extends JPanel
 {
 	static final long serialVersionUID = 0L; // to shut up Eclipse
+	private GameboardImp boardModel;
+	
+	public boolean attemptMove(int xPosition, int yPosition){
+		if(boardModel.getResult() == GameResult.PENDING){
+    		if(boardModel.xsTurn()){
+    			return boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
+    		}else if(boardModel.osTurn()){
+    			return boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
+    		}
+    	}
+		return false;
+	}
     
     public GameBoardDisplay(String username, String modeName)
     {
+    	boardModel = new GameboardImp();
+    	
        // This is the window that will be shown
     	JFrame frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
         
@@ -23,8 +37,6 @@ public class GameBoardDisplay extends JPanel
         String[] players = Game.getPlayers(username);
         String player1 = players[0];
         String player2 = players[1];
-        
-        
         
         // add a label to the top of the window
         JLabel title = new JLabel(player1 + " vs " + player2);
@@ -84,15 +96,15 @@ public class GameBoardDisplay extends JPanel
         
         
         // create a listener for all cells
-        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("0,0");}};
-        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("0,1");}};
-        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("0,2");}};
-        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("1,0");}};
-        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("1,1");}};
-        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("1,2");}};
-        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("2,0");}};
-        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("2,1");}};
-        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){System.out.println("2,2");}};
+        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,0);}};
+        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,1);}};
+        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(0,2);}};
+        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,0);}};
+        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,1);}};
+        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(1,2);}};
+        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,0);}};
+        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,1);}};
+        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){attemptMove(2,2);}};
          
         
         

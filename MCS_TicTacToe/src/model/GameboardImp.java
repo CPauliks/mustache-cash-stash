@@ -59,6 +59,10 @@ public class GameboardImp implements Gameboard, Cloneable {
 	public boolean osTurn() {
 		return osTurn;
 	}
+	
+	public GameResult getResult(){
+		return this.result;
+	}
 
 	@Override
 	public boolean requestMove(int xPosition, int yPosition,
