@@ -1,8 +1,10 @@
+package UI;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+
 
 
 public class GameBoardDisplay extends JPanel
@@ -21,6 +23,8 @@ public class GameBoardDisplay extends JPanel
         String[] players = Game.getPlayers(username);
         String player1 = players[0];
         String player2 = players[1];
+        
+        
         
         // add a label to the top of the window
         JLabel title = new JLabel(player1 + " vs " + player2);
