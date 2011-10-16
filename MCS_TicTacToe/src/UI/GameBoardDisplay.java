@@ -20,8 +20,10 @@ public class GameBoardDisplay extends JPanel
 	public boolean attemptMove(int xPosition, int yPosition){
 		if(boardModel.getResult() == GameResult.PENDING){
     		if(boardModel.xsTurn()){
+    			System.out.println("x");
     			return boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
     		}else if(boardModel.osTurn()){
+    			System.out.println("o");
     			return boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
     		}
     	}
@@ -29,6 +31,13 @@ public class GameBoardDisplay extends JPanel
 	}
 	
 	private void displayNewPiece(int xPosition, int yPosition) {
+		PlaceValue[][] brd = boardModel.getBoard();
+		for(int i = 0; i < 3; i++){
+			for(int j = 0; j < 3; j++){
+				System.out.print("["+brd[i][j]+"]");
+			}
+			System.out.println("");
+		}
 		if(boardModel.xsTurn()) {
 			cells[xPosition][yPosition].setIcon(xPiece);
 			board.revalidate();

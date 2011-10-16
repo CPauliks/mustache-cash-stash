@@ -1,19 +1,60 @@
 package model;
+import java.util.LinkedList;
 
 public class GameboardImp implements Gameboard, Cloneable {
 	
 	private PlaceValue[][] currentBoard;
+	private Integer[] rowStates;
+	private LinkedList<Integer>[][] members;
 	private boolean xsTurn;
 	private boolean osTurn;
 	private GameResult result;
 	
 	public GameboardImp() {
 		currentBoard = new PlaceValue[3][3];
-		for(PlaceValue[] c:currentBoard){
-			for(PlaceValue p:c){
-				p = PlaceValue.BLANK;
+		members = (LinkedList<Integer>[][]) new LinkedList[3][3];
+		for(int i = 0; i < 3; i++){
+			for(int j = 0; j < 3; j++){
+				currentBoard[i][j] = PlaceValue.BLANK;
+				members[i][j] = new LinkedList<Integer>();
 			}
 		}
+		rowStates = new Integer[8];
+		for(int i = 0; i<8; i++){
+			rowStates[i] = 0;
+		}
+		members[0][0].add(rowStates[0]);
+		members[0][0].add(rowStates[3]);
+		members[0][0].add(rowStates[6]);
+		
+		members[1][0].add(rowStates[0]);
+		members[1][0].add(rowStates[4]);
+		
+		members[2][0].add(rowStates[0]);
+		members[2][0].add(rowStates[5]);
+		members[2][0].add(rowStates[7]);
+		
+		members[0][1].add(rowStates[1]);
+		members[0][1].add(rowStates[3]);
+		
+		members[1][1].add(rowStates[1]);
+		members[1][1].add(rowStates[4]);
+		members[1][1].add(rowStates[6]);
+		members[1][1].add(rowStates[7]);
+		
+		members[2][1].add(rowStates[1]);
+		members[2][1].add(rowStates[5]);
+		
+		members[0][2].add(rowStates[2]);
+		members[0][2].add(rowStates[3]);
+		members[0][2].add(rowStates[7]);
+		
+		members[1][2].add(rowStates[2]);
+		members[1][2].add(rowStates[4]);
+		
+		members[2][2].add(rowStates[2]);
+		members[2][2].add(rowStates[3]);
+		members[2][2].add(rowStates[6]);
 		xsTurn = true;
 		osTurn = false;
 		result = GameResult.PENDING;
@@ -22,7 +63,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 	public Gameboard clone() {
 		GameboardImp cloneBoard = new GameboardImp();
 		for(int i = 0; i < 3; i++){
-			for(int j = 0; i < 3; j++){
+			for(int j = 0; j < 3; j++){
 				cloneBoard.forceMove(i, j, currentBoard[i][j]);
 			}
 		}
@@ -43,11 +84,11 @@ public class GameboardImp implements Gameboard, Cloneable {
 	public PlaceValue[][] getBoard(){
 		PlaceValue[][] cloneBoard = new PlaceValue[3][3];
 		for(int i = 0; i < 3; i++){
-			for(int j = 0; i < 3; j++){
+			for(int j = 0; j < 3; j++){
 				cloneBoard[i][j] = currentBoard[i][j];
 			}
 		}
-		return cloneBoard;
+		return currentBoard;
 	}
 
 	@Override
@@ -70,8 +111,18 @@ public class GameboardImp implements Gameboard, Cloneable {
 		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
 				((pieceToPlace == PlaceValue.X && this.xsTurn())||
 				 (pieceToPlace == PlaceValue.O && this.osTurn()))) {
+			System.out.println("placing piece");
+			for(Integer sum:members[xPosition][yPosition]){
+				if(pieceToPlace == PlaceValue.X){
+					sum++;
+				}else{
+					sum--;
+				}
+			}
 			this.forceMove(xPosition, yPosition, pieceToPlace);
+			System.out.println(this.checkResult());
 			if(this.checkResult() == GameResult.PENDING){
+				System.out.println("turn switch");
 				xsTurn = !xsTurn;
 				osTurn = !osTurn;
 			}else {
@@ -84,50 +135,22 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	
 	private GameResult checkResult(){
-		if((currentBoard[0][0] != PlaceValue.BLANK)&&
-				((currentBoard[0][0] == currentBoard[1][0])&&(currentBoard[0][0] == currentBoard[2][0]))||
-				((currentBoard[0][0] == currentBoard[0][1])&&(currentBoard[0][0] == currentBoard[0][2]))||
-				((currentBoard[0][0] == currentBoard[1][1])&&(currentBoard[0][0] == currentBoard[2][2])))
-		{
-			if(currentBoard[0][0] == PlaceValue.X){
+		for(Integer sum:rowStates){
+			System.out.println(sum+" ");
+			if(sum.equals(3)){
 				this.result = GameResult.XWIN;
-			}
-			else{
+			}else if(sum.equals(-3)){
 				this.result = GameResult.OWIN;
-			}
-		}
-		else if((currentBoard[1][1] != PlaceValue.BLANK)&&
-				((currentBoard[1][1] == currentBoard[1][0])&&(currentBoard[1][1] == currentBoard[1][2]))||
-				((currentBoard[1][1] == currentBoard[0][1])&&(currentBoard[1][1] == currentBoard[2][1]))||
-				((currentBoard[1][1] == currentBoard[2][0])&&(currentBoard[1][1] == currentBoard[0][2])))
-		{
-			if(currentBoard[1][1] == PlaceValue.X){
-				this.result = GameResult.XWIN;
-			}
-			else{
-				this.result = GameResult.OWIN;
-			}
-		}
-		else if((currentBoard[2][2] != PlaceValue.BLANK)&&
-				((currentBoard[2][2] == currentBoard[1][2])&&(currentBoard[2][2] == currentBoard[0][2]))||
-				((currentBoard[2][2] == currentBoard[2][1])&&(currentBoard[2][2] == currentBoard[2][0])))
-		{
-			if(currentBoard[2][2] == PlaceValue.X){
-				this.result = GameResult.XWIN;
-			}
-			else{
-				this.result = GameResult.OWIN;
-			}
-		}
-		else{
-			for(PlaceValue[] c:currentBoard){
-				for(PlaceValue p:c){
-					if(p == PlaceValue.BLANK){
-						return GameResult.PENDING;
+			}else{
+				for(PlaceValue[] c:currentBoard){
+					for(PlaceValue p:c){
+						if(p == PlaceValue.BLANK){
+							return this.result;
+						}
 					}
 				}
+				this.result = GameResult.CAT;
 			}
-			this.result = GameResult.CAT;
 		}
 		return this.result;
 	}
