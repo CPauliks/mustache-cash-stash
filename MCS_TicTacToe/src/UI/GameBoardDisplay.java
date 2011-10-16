@@ -150,14 +150,14 @@ public class GameBoardDisplay extends JPanel
         
         
         // add the board label to the lower side of the window
-        add(board, BorderLayout.SOUTH);         
+        add(board, BorderLayout.CENTER);         
         
         messages = new JLabel();
         messages.setFont(new Font("Serif", Font.BOLD, 24));  
         messages.setForeground(Color.WHITE);
         
         // add the messages label to the upper side of the window
-        add(messages, BorderLayout.NORTH); 
+        add(messages, BorderLayout.SOUTH); 
         
         
         // Place the window in the middle of the screen
