@@ -50,10 +50,10 @@ public class GameBoardDisplay extends JPanel
 			displayStatus("Cat's game!");
 		}
 		else if (status == GameResult.OWIN) {
-			displayStatus(player1 + " Wins!");
+			displayStatus(player2 + " Wins!");
 		}
 		else if (status == GameResult.XWIN) {
-			displayStatus(player2 + " Wins!");
+			displayStatus(player1 + " Wins!");
 		}
 		return result;
 	}
@@ -222,7 +222,7 @@ public class GameBoardDisplay extends JPanel
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // set window not resizable
-        frame.setResizable(false);    
+        frame.setResizable(true);    
         
         frame.setIconImage(new ImageIcon("mord.png").getImage()); //If we want favicon for our window.
         
