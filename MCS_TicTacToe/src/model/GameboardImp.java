@@ -1,19 +1,156 @@
+//BEGIN FILE GameBoardImp.java
 package model;
+
 import java.util.LinkedList;
 
+/**
+* An implementation for the gameboard model for the TTT system.
+* Keeps track of the board and what pieces are where
+* @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
+* @version 0.0 pending CCR approval
+*/
+//BEGIN CLASS GameBoardImp
 public class GameboardImp implements Gameboard, Cloneable {
 	
-	private PlaceValue[][] currentBoard;
-	private Integer[] rowStates;
-	private LinkedList<Integer>[][] members;
-	private boolean xsTurn;
-	private boolean osTurn;
-	private GameResult result;
+	/**
+	 * Sets up a GameBoard for a new game.
+	 */
+	//BEGIN CONSTRUCTOR public GameBoardImp()
+	public GameboardImp() 
+	{
+		currentBoard = new PlaceValue[3][3];
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				currentBoard[i][j] = PlaceValue.BLANK;
+			}
+		}
+		rowStates = new Integer[8];
+		for(int i = 0; i<8; i++)
+		{
+			rowStates[i] = 0;
+		}
+		xsTurn = true;
+		osTurn = false;
+		result = GameResult.PENDING;
+	}
+	//END CONSTRUCTOR public GameBoardImp()
 	
-	private LinkedList<Integer> coordToRows(int x, int y){
+	//BEGIN METHOD public Gameboard clone() 
+	public Gameboard clone() 
+	{
+		GameboardImp cloneBoard = new GameboardImp();
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				cloneBoard.forceMove(i, j, currentBoard[i][j]);
+			}
+		}
+		cloneBoard.xsTurn = this.xsTurn;
+		cloneBoard.osTurn = this.osTurn;
+		return cloneBoard;
+	}
+	//END METHOD public Gameboard clone() 
+	
+	@Override
+	//BEGIN METHOD public PlaceValue[][] getBoard()
+	public PlaceValue[][] getBoard()
+	{
+		PlaceValue[][] cloneBoard = new PlaceValue[3][3];
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				cloneBoard[i][j] = currentBoard[i][j];
+			}
+		}
+		return currentBoard;
+	}
+	//END METHOD public PlaceValue[][] getBoard()
+	
+	@Override
+	//BEGIN METHOD public GameResult getResult()
+	public GameResult getResult()
+	{
+		return this.result;
+	}
+	//END METHOD public GameResult getResult()
+
+	@Override
+	//BEGIN METHOD public Gameboard getState()
+	public Gameboard getState() 
+	{
+		return this.clone();
+	}
+	//END METHOD public Gameboard getState()
+	
+	@Override
+	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
+	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
+	{
+		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
+				((pieceToPlace == PlaceValue.X && this.xsTurn())||
+				 (pieceToPlace == PlaceValue.O && this.osTurn()))) 
+		{
+			for(Integer rowNum:coordToRows(xPosition, yPosition))
+			{
+				if(pieceToPlace == PlaceValue.X)
+				{
+					rowStates[rowNum]++;
+				}
+				else
+				{
+					rowStates[rowNum]--;
+				}
+			}
+			this.forceMove(xPosition, yPosition, pieceToPlace);
+			if(this.checkResult() == GameResult.PENDING)
+			{
+				xsTurn = !xsTurn;
+				osTurn = !osTurn;
+			}
+			else 
+			{
+				xsTurn = false;
+				osTurn = false;
+			}
+			return true;
+		}
+		return false;
+	}
+	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
+	
+	@Override
+	//BEGIN METHOD public boolean xsTurn()
+	public boolean xsTurn() 
+	{
+		return xsTurn;
+	}
+	//END METHOD public boolean xsTurn()
+
+	@Override
+	//BEGIN METHOD public boolean osTurn() 
+	public boolean osTurn() 
+	{
+		return osTurn;
+	}
+	//END METHOD public boolean osTurn() 
+	
+	/**
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	//BEGIN METHOD private LinkedList<Integer> coordToRows(int x, int y)
+	private LinkedList<Integer> coordToRows(int x, int y)
+	{
 		int switchTrick = (x*10)+y;
 		LinkedList<Integer> returnRows = new LinkedList<Integer>();
-		switch(switchTrick){
+		switch(switchTrick)
+		{
 			case 0:
 				returnRows.add(0);
 				returnRows.add(3);
@@ -59,109 +196,34 @@ public class GameboardImp implements Gameboard, Cloneable {
 		}
 		return returnRows;
 	}
+	//END METHOD private LinkedList<Integer> coordToRows(int x, int y)
 	
-	public GameboardImp() {
-		currentBoard = new PlaceValue[3][3];
-		members = (LinkedList<Integer>[][]) new LinkedList[3][3];
-		for(int i = 0; i < 3; i++){
-			for(int j = 0; j < 3; j++){
-				currentBoard[i][j] = PlaceValue.BLANK;
-				members[i][j] = new LinkedList<Integer>();
-			}
-		}
-		rowStates = new Integer[8];
-		for(int i = 0; i<8; i++){
-			rowStates[i] = 0;
-		}
-		xsTurn = true;
-		osTurn = false;
-		result = GameResult.PENDING;
-	}
-	
-	public Gameboard clone() {
-		GameboardImp cloneBoard = new GameboardImp();
-		for(int i = 0; i < 3; i++){
-			for(int j = 0; j < 3; j++){
-				cloneBoard.forceMove(i, j, currentBoard[i][j]);
-			}
-		}
-		cloneBoard.xsTurn = this.xsTurn;
-		cloneBoard.osTurn = this.osTurn;
-		return cloneBoard;
-	}
-	
-	private void forceMove(int xPosition, int yPosition, PlaceValue piece){
-		currentBoard[xPosition][yPosition] = piece;
-	}
-
-	@Override
-	public Gameboard getState() {
-		return this.clone();
-	}
-	
-	public PlaceValue[][] getBoard(){
-		PlaceValue[][] cloneBoard = new PlaceValue[3][3];
-		for(int i = 0; i < 3; i++){
-			for(int j = 0; j < 3; j++){
-				cloneBoard[i][j] = currentBoard[i][j];
-			}
-		}
-		return currentBoard;
-	}
-
-	@Override
-	public boolean xsTurn() {
-		return xsTurn;
-	}
-
-	@Override
-	public boolean osTurn() {
-		return osTurn;
-	}
-	
-	public GameResult getResult(){
-		return this.result;
-	}
-
-	@Override
-	public boolean requestMove(int xPosition, int yPosition,
-			PlaceValue pieceToPlace) {
-		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
-				((pieceToPlace == PlaceValue.X && this.xsTurn())||
-				 (pieceToPlace == PlaceValue.O && this.osTurn()))) {
-			for(Integer rowNum:coordToRows(xPosition, yPosition)){
-				if(pieceToPlace == PlaceValue.X){
-					rowStates[rowNum]++;
-				}else{
-					rowStates[rowNum]--;
-				}
-			}
-			this.forceMove(xPosition, yPosition, pieceToPlace);
-			if(this.checkResult() == GameResult.PENDING){
-				xsTurn = !xsTurn;
-				osTurn = !osTurn;
-			}else {
-				xsTurn = false;
-				osTurn = false;
-			}
-			return true;
-		}
-		return false;
-	}
-	
-	private GameResult checkResult(){
-		for(Integer sum:rowStates){
-			if(sum.equals(3)){
+	/**
+	 * Checks the status of the game and updates it, if necessary.
+	 * @return the current status of the game
+	 */
+	//BEGIN METHOD private GameResult checkResult()
+	private GameResult checkResult()
+	{
+		for(Integer sum:rowStates)
+		{
+			if(sum.equals(3))
+			{
 				this.result = GameResult.XWIN;
 				return this.result;
-			}else if(sum.equals(-3)){
+			}
+			else if(sum.equals(-3))
+			{
 				this.result = GameResult.OWIN;
 				return this.result;
 			}
 		}
-		for(PlaceValue[] c:currentBoard){
-			for(PlaceValue p:c){
-				if(p == PlaceValue.BLANK){
+		for(PlaceValue[] c:currentBoard)
+		{
+			for(PlaceValue p:c)
+			{
+				if(p == PlaceValue.BLANK)
+				{
 					return this.result;
 				}
 			}
@@ -169,5 +231,28 @@ public class GameboardImp implements Gameboard, Cloneable {
 		this.result = GameResult.CAT;
 		return this.result;
 	}
-
+	//END METHOD private GameResult checkResult()
+	
+	/**
+	 * Private version of RequestMove.
+	 * Actually places the piece on the board.
+	 * @param xPosition The x (horizontal) coordinate of the requested space to occupy
+	 * @param yPosition The y (vertical) coordinate of the requested space to occupy
+	 * @param piece The type of piece to put in the location
+	 */
+	//BEGIN METHOD private void forceMove(int xPosition, int yPosition, PlaceValue piece)
+	private void forceMove(int xPosition, int yPosition, PlaceValue piece)
+	{
+		currentBoard[xPosition][yPosition] = piece;
+	}
+	//END METHOD private void forceMove(int xPosition, int yPosition, PlaceValue piece)
+	
+	private PlaceValue[][] currentBoard;
+	private Integer[] rowStates;
+	private boolean xsTurn;
+	private boolean osTurn;
+	private GameResult result;
+	
 }
+//END CLASS GameBoardImp
+//END FILE GameBoardImp.java

@@ -4,7 +4,7 @@ package controller;
 import view.*;
 import model.*;
 
-/*
+/**
  * A simple interface for a TTT controller. Keeps track of which views are playing the game as well as the models they have in use.
  * Passes requests from the views to the model and results back to the views.
  * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
@@ -13,8 +13,7 @@ import model.*;
 //BEGIN INTERFACE Controller
 public interface Controller 
 {
-	
-	/*
+	/**
 	 * A request from a client to place a piece on the Gameboard at a certain position.
 	 * The controller passes this request to the Gameboard
 	 * @param xPosition The x (horizontal) coordinate of the requested space to occupy
@@ -26,7 +25,7 @@ public interface Controller
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
 	
-	/*
+	/**
 	 * Allows a Client to ask whether it is their turn.
 	 * @param thisClient The Client asking the question.
 	 * @return true if it is this Client's turn, else false.
@@ -35,7 +34,7 @@ public interface Controller
 	public boolean isClientsTurn(Client thisClient);
 	//END METHOD public boolean isClientsTurn(Client thisClient)
 	
-	/*
+	/**
 	 * Begins a new game with the given clients.
 	 * @param xPlayer The player controlling X pieces
 	 * @param oPlayer The player controlling O pieces
@@ -44,7 +43,7 @@ public interface Controller
 	public void newGame(Client xPlayer, Client oPlayer);
 	//END METHOD public void newGame(Client xPlayer, Client oPlayer)
 	
-	/*
+	/**
 	 * Allows a Client to request to forfeit the current game.
 	 * @param resigningClient The Client requesting to forfeit the game.
 	 * @return Whether the request to resign was successful.
@@ -53,7 +52,7 @@ public interface Controller
 	public boolean resign(Client resigningClient);
 	//END METHOD public boolean resign(Client resigningClient)
 	
-	/*
+	/**
 	 * Requests to quit the game entirely.
 	 * This should also forfeit the current game (if any).
 	 * @param quittingClient The client requesting to end the game.
@@ -62,7 +61,7 @@ public interface Controller
 	public void endSession(Client quittingClient);
 	//END METHOD public void endSession(Client quittingClient)
 	
-	/*
+	/**
 	 * Allows a client to request a copy of the Gameboard
 	 * This request should be passed to the Gameboard
 	 * @return A copy of the Gameboard
@@ -71,7 +70,7 @@ public interface Controller
 	public Gameboard getGameboardState();
 	//END METHOD public Gameboard getGameboardState()
 	
-	/*
+	/**
 	 * Allows a client to request a copy of the Statistics
 	 * This request should be passed to the Statistics
 	 * @return A copy of the Statistics
@@ -81,5 +80,4 @@ public interface Controller
 	//END METHOD public Statistics getStatisticsState()
 }
 //END INTERFACE Controller
-
 //END FILE Controller.java

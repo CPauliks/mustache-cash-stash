@@ -2,7 +2,7 @@
 package view;
 //imports would go here if we had any
 
-/*
+/**
  * A simple interface for a TTT client. Clients provide the means of communication between a user (or AI) and the controller.
  * This composes part of the View for the MVC pattern.
  * A UI or AI module is attached to the Client and the clients attach to the controller.
@@ -13,7 +13,7 @@ package view;
 public interface Client 
 {
 	
-	/*
+	/**
 	 * Instructs a Client to update its Gameboard model.
 	 * A client receiving this call should attempt to retrieve a new Gameboard and update any relevant info,
 	 * such as the GUI view of the Gameboard or the AI's move system for an AI attached client.
@@ -22,7 +22,7 @@ public interface Client
 	public void updateGameboard();
 	//END METHOD public void updateGameboard()
 	
-	/*
+	/**
 	 * Instructs a Client to update its Statistics model. 
 	 * A client receiving this call should attempt to retrieve a new Statistics item and update any relevant info.
 	 */
@@ -30,7 +30,7 @@ public interface Client
 	public void updateStatistics();
 	//END METHOD public void updateStatistics()
 	
-	/*
+	/**
 	 * Requests a move on the behalf of the client's attached user.
 	 * A client receiving this call should pass the call towards the controller along with it's relevant piece information.
 	 * @param xPosition The x (horizontal) coordinate of the requested space to occupy
@@ -41,7 +41,7 @@ public interface Client
 	public boolean requestMove(int xPosition, int yPosition);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition)
 	
-	/*
+	/**
 	 * Requests to forfeit the current game on behalf of the client's attached user.
 	 * A client receiving this call should pass the call towards the controller along with itself.
 	 * @return Whether the request to resign was successful.
@@ -50,7 +50,7 @@ public interface Client
 	public boolean resign();
 	//END METHOD public boolean resign()
 	
-	/*
+	/**
 	 * Requests to quit the game entirely on behalf of the client's attached user.
 	 * This should also forfeit the current game (if any).
 	 * A client receiving this call should pass the call towards the controller along with itself.
@@ -60,5 +60,4 @@ public interface Client
 	//END METHOD public void endSession()
 }
 //END INTERFACE Client
-
 //END FILE Client.java

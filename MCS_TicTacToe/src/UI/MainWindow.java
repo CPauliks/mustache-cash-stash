@@ -1,11 +1,17 @@
+//BEGIN FILE MainWindow.java
 package UI;
-import javax.swing.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-
+/**
+ * 
+ * @author Chris
+ *
+ */
+//BEGIN CLASS MainWindow
 public class MainWindow extends JPanel implements ActionListener
 {
 	public static JFrame masterFrame = new JFrame("TicTacToe"); // the window it self
@@ -94,10 +100,7 @@ public class MainWindow extends JPanel implements ActionListener
         	 	
 	}
 	
-	
-	
-	
-	/*
+	/**
 	 * actionPerformed
 	 * 
 	 * Listens to actions and act accordingly
@@ -186,9 +189,6 @@ public class MainWindow extends JPanel implements ActionListener
 					}
 					// show game board
 					new GameBoardDisplay(user1, user2, "Dual");
-					
-					// close main window
-					masterFrame.dispose();
 				}
 				
 				// if cancel button is clicked or if window is closed
@@ -200,8 +200,6 @@ public class MainWindow extends JPanel implements ActionListener
 			
 		}
 		
-		
-		
 		// if the scores button is clicked
 		else if(command.equalsIgnoreCase("Scores"))
 		{
@@ -211,7 +209,6 @@ public class MainWindow extends JPanel implements ActionListener
 				new Scores();
 			}
 		}
-		
 		
 		// if the quit button is clicked
 		else
@@ -229,30 +226,18 @@ public class MainWindow extends JPanel implements ActionListener
 		
 	}
 	
-	
-	
-	
-	/*
-	 * scoresWindowClosed
-	 * 
-	 * notify the main window as soon as the scores
-	 * window is closed
+	/**
+	 * Notifies the main window as soon as the score window is closed.
 	 */
 	public static void scoresWindowIsClosed()
 	{
 		scoresWindowIsUp = false;
 	}
 	
-	
-	
-	
-	/*
-	 * showMainWindow
-	 * 
-	 * is called by the main function of the program to 
-	 * display the main window
+	/**
+	 * Called by the main function to display the main window.
 	 */
-	public static void showMainWindow()  
+	public static void showMainWindow() 
 	{
 		// create a content pane
 		final MainWindow contentPane = new MainWindow(masterFrame);
@@ -278,3 +263,5 @@ public class MainWindow extends JPanel implements ActionListener
 	
 	
 }
+//END CLASS MainWindow
+//END FILE MainWindow.java

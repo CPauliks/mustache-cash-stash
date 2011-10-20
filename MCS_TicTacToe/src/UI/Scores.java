@@ -1,6 +1,6 @@
 package UI;
-import java.awt.*;
 
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -96,10 +96,9 @@ public class Scores extends JPanel
     	return thisArray;    	
     }
     
-    /*
-     * getFrame
-     * 
-     * returns the main frame
+    /**
+     * Returns the main frame of the scores window.
+     * @return said frame
      */
     public static JFrame getFrame()
     {

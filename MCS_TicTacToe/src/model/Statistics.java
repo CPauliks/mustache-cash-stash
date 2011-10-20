@@ -2,7 +2,7 @@
 package model;
 //imports would go here if we had any
 
-/*
+/**
 * An interface for the statistics model for the TTT system.
 * Keeps track of wins, losses, and ties for each player in a game.
 * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
@@ -12,7 +12,7 @@ package model;
 public interface Statistics 
 {
 	
-	/*
+	/**
 	 * Returns an immutable copy of this Statistics for use by views to update their model.
 	 * @return An immutable copy of this Statistics
 	 */
@@ -20,7 +20,7 @@ public interface Statistics
 	public Statistics getState();
 	//END METHOD public Statistics getState()
 	
-	/*
+	/**
 	 * Returns the number of wins for a given player.
 	 * @param playerName The name of the player to query
 	 * @return The number of wins
@@ -29,7 +29,7 @@ public interface Statistics
 	public int getWins(String playerName);
 	//END METHOD public int getWins(String playerName)
 	
-	/*
+	/**
 	 * Returns the number of losses for a given player.
 	 * @param playerName The name of the player to query.
 	 * @return The number of losses.
@@ -38,7 +38,7 @@ public interface Statistics
 	public int getLosses(String playerName);
 	//END METHOD getLosses(String playerName)
 	
-	/*
+	/**
 	 * Returns the number of ties for a given player.
 	 * @param playerName The name of the player to query.
 	 * @return The number of ties.
@@ -47,7 +47,7 @@ public interface Statistics
 	public int getTies(String playerName);
 	//END METHOD getTies(String playerName)
 	
-	/*
+	/**
 	 * Returns the total number of games played by a given player
 	 * @param playerName The name of the player to query.
 	 * @return The total number of games.
@@ -56,7 +56,7 @@ public interface Statistics
 	public int getGameCount(String playerName);
 	//END METHOD getGameCount(String playerName)
 	
-	/*
+	/**
 	 * Adds a win for the given player's record.
 	 * @param playerName The player to assign a win to.
 	 */
@@ -64,7 +64,7 @@ public interface Statistics
 	public void addWin(String playerName);
 	//END METHOD addWin(String playerName)
 	
-	/*
+	/**
 	 * Adds a loss for the given player's record.
 	 * @param playerName The player to assign a loss to.
 	 */
@@ -72,7 +72,7 @@ public interface Statistics
 	public void addLoss(String playerName);
 	//END METHOD addLoss(String playerName)
 	
-	/*
+	/**
 	 * Adds a tie for the given player's record.
 	 * @param playerName The player to assign a tie to.
 	 */
@@ -81,5 +81,4 @@ public interface Statistics
 	//END METHOD addTie(String playerName)
 }
 //END INTERFACE Statistics
-
 //END FILE Statistics.java
