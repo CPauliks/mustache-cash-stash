@@ -139,10 +139,15 @@ public class GameboardImp implements Gameboard, Cloneable {
 	//END METHOD public boolean osTurn() 
 	
 	/**
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
+	 * Returns a List of the rows the requested space is part of.
+	 * Rows numbers are as follows, corresponding to the same rows in the rowStates array;
+	 * 6   3    4    5   7    
+	 * 0 [0,0][0,1][0,2]
+	 * 1 [1,0][1,1][1,2]
+	 * 2 [2,0][2,1][2,2]
+	 * @param x X coordinate of the space
+	 * @param y Y coordinate of the space
+	 * @return The requested List
 	 */
 	//BEGIN METHOD private LinkedList<Integer> coordToRows(int x, int y)
 	private LinkedList<Integer> coordToRows(int x, int y)
@@ -151,46 +156,46 @@ public class GameboardImp implements Gameboard, Cloneable {
 		LinkedList<Integer> returnRows = new LinkedList<Integer>();
 		switch(switchTrick)
 		{
-			case 0:
+			case 0:  //0,0
 				returnRows.add(0);
 				returnRows.add(3);
 				returnRows.add(6);
 				break;
-			case 1:
+			case 1: //0,1
 				returnRows.add(0);
 				returnRows.add(4);
 				break;
-			case 2:
+			case 2: //0,2
 				returnRows.add(0);
 				returnRows.add(5);
 				returnRows.add(7);
 				break;
-			case 10:
+			case 10: //1,0
 				returnRows.add(1);
 				returnRows.add(3);
 				break;
-			case 11:
+			case 11: //1,1
 				returnRows.add(1);
 				returnRows.add(4);
 				returnRows.add(6);
 				returnRows.add(7);
 				break;
-			case 12:
+			case 12: //1,2
 				returnRows.add(1);
 				returnRows.add(5);
 				break;
-			case 20:
+			case 20: //2,0
 				returnRows.add(2);
 				returnRows.add(3);
 				returnRows.add(7);
 				break;
-			case 21:
+			case 21: //2,1
 				returnRows.add(2);
 				returnRows.add(4);
 				break;
-			case 22:
+			case 22: //2,2
 				returnRows.add(2);
-				returnRows.add(3);
+				returnRows.add(5);
 				returnRows.add(6);
 				break;
 		}
