@@ -55,7 +55,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         cells = constructCells();
         boardPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         
-	 	// create 3 buttons
+	 	// create  buttons
 	 	JButton button1 = new JButton("Restart Game");
 	 	JButton button2 = new JButton("Quit Game");
 	 	
