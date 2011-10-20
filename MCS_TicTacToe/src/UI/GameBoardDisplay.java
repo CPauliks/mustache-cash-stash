@@ -3,8 +3,11 @@ package UI;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import model.*;
 
 /**
@@ -13,8 +16,10 @@ import model.*;
  * @version 0.9
  */
 //BEGIN CLASS GameBoardDisplay
-public class GameBoardDisplay extends JPanel
+public class GameBoardDisplay extends JPanel implements ActionListener
 {
+	public  static String initialUser1, initialUser2, initialModeName;
+	
 	/**
 	 * Builds and then draws the UI for a session of TTT
 	 * @param user1 The name of player 1
@@ -24,6 +29,11 @@ public class GameBoardDisplay extends JPanel
 	//BEGIN CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
     public GameBoardDisplay(String user1, String user2, String modeName)
     {
+    	// keep track of the initial usernames and game mode in case if we to restart the game
+    	initialUser1 = user1;
+    	initialUser2 = user2;
+    	initialModeName = modeName;
+    	
     	boardModel = new GameboardImp();
     	setLayout(new BorderLayout());
     	
@@ -35,34 +45,61 @@ public class GameBoardDisplay extends JPanel
         player1 = players[0];
         player2 = players[1];
         
-        // add a label to the top of the window
-        JLabel title = new JLabel(player1 + " vs " + player2);
-        title.setFont(new Font("Serif", Font.BOLD, 36));  
-        title.setForeground(Color.WHITE);
+        // create a header that holds the image
+        JPanel header = new JPanel();
+        header.add(new JLabel(new ImageIcon("bg.png")));
+        header.setBackground(Color.BLACK);
+        
 
         boardPanel = constructBoardPannel();
         cells = constructCells();
+        boardPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         
+	 	// create 3 buttons
+	 	JButton button1 = new JButton("Restart Game");
+	 	JButton button2 = new JButton("Quit Game");
+	 	
+	 	// set action command to buttons
+	 	button1.setActionCommand("restart");
+	 	button2.setActionCommand("quit");
+	 	
+	 	// set action listeners to buttons
+	 	button1.addActionListener(this);
+	 	button2.addActionListener(this);
+	 	
+	 	
         // add the board label to the lower side of the window   
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(3,1));
+        buttonsPanel.setLayout(new GridLayout(7,1));
         buttonsPanel.setBackground(Color.BLACK);
         buttonsPanel.setPreferredSize(new Dimension(300, 100));
+        buttonsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
         
         gameStatus = new JLabel(player1 + "'s Turn");
-        gameStatus.setFont(new Font("Serif", Font.BOLD, 28));  
+        gameStatus.setFont(new Font("Serif", Font.BOLD, 18));  
         gameStatus.setForeground(Color.WHITE);
+        gameStatus.setBorder(new EmptyBorder(10, 10, 10, 10));
         
+        // add a label to the top of the window
+        JLabel title = new JLabel(player1 + " vs " + player2);
+        title.setFont(new Font("Serif", Font.BOLD, 28));  
+        title.setForeground(Color.ORANGE);
+        
+        buttonsPanel.add(title);
         buttonsPanel.add(gameStatus);
-        buttonsPanel.add(new JLabel("Add buttons"));
-        buttonsPanel.add(new JLabel("to this JPanel"));
+        buttonsPanel.add(new JLabel());
+        buttonsPanel.add(new JLabel());
+        buttonsPanel.add(new JLabel());
+        buttonsPanel.add(button1);
+        buttonsPanel.add(button2);
        
         moveStatus = new JLabel("Ready to play!");
-        moveStatus.setFont(new Font("Serif", Font.BOLD, 28));  
-        moveStatus.setForeground(Color.WHITE);
+        moveStatus.setFont(new Font("Serif", Font.BOLD, 18));  
+        moveStatus.setForeground(Color.CYAN);
+        moveStatus.setBorder(new EmptyBorder(10, 10, 10, 10));
         
         // add all the parts to the window
-        add(title, BorderLayout.NORTH); 
+        add(header, BorderLayout.NORTH); 
         add(boardPanel, BorderLayout.CENTER);  
         add(buttonsPanel, BorderLayout.EAST);
         add(moveStatus, BorderLayout.SOUTH); 
@@ -71,6 +108,36 @@ public class GameBoardDisplay extends JPanel
         setBackground(Color.BLACK);
     }
     //END CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
+	
+    
+    
+	/**
+	 * actionPerformed
+	 * 
+	 * Listens to actions and act accordingly
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent event)
+	{
+		// get the action of the button
+		String command = event.getActionCommand();
+		
+		// if the restart game button is clicked
+		if(command.equalsIgnoreCase("restart"))
+		{
+			new GameBoardDisplay(initialUser1, initialUser2, initialModeName);
+			boardFrame.dispose();
+		}
+		
+		// if the quit game button is clicked
+		else
+		{
+			boardFrame.dispose();
+		}
+	}
+	
+	
+	
 	
 	/**
 	 * A request from a client to place a piece on the Gameboard at a certain position.
@@ -202,7 +269,7 @@ public class GameBoardDisplay extends JPanel
 		JFrame frame = new JFrame ("Tic Tac Toe - " + modeName + " Mode");
         
         // set the size of the window
-        frame.setSize(700, 500);
+        frame.setSize(700, 600);
         
 		// Place the window in the middle of the screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

@@ -125,7 +125,7 @@ public class MainWindow extends JPanel implements ActionListener
 			while(!isValid)
 			{
 				// show a dialog to get the username
-				user1 = JOptionPane.showInputDialog(null, "What's Your Name?");
+				user1 = JOptionPane.showInputDialog(null, "Player 1 Name:");
 				
 				
 				// if the user click on cancel
@@ -162,7 +162,7 @@ public class MainWindow extends JPanel implements ActionListener
 					new GameBoardDisplay(user1, "Computer", "Single");
 					
 					// close main window
-					masterFrame.dispose();
+					//masterFrame.dispose();
 				}
 				
 				// if dual mode is selected
@@ -171,7 +171,7 @@ public class MainWindow extends JPanel implements ActionListener
 					while(!isValid)
 					{
 						// show a dialog to get the username
-						 user2 = JOptionPane.showInputDialog(null, "What's Your Name?");
+						 user2 = JOptionPane.showInputDialog(null, "Player 2 Name:");
 						
 						// if the user click on cancel
 						if(user2 == null)
@@ -185,9 +185,17 @@ public class MainWindow extends JPanel implements ActionListener
 							// if the username is at least 1 character long, accept the username
 							if(user1.length() > 0)
 							isValid = true;
+							
+							// check if username is already used
+							if(user2.equals(user1))
+							{
+								isValid = false;							
+								JOptionPane.showMessageDialog(null, "The name you have choosen is already being used by another player");
+							}
 						}
 					}
-					// show game board
+					// show game board if allowed
+					if(isValid)
 					new GameBoardDisplay(user1, user2, "Dual");
 				}
 				
