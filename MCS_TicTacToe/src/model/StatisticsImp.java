@@ -17,9 +17,12 @@ public class StatisticsImp implements Statistics, Cloneable{
 	 */
 	public StatisticsImp(){
 		//setSessionStatistics(sessionStatistics);
-		sessionStatistics = new HashMap<String, List<Integer>>();
+		this.sessionStatistics = new HashMap<String, List<Integer>>();
 	}
 
+	public StatisticsImp(Map<String, List<Integer>> stats){
+		this.sessionStatistics = stats;
+	}
 	@Override
 	/**
 	 * Returns an immutable copy of this Statistics for use by views to update their model.
@@ -122,7 +125,9 @@ public class StatisticsImp implements Statistics, Cloneable{
 	
 	public Statistics clone(){
 		
-		return this;
+		Statistics c = new StatisticsImp(sessionStatistics);
+		
+		return c;
 		
 	}
 	
