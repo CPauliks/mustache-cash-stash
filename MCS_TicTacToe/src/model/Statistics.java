@@ -79,6 +79,8 @@ public interface Statistics
 	//BEGIN METHOD addTie(String playerName)
 	public void addTie(String playerName);
 	//END METHOD addTie(String playerName)
+
+	public void addPlayer(String playerName);
 }
 //END INTERFACE Statistics
 //END FILE Statistics.java

@@ -52,7 +52,8 @@ public class StatisticsImp implements Statistics, Cloneable{
 	 */
 	public int getLosses(String playerName) {
 		// TODO Auto-generated method stub
-		return sessionStatistics.get(playerName).get(1);
+		List<Integer> stats = sessionStatistics.get(playerName);
+		return stats.get(1);
 	}
 
 	@Override
@@ -133,10 +134,10 @@ public class StatisticsImp implements Statistics, Cloneable{
 	
 	public void addPlayer(String playerName){
 		List<Integer> stats = new ArrayList<Integer>();
-		for(int i = 0; i < stats.size(); i++){
+		for(int i = 0; i < 4; i++){
 			stats.add(i, (Integer) 0);
 		}
-		sessionStatistics.put(playerName, stats);
+		this.sessionStatistics.put(playerName, stats);
 	}
 	
 	
