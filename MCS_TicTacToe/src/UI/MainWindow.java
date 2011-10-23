@@ -20,9 +20,6 @@ public class MainWindow extends JPanel implements ActionListener
 	public static Color backgroundColor = new Color(0,0,0); // the black color of background
 	protected static boolean scoresWindowIsUp = false; // monitor the scores window
 	
-	
-	
-	
 	/*
 	 *  MainWindow
 	 *  

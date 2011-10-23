@@ -3,7 +3,8 @@ package UI;
 
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.Random;
+import static java.lang.Math.abs;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -109,35 +110,44 @@ public class GameBoardDisplay extends JPanel implements ActionListener
     }
     //END CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
 	
-    
-    
 	/**
 	 * actionPerformed
 	 * 
 	 * Listens to actions and act accordingly
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
+    //BEGIN METHOD public void actionPreformed(ActionEven event)
 	public void actionPerformed(ActionEvent event)
 	{
 		// get the action of the button
 		String command = event.getActionCommand();
-		
+		String [] names = Game.getPlayers(initialUser1, initialUser2);
 		// if the restart game button is clicked
 		if(command.equalsIgnoreCase("restart"))
 		{
-			new GameBoardDisplay(initialUser1, initialUser2, initialModeName);
+			GameResult status = boardModel.getResult();
+			if (status == GameResult.XWIN) //X gets to be X next game
+			{
+				new GameBoardDisplay(player1, player2, initialModeName);
+			}
+			
+			else if (status == GameResult.OWIN) //O gets to be X next game
+			{
+				new GameBoardDisplay(player2, player1, initialModeName);
+			}
+			
+			else //Pending or tie, randomly select who is first next game.
+			{
+				Random rng = new Random();
+				int p1index = rng.nextInt(2);
+				int p2index = abs(p1index-1);
+				new GameBoardDisplay(names[p1index], names[p2index], initialModeName);
+			}
+			
+		} //Else case is quit was selected, in which case we do nothing. In either case we have to delete this GBD.
 			boardFrame.dispose();
-		}
-		
-		// if the quit game button is clicked
-		else
-		{
-			boardFrame.dispose();
-		}
 	}
-	
-	
-	
+	//END METHOD public void actionPreformed(ActionEvent event)
 	
 	/**
 	 * A request from a client to place a piece on the Gameboard at a certain position.
