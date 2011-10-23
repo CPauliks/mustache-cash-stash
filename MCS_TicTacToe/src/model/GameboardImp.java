@@ -82,10 +82,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 	 * @return the current status of the game.
 	 */
 	@Override
-	/**
-	 * Returns the current status of the game as an enum value
-	 * @return the current status of the game.
-	 */
 	//BEGIN METHOD public GameResult getResult()
 	public GameResult getResult()
 	{
@@ -116,17 +112,13 @@ public class GameboardImp implements Gameboard, Cloneable {
 	 * @return Whether the move request was successful in updating the Gameboard.
 	 */
 	@Override
-	/**
-	 * A request from a client to place a piece on the Gameboard at a certain position.
-	 * The Gameboard should check whether the move is in turn and is valid before placing the piece.
-	 * @param xPosition The x (horizontal) coordinate of the requested space to occupy
-	 * @param yPosition The y (vertical) coordinate of the requested space to occupy
-	 * @param pieceToPlace The type of piece to put in the requested location.
-	 * @return Whether the move request was successful in updating the Gameboard.
-	 */
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
 	{
+		if((xPosition > 2)||(yPosition > 2)||(xPosition < 0)||(yPosition < 0))
+		{
+			return false;
+		}
 		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
 				((pieceToPlace == PlaceValue.X && this.xsTurn())||
 				 (pieceToPlace == PlaceValue.O && this.osTurn()))) 
