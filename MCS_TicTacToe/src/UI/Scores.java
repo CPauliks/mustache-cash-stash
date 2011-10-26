@@ -122,6 +122,7 @@ class FrameListener extends WindowAdapter
    * when the user close the scores menu, notify
    * the mainWindow and close the window
    */
+	@Override
   public void windowClosing(WindowEvent e)
   {
     // get the scores window

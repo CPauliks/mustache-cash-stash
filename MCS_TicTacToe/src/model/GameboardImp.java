@@ -36,11 +36,12 @@ public class GameboardImp implements Gameboard, Cloneable {
 		result = GameResult.PENDING;
 	}
 	//END CONSTRUCTOR public GameBoardImp()
-	
-	//BEGIN METHOD public Gameboard clone() 
+
+	@Override
 	/**
 	 * Returns a new copy of Gameboard
 	 */
+	//BEGIN METHOD public Gameboard clone() 
 	public Gameboard clone() 
 	{
 		GameboardImp cloneBoard = new GameboardImp();

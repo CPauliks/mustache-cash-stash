@@ -49,8 +49,8 @@ public class MainWindow extends JPanel implements ActionListener
 	 	middle.setLayout(new GridLayout(3,1));
 	 	
 	 	// create 2 images and place them in header and footer
-	 	header.add(new JLabel(new ImageIcon("header.png")));
-	 	footer.add(new JLabel(new ImageIcon("footer.png")));
+	 	header.add(new JLabel(new ImageIcon("images/header.png")));
+	 	footer.add(new JLabel(new ImageIcon("images/footer.png")));
 	 	
 	 	// create 3 buttons
 	 	JButton button1 = new JButton("New Game");
@@ -103,6 +103,7 @@ public class MainWindow extends JPanel implements ActionListener
 	 * Listens to actions and act accordingly
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
+	@Override
 	public void actionPerformed(ActionEvent event)
 	{
 		// get the action of the button

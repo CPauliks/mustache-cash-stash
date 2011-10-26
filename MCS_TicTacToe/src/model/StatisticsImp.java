@@ -149,6 +149,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 	//END METHOD getSessionStatistics
 	
 	//BEGIN METHOD public Statistics clone()
+	@Override
 	public Statistics clone(){
 		
 		Statistics c = new StatisticsImp(sessionStatistics);
@@ -159,6 +160,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 	//END METHOD public Statistics clone()
 	
 	//BEGIN METHOD public addPlayer()
+	@Override
 	public void addPlayer(String playerName){
 		List<Integer> stats = new ArrayList<Integer>();
 		for(int i = 0; i < 4; i++){

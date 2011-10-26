@@ -8,7 +8,6 @@ import static java.lang.Math.abs;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import model.*;
 
 /**
@@ -48,7 +47,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         
         // create a header that holds the image
         JPanel header = new JPanel();
-        header.add(new JLabel(new ImageIcon("bg.png")));
+        header.add(new JLabel(new ImageIcon("images/bg.png")));
         header.setBackground(Color.BLACK);
         
 
@@ -110,6 +109,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
     }
     //END CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
 	
+    @Override
 	/**
 	 * actionPerformed
 	 * 
@@ -302,7 +302,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         // set window not resizable
         frame.setResizable(true);    
         
-        frame.setIconImage(new ImageIcon("mord.png").getImage()); //If we want favicon for our window.
+        frame.setIconImage(new ImageIcon("images/mord.png").getImage()); //If we want favicon for our window.
         
         // show the window
         frame.setContentPane(this);
@@ -352,15 +352,15 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         cellArray[2][2] = cell_22;
         
         // create a listener for all cells
-        MouseListener listener00 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener01 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener02 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(0,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener10 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener11 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener12 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(1,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener20 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener21 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener22 = new MouseAdapter(){public void mouseClicked(MouseEvent event){if(attemptMove(2,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener00 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener01 = new MouseAdapter(){@Override  public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener02 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener10 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener11 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener12 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener20 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener21 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener22 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
         
         // link listeners to cells
         cell_00.addMouseListener(listener00);
@@ -388,8 +388,8 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 	}
 	//END METHOD private JLabel[][] constructCells() 
 	
-	private static Icon xPiece = new ImageIcon("X.png");
-	private static Icon oPiece = new ImageIcon("O.png");
+	private static Icon xPiece = new ImageIcon("images/X.png");
+	private static Icon oPiece = new ImageIcon("images/O.png");
 	private Gameboard boardModel;
 	private JLabel[][] cells;
 	private JPanel boardPanel;
