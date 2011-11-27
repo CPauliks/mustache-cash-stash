@@ -64,6 +64,16 @@ public interface Gameboard
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
+	
+	/**
+	 * A request from a client to resign from the game.
+	 * The GameBoard should check that the
+	 * @param pieceResigning The piece value of the player resigning.
+	 * @return Whether the resignation request was successfull in updating the Gameboard
+	 */
+	//BEGIN METHOD public boolean resign(PlaceValue pieceResigning)
+	public boolean resign(PlaceValue pieceResigning);
+	//END METHOD public boolean resign(PlaceValue pieceResigning)
 }
 //END INTERFACE Gameboard
 //END FILE Gameboard.java

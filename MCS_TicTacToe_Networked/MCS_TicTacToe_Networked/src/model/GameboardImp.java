@@ -185,6 +185,22 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public boolean osTurn()
 	
+	@Override
+	//BEGIN METHOD public boolean resign(PlaceValue pieceResigning)
+	public boolean resign(PlaceValue pieceResigning) {
+		if (pieceResigning == PlaceValue.O) {
+			this.result = GameResult.XWIN;
+			return true;
+		}
+		else if (pieceResigning == PlaceValue.X) {
+			this.result = GameResult.OWIN;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	//BEGIN METHOD public boolean resign(PlaceValue pieceResigning)
 	
 	/**
 	 * Returns a List of the rows the requested space is part of.
@@ -304,7 +320,8 @@ public class GameboardImp implements Gameboard, Cloneable {
 	private Integer[] rowStates;
 	private boolean xsTurn;	
 	private boolean osTurn;	
-	private GameResult result; 
+	private GameResult result;
+
 	
 }
 //END CLASS GameBoardImp

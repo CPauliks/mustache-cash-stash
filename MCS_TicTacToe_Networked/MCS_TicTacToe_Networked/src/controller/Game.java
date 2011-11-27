@@ -37,8 +37,13 @@ public class Game {
 	{
 		return this.board.requestMove(xPosition, yPosition, pieceToPlace);
 	}
+	public boolean resign(PlaceValue piece) {		
+		return this.board.resign(piece);
+	}
 	
 	private GameboardImp board;
 	private User xPlayer;
 	private User oPlayer;
+
+
 }

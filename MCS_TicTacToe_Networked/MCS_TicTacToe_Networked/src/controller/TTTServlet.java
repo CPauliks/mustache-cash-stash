@@ -78,15 +78,29 @@ public class TTTServlet extends HttpServlet {
 			if(game != null)
 			{
 				boolean success = false;
+				PlaceValue piece = PlaceValue.parsePlaceValue(side);
 				if(resigning.equals("true")) {
-					//TODO: End game, assign loss to player
-					success = true;
+					switch(piece){
+					case X:
+						if(game.hasXPlayer(User.parseUser(userString)))
+						{
+							success = game.resign(piece);
+						}
+						break;
+					case O:
+						if(game.hasOPlayer(User.parseUser(userString)))
+						{
+							success = game.resign(piece);
+						}
+						break;
+					default:
+						success = false;
+						break;
+					}
 				}
 				else {
 					int xPos = Integer.parseInt(request.getParameter("xPosition"));
 					int yPos = Integer.parseInt(request.getParameter("yPosition"));
-					PlaceValue piece = PlaceValue.parsePlaceValue(side);
-
 					switch(piece){
 						case X:
 							if(game.hasXPlayer(User.parseUser(userString)))
