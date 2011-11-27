@@ -36,6 +36,14 @@ public class GameboardImp implements Gameboard, Cloneable {
 		result = GameResult.PENDING;
 	}
 	//END CONSTRUCTOR public GameBoardImp()
+	
+	public GameboardImp(boolean xsTurn, boolean osTurn, GameResult result, PlaceValue[][] board)
+	{
+		this.currentBoard = board;
+		this.xsTurn = xsTurn;
+		this.osTurn = osTurn;
+		this.result = result;
+	}
 
 	@Override
 	/**
@@ -175,15 +183,8 @@ public class GameboardImp implements Gameboard, Cloneable {
 	{
 		return osTurn;
 	}
-	//END METHOD public boolean osTurn() 
+	//END METHOD public boolean osTurn()
 	
-	public String toXML(){
-		StringBuffer sb = new StringBuffer();
-		sb.append("<gameState>");
-		sb.append("<gameResult>");
-		sb.append(this.getResult());
-		
-	}
 	
 	/**
 	 * Returns a List of the rows the requested space is part of.
