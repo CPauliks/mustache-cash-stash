@@ -1,5 +1,8 @@
 //BEGIN FILE Client.java
 package view;
+
+import model.PlaceValue;
+
 //imports would go here if we had any
 
 /**
@@ -38,7 +41,7 @@ public interface Client
 	 * @return Whether the move request was successful.
 	 */
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition)
-	public boolean requestMove(int xPosition, int yPosition);
+	public boolean requestMove(int xPosition, int yPosition, PlaceValue side);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition)
 	
 	/**

@@ -1,4 +1,6 @@
 package controller;
+import java.util.StringTokenizer;
+
 import model.Statistics;
 
 public class User {
@@ -17,6 +19,27 @@ public class User {
 	}
 	public String toString(){
 		return this.userName+"."+this.characterCode;
+	}
+	public static User parseUser(String userString)
+	{
+		StringTokenizer tkizer = new StringTokenizer(userString, ".");
+		String uname = tkizer.nextToken();
+		String codeString = tkizer.nextToken();
+		return new User(uname, Integer.parseInt(codeString));
+	}
+	public boolean equals(Object obj){
+		if(this == obj)
+		{
+			return true;
+		}
+		else if(!(obj instanceof User))
+		{
+			return false;
+		}
+		else
+		{
+			return ((User) obj).getUserName().equals(this.userName) && (((User) obj).getCharacterCode() == this.characterCode);
+		}
 	}
 	protected Statistics getUserStatistics(){
 		return userStats;

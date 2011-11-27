@@ -2,9 +2,11 @@ package view;
 import java.io.IOException;
 
 import model.GameboardImp;
+import model.PlaceValue;
 import controller.User;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -49,22 +51,32 @@ public class NetworkClient implements Client {
 	}
 
 	@Override
-	public boolean requestMove(int xPosition, int yPosition) {
+	public boolean requestMove(int xPosition, int yPosition, PlaceValue side) {
 		HttpPost sendMove = new HttpPost(serverLocation);
 		HttpParams parameters = new BasicHttpParams();
 		parameters.setParameter("User", this.user.toString());
 		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
 		parameters.setParameter("xPosition", Integer.toString(xPosition));
 		parameters.setParameter("yPosition", Integer.toString(yPosition));
+		parameters.setParameter("Side", side.getRepr());
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
 		try{
 			responseBody = httpClient.execute(sendMove, responseHandler);
-		} catch (IOException e) {
-			//TODO Paceholder catch. Figure out how to handle gracefully.
-			e.printStackTrace();
+		} catch (HttpResponseException e) {
+			return false;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return false;
 		}
-		return false;
+		if(responseBody.equals("Success"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	@Override

@@ -10,17 +10,32 @@ package model;
 //BEGIN ENUM PlaceValue
 public enum PlaceValue 
 {
-	X ('X'),
-	O ('O'),
-	BLANK ('_');
+	X ("X"),
+	O ("O"),
+	BLANK ("_");
 	
-	PlaceValue(char repr){
+	PlaceValue(String repr){
 		this.repr = repr;
 	}
-	public char getRepr(){
+	public String getRepr(){
 		return this.repr;
 	}
-	private final char repr;
+	public static PlaceValue parsePlaceValue(String repr)
+	{
+		if(repr == "X")
+		{
+			return PlaceValue.X;
+		}
+		else if(repr == "O")
+		{
+			return PlaceValue.O;
+		}
+		else
+		{
+			return PlaceValue.BLANK;
+		}
+	}
+	private final String repr;
 }
 //END ENUM PlaceValue
 //END FILE PlaceValue.java
