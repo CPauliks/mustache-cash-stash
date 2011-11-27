@@ -50,7 +50,7 @@ public interface Client
 	 * @return Whether the request to resign was successful.
 	 */
 	//BEGIN METHOD public boolean resign()
-	public boolean resign();
+	public boolean resign(PlaceValue side);
 	//END METHOD public boolean resign()
 	
 	/**
@@ -59,7 +59,7 @@ public interface Client
 	 * A client receiving this call should pass the call towards the controller along with itself.
 	 */
 	//BEGIN METHOD public void endSession()
-	public void endSession();
+	public void endSession(PlaceValue side);
 	//END METHOD public void endSession()
 }
 //END INTERFACE Client

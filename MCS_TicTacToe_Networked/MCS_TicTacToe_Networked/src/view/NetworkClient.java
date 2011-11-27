@@ -59,6 +59,7 @@ public class NetworkClient implements Client {
 		parameters.setParameter("xPosition", Integer.toString(xPosition));
 		parameters.setParameter("yPosition", Integer.toString(yPosition));
 		parameters.setParameter("Side", side.getRepr());
+		sendMove.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
 		try{
@@ -80,15 +81,38 @@ public class NetworkClient implements Client {
 	}
 
 	@Override
-	public boolean resign() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean resign(PlaceValue side) {
+		HttpPost sendResign = new HttpPost(serverLocation);
+		HttpParams parameters = new BasicHttpParams();
+		parameters.setParameter("User", this.user.toString());
+		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
+		parameters.setParameter("Resign", "true");
+		sendResign.setParams(parameters);
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String responseBody = "";
+		try{
+			responseBody = httpClient.execute(sendResign, responseHandler);
+		} catch (HttpResponseException e) {
+			return false;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+			return false;
+		}
+		if(responseBody.equals("Success"))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	@Override
-	public void endSession() {
-		// TODO Auto-generated method stub
-
+	public void endSession(PlaceValue side) {
+		if( gameNum != 0) {
+			resign(side);
+		}
 	}
 	
 	private HttpClient httpClient;

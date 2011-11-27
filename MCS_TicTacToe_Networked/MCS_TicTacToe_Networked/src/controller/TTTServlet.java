@@ -65,35 +65,45 @@ public class TTTServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String gameNumString = request.getParameter("GameNumber");
 		String userString = request.getParameter("User");
 		String side = request.getParameter("Side");
+		String resigning = request.getParameter("Resign");
+		if (resigning == null) {
+			resigning = "false";
+		}
 		if(gameNumString != null){
 			int gameNum = Integer.parseInt(gameNumString);
 			Game game = this.currentGames.get(gameNum);
 			if(game != null)
 			{
-				int xPos = Integer.parseInt(request.getParameter("xPosition"));
-				int yPos = Integer.parseInt(request.getParameter("yPosition"));
-				PlaceValue piece = PlaceValue.parsePlaceValue(side);
 				boolean success = false;
-				switch(piece){
-					case X:
-						if(game.hasXPlayer(User.parseUser(userString)))
-						{
-							success = game.requestMove(xPos, yPos, piece);
-						}
-						break;
-					case O:
-						if(game.hasOPlayer(User.parseUser(userString)))
-						{
-							success = game.requestMove(xPos, yPos, piece);
-						}
-						break;
-					default:
-						success = false;
-						break;
+				if(resigning.equals("true")) {
+					//TODO: End game, assign loss to player
+					success = true;
+				}
+				else {
+					int xPos = Integer.parseInt(request.getParameter("xPosition"));
+					int yPos = Integer.parseInt(request.getParameter("yPosition"));
+					PlaceValue piece = PlaceValue.parsePlaceValue(side);
+
+					switch(piece){
+						case X:
+							if(game.hasXPlayer(User.parseUser(userString)))
+							{
+								success = game.requestMove(xPos, yPos, piece);
+							}
+							break;
+						case O:
+							if(game.hasOPlayer(User.parseUser(userString)))
+							{
+								success = game.requestMove(xPos, yPos, piece);
+							}
+							break;
+						default:
+							success = false;
+							break;
+					}
 				}
 				if(success)
 				{

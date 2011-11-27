@@ -37,6 +37,7 @@ public class Game {
 	{
 		return this.board.requestMove(xPosition, yPosition, pieceToPlace);
 	}
+	
 	private GameboardImp board;
 	private User xPlayer;
 	private User oPlayer;

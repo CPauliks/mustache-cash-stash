@@ -102,7 +102,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 	public void addWin(String playerName) {
 		// TODO Auto-generated method stub
 		List<Integer> stats = sessionStatistics.get(playerName);
-		stats.add(0, stats.get(0) + 1);
+		stats.set(0, stats.get(0) + 1);
 		sessionStatistics.put(playerName,  stats);
 	}
 
@@ -115,7 +115,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 	public void addLoss(String playerName) {
 		// TODO Auto-generated method stub
 		List<Integer> stats = this.sessionStatistics.get(playerName);
-		stats.add(1, stats.get(1) + 1);
+		stats.set(1, stats.get(1) + 1);
 		this.sessionStatistics.put(playerName,  stats);
 	}
 	//END METHOD public addLoss()
@@ -130,8 +130,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 		// TODO Auto-generated method stub
 		
 		List<Integer> stats = this.sessionStatistics.get(playerName);
-		stats.add(2, stats.get(2) + 1);
-		
+		stats.set(2, stats.get(2) + 1);
 		this.sessionStatistics.put(playerName, stats);
 	}
 	//END METHOD public addTie()
