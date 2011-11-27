@@ -2,6 +2,7 @@ package view;
 import java.io.IOException;
 
 import model.GameboardImp;
+import controller.User;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
@@ -15,17 +16,20 @@ import org.apache.http.params.HttpParams;
 
 public class NetworkClient implements Client {
 	
-	public NetworkClient(String serverLocation, int gameNum)
+	public NetworkClient(String serverLocation, int gameNum, User user)
 	{
 		httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
 		this.gameNum = gameNum;
+		this.user = user;
+		
 	}
 
 	@Override
 	public void updateGameboard() {
 		HttpGet getGame = new HttpGet(serverLocation);
 		HttpParams parameters = new BasicHttpParams();
+		parameters.setParameter("User", this.user.toString());
 		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
 		getGame.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
@@ -41,12 +45,25 @@ public class NetworkClient implements Client {
 
 	@Override
 	public void updateStatistics() {
-		//TODO Auto-generater method stub
+		//TODO Auto-generated method stub
 	}
 
 	@Override
 	public boolean requestMove(int xPosition, int yPosition) {
-		// TODO Auto-generated method stub
+		HttpPost sendMove = new HttpPost(serverLocation);
+		HttpParams parameters = new BasicHttpParams();
+		parameters.setParameter("User", this.user.toString());
+		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
+		parameters.setParameter("xPosition", Integer.toString(xPosition));
+		parameters.setParameter("yPosition", Integer.toString(yPosition));
+		ResponseHandler<String> responseHandler = new BasicResponseHandler();
+		String responseBody = "";
+		try{
+			responseBody = httpClient.execute(sendMove, responseHandler);
+		} catch (IOException e) {
+			//TODO Paceholder catch. Figure out how to handle gracefully.
+			e.printStackTrace();
+		}
 		return false;
 	}
 
@@ -66,5 +83,6 @@ public class NetworkClient implements Client {
 	private String serverLocation;
 	private int gameNum;
 	private GameboardImp currentBoard;
+	private User user;
 
 }

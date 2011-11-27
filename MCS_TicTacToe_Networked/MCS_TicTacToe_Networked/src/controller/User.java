@@ -15,6 +15,9 @@ public class User {
 	public Statistics getUserRecord(){
 		return userStats.getState();
 	}
+	public String toString(){
+		return this.userName+"."+this.characterCode;
+	}
 	protected Statistics getUserStatistics(){
 		return userStats;
 	}
