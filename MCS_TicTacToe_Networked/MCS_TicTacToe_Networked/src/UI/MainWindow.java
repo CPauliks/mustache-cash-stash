@@ -53,13 +53,13 @@ public class MainWindow extends JPanel implements ActionListener
 	 	footer.add(new JLabel(new ImageIcon("images/footer.png")));
 	 	
 	 	// create 3 buttons
-	 	JButton button1 = new JButton("New Game");
-	 	JButton button2 = new JButton("Scores");
+	 	JButton button1 = new JButton("Network Game");
+	 	JButton button2 = new JButton("Local Game");
 	 	JButton button3 = new JButton("Quit");
 	 	
 	 	// set action command to buttons
-	 	button1.setActionCommand("New Game");
-	 	button2.setActionCommand("Scores");
+	 	button1.setActionCommand("Network Game");
+	 	button2.setActionCommand("Local Game");
 	 	button3.setActionCommand("Quit");
 	 	
 	 	// set action listeners to button
@@ -160,7 +160,7 @@ public class MainWindow extends JPanel implements ActionListener
 					new GameBoardDisplay(user1, "Computer", "Single");
 					
 					// close main window
-					//masterFrame.dispose();
+					masterFrame.dispose();
 				}
 				
 				// if dual mode is selected
@@ -195,6 +195,7 @@ public class MainWindow extends JPanel implements ActionListener
 					// show game board if allowed
 					if(isValid)
 					new GameBoardDisplay(user1, user2, "Dual");
+					masterFrame.dispose();
 				}
 				
 				// if cancel button is clicked or if window is closed

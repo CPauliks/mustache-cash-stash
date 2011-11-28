@@ -4,6 +4,7 @@
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/lib"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/images"/>
         <property name="context-root" value="MCS_TicTacToe_Networked"/>
         <property name="java-output-path" value="/MCS_TicTacToe_Networked/build/classes"/>
     </wb-module>
