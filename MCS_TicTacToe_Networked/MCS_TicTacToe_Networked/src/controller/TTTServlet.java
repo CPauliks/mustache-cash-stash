@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,9 @@ import model.*;
 public class TTTServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HashMap<Integer, Game> currentGames;
+	private HashMap<User, HashSet<User>> gameRequests; //Key is player game is requested AGAINST, NOT by
+	private HashSet<User> users;
+	private Random rng;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,6 +31,8 @@ public class TTTServlet extends HttpServlet {
     public TTTServlet() {
         super();
     	currentGames = new HashMap<Integer, Game>();
+    	users = new HashSet<User>();
+    	rng = new Random();
         // TODO Auto-generated constructor stub
     }
 
@@ -63,12 +70,32 @@ public class TTTServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Handles requests for moves, resignation and new game requests.
+	 * Requests for moves and resignation require the following:
+	 *   an int "GameNumber" assigned by the server
+	 *   a User "User" who is making the request. Should be in string representation "characterName.XXX" where XXX is the code number.
+	 *   Which piece is being controlled, "Side". Either "X" or "O".
+	 * Additionally, a move requires the following fields:
+	 *   an int "xPosition", representing the index (0-indexed) of the column to play in.
+	 *   an int "yPosition", representing the index (0-indexed) of the row to play in.
+	 * 	 x and y position follow the following schematic:
+	 *     [0,0][0,1][0,2]
+	 *     [1,0][1,1][1,2]
+	 *     [2,0][2,1][2,2]
+	 * Alternatively, to resign, the parameter "Resign" should be sent with the value "true"
+	 * 
+	 * Sending a request with "RequestedUserName" by itself will create a user with that name and return a string representation of your User.
+	 * 
+	 * Request a game against an opponent by including parameter "RequestedOpponent".
+	 * This parameter's value should be a string representation of another user.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String gameNumString = request.getParameter("GameNumber");
 		String userString = request.getParameter("User");
 		String side = request.getParameter("Side");
 		String resigning = request.getParameter("Resign");
+		String newUserName = request.getParameter("RequestedUserName");
+		String opponentRequest = request.getParameter("RequestedOpponent");
 		if (resigning == null) {
 			resigning = "false";
 		}
@@ -126,6 +153,50 @@ public class TTTServlet extends HttpServlet {
 				else
 				{
 					response.getWriter().print("Failure");
+				}
+			}
+		}else if(newUserName != null){
+			int i;
+			User newUser;
+			do{
+				i = rng.nextInt(1000);
+				newUser = new User(newUserName, i);
+			}while(users.contains(newUser));
+			users.add(newUser);
+			response.getWriter().print(newUser);
+		}else if(opponentRequest != null){
+			User requestingUser = User.parseUser(userString);
+			User challengedUser = User.parseUser(opponentRequest);
+			HashSet<User> requests = gameRequests.get(requestingUser);
+			if(requests != null)
+			{
+				if(requests.contains(challengedUser))
+				{
+					int i;
+					if(rng.nextBoolean()){
+						do{
+							i = rng.nextInt(8191)+1;
+						}while(!currentGames.containsKey(i));
+						currentGames.put(i, new Game(requestingUser, challengedUser));
+					}else{
+						do{
+							i = rng.nextInt(8191)+1;
+						}while(!currentGames.containsKey(i));
+						currentGames.put(i, new Game(challengedUser, requestingUser));
+					}
+					requests.remove(challengedUser);
+					response.getWriter().print(i);
+				}else{
+					HashSet<User> challengedUserRequests = gameRequests.get(challengedUser);
+					if(challengedUserRequests == null)
+					{
+						gameRequests.put(challengedUser, new HashSet<User>());
+						gameRequests.get(challengedUser).add(requestingUser);
+					}else
+					{
+						gameRequests.get(challengedUser).add(requestingUser);
+					}
+					response.getWriter().print("Success");
 				}
 			}
 		}

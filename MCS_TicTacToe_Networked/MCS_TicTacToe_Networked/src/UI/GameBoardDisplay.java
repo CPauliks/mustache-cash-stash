@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import model.*;
-import view.*;
 
 /**
  * The UI for a game session
@@ -19,7 +18,7 @@ import view.*;
 //BEGIN CLASS GameBoardDisplay
 public class GameBoardDisplay extends JPanel implements ActionListener
 {
-	public  static String initialUser1, initialUser2, initialModeName;
+	public static String initialUser1, initialUser2, initialModeName;
 	
 	/**
 	 * Builds and then draws the UI for a session of TTT

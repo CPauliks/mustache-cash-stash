@@ -9,9 +9,10 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import model.*;
+import view.*;
 
 /**
- * The UI for a game session
+ * The UI for a Network game session
  * @author Mustache Cash Stash
  * @version 0.9
  */
@@ -353,7 +354,7 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
         
         // create a listener for all cells
         MouseListener listener00 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener01 = new MouseAdapter(){@Override  public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener01 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
         MouseListener listener02 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
         MouseListener listener10 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
         MouseListener listener11 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
