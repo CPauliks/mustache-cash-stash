@@ -9,7 +9,6 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import model.*;
-import view.*;
 
 /**
  * The UI for a game session
@@ -17,7 +16,7 @@ import view.*;
  * @version 0.9
  */
 //BEGIN CLASS GameBoardDisplay
-public class GameBoardDisplay extends JPanel implements ActionListener
+public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 {
 	public  static String initialUser1, initialUser2, initialModeName;
 	
@@ -28,7 +27,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 	 * @param modeName The mode to display on the window.
 	 */
 	//BEGIN CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
-    public GameBoardDisplay(String user1, String user2, String modeName)
+    public NetworkGameBoardDisplay(String user1, String user2, String modeName)
     {
     	// keep track of the initial usernames and game mode in case if we to restart the game
     	initialUser1 = user1;
@@ -129,12 +128,12 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 			GameResult status = boardModel.getResult();
 			if (status == GameResult.XWIN) //X gets to be X next game
 			{
-				new GameBoardDisplay(player1, player2, initialModeName);
+				new NetworkGameBoardDisplay(player1, player2, initialModeName);
 			}
 			
 			else if (status == GameResult.OWIN) //O gets to be X next game
 			{
-				new GameBoardDisplay(player2, player1, initialModeName);
+				new NetworkGameBoardDisplay(player2, player1, initialModeName);
 			}
 			
 			else //Pending or tie, randomly select who is first next game.
@@ -142,7 +141,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 				Random rng = new Random();
 				int p1index = rng.nextInt(2);
 				int p2index = abs(p1index-1);
-				new GameBoardDisplay(names[p1index], names[p2index], initialModeName);
+				new NetworkGameBoardDisplay(names[p1index], names[p2index], initialModeName);
 			}
 			
 		} //Else case is quit was selected, in which case we do nothing. In either case we have to delete this GBD.
@@ -301,7 +300,7 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         // set window not resizable
-        frame.setResizable(false);    
+        frame.setResizable(true);    
         
         frame.setIconImage(new ImageIcon("images/mord.png").getImage()); //If we want favicon for our window.
         

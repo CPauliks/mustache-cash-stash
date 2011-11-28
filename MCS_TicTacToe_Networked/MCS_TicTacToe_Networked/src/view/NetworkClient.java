@@ -42,7 +42,7 @@ public class NetworkClient implements Client {
 			//TODO Placeholder catch. Figure out how to handle gracefully.
 			e.printStackTrace();
 		}
-		currentBoard = XMLDOMReader.convert(responseBody);
+		setCurrentBoard(XMLDOMReader.convert(responseBody));
 	}
 
 	@Override
@@ -115,6 +115,20 @@ public class NetworkClient implements Client {
 		}
 	}
 	
+	/**
+	 * @return the currentBoard
+	 */
+	public GameboardImp getCurrentBoard() {
+		return currentBoard;
+	}
+
+	/**
+	 * @param currentBoard the currentBoard to set
+	 */
+	private void setCurrentBoard(GameboardImp currentBoard) {
+		this.currentBoard = currentBoard;
+	}
+
 	private HttpClient httpClient;
 	private String serverLocation;
 	private int gameNum;
