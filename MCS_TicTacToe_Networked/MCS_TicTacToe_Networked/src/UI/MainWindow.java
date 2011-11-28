@@ -109,115 +109,17 @@ public class MainWindow extends JPanel implements ActionListener
 		// get the action of the button
 		String command = event.getActionCommand();
 		
-		// if the new game button is clicked
-		if(command.equalsIgnoreCase("New Game"))
-		{
-			String user1 = "";
-			String user2 = "";
-			
-			// we assume the username is valid 
-			boolean isValid = false;
-			
-			
-			// keep asking the user for a valid username
-			while(!isValid)
-			{
-				// show a dialog to get the username
-				user1 = JOptionPane.showInputDialog(null, "Player 1 Name:");
-				
-				
-				// if the user click on cancel
-				if(user1 == null)
-				{
-					// simply stop asking for username and break the while loop 
-					isValid = false;
-					break;
-				}
-				else
-				{
-					// if the username is at least 1 character long, accept the username
-					if(user1.length() > 0)
-					isValid = true;
-				}
-			}
-			
-			
-			// if the username supplied is valid, ask about game mode
-			if(isValid)
-			{
-				isValid = false;
-				// an array of selections
-				Object []Options = {"Single Player", "Dual Player"};
-				
-				// user the array of selections to create a dialog box that asks the user for game mode
-				int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
-				
-				
-				// if single mode is selected
-				if (gametype == 0)
-				{
-					// show game board
-					new GameBoardDisplay(user1, "Computer", "Single");
-					
-					// close main window
-					masterFrame.dispose();
-				}
-				
-				// if dual mode is selected
-				else if (gametype == 1)
-				{
-					while(!isValid)
-					{
-						// show a dialog to get the username
-						 user2 = JOptionPane.showInputDialog(null, "Player 2 Name:");
-						
-						// if the user click on cancel
-						if(user2 == null)
-						{
-							// simply stop asking for username and break the while loop 
-							isValid = false;
-							break;
-						}
-						else
-						{
-							// if the username is at least 1 character long, accept the username
-							if(user1.length() > 0)
-							isValid = true;
-							
-							// check if username is already used
-							if(user2.equals(user1))
-							{
-								isValid = false;							
-								JOptionPane.showMessageDialog(null, "The name you have choosen is already being used by another player");
-							}
-						}
-					}
-					// show game board if allowed
-					if(isValid)
-					new GameBoardDisplay(user1, user2, "Dual");
-					masterFrame.dispose();
-				}
-				
-				// if cancel button is clicked or if window is closed
-				else
-				{
-					// do nothing
-				}
-			}
-			
+		// If the Network Game button is clicked.
+		if(command.equalsIgnoreCase("Network Game")) {
+			networkGamePrompts();
 		}
 		
-		// if the scores button is clicked
-		else if(command.equalsIgnoreCase("Scores"))
-		{
-			if(!scoresWindowIsUp)
-			{
-				scoresWindowIsUp = true;
-				new Scores();
-			}
+		// If the Local Game button is clicked.
+		else if (command.equalsIgnoreCase("Local Game")) {
+			localGamePrompts();
 		}
 		
-		// if the quit button is clicked
+		//None of the above; must have clicked quit.
 		else
 		{
 			// ask user for confirmation
@@ -230,8 +132,228 @@ public class MainWindow extends JPanel implements ActionListener
 			}
 	
 		}
+	}
+	
+	private void localGamePrompts() {
+		String user1 = "";
+		String user2 = "";
+		
+		// we assume the username is valid 
+		boolean isValid = false;
+		
+		// keep asking the user for a valid username
+		while(!isValid)
+		{
+			// show a dialog to get the username
+			user1 = JOptionPane.showInputDialog(null, "Player 1 Name:");
+			
+			
+			// if the user clicks on cancel
+			if(user1 == null)
+			{
+				// simply stop asking for username and break the while loop 
+				isValid = false;
+				break;
+			}
+			else
+			{
+				// If the username is valid, accept it.
+				isValid = isAValidUserName(user1);
+			}
+		}
+		
+		
+		// if the username supplied is valid, ask about game mode
+		if(isValid)
+		{
+			isValid = false;
+			// an array of selections
+			Object []Options = {"Single Player", "Dual Player"};
+			
+			// user the array of selections to create a dialog box that asks the user for game mode
+			int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
+			
+			// if single mode is selected
+			if (gametype == 0)
+			{
+				// show game board
+				new GameBoardDisplay(user1, "Computer", "Single");
+				
+				// close main window
+				masterFrame.dispose();
+			}
+			
+			// if dual mode is selected
+			else if (gametype == 1)
+			{
+				while(!isValid)
+				{
+					// show a dialog to get the username
+					 user2 = JOptionPane.showInputDialog(null, "Player 2 Name:");
+					
+					// if the user click on cancel
+					if(user2 == null)
+					{
+						// simply stop asking for username and break the while loop 
+						isValid = false;
+						break;
+					}
+					else
+					{
+						// If the username is valid, accept it.
+						isValid = isAValidUserName(user2);
+						
+						// check if username is already used
+						if(user2.equals(user1))
+						{
+							isValid = false;							
+							JOptionPane.showMessageDialog(null, "The name you have choosen is already being used by another player");
+						}
+					}
+				}
+				// show game board if allowed
+				if(isValid)
+				new GameBoardDisplay(user1, user2, "Dual");
+				masterFrame.dispose();
+			}
+			
+			// if cancel button is clicked or if window is closed
+			else
+			{
+				// do nothing
+			}
+		}
 		
 	}
+	
+	/**
+	 * Checks whether a userName is valid.  Less than 25 characters, no punctuation.
+	 * @param userName
+	 * @return if the username is valid.
+	 */
+	private boolean isAValidUserName(String input) {
+		int nameLength = input.length();
+		if (nameLength > 0 && nameLength < 26){
+			
+			return (input.split("\\W").length == 1);
+
+		}
+		return false;
+	}
+
+	private void networkGamePrompts() {
+		// TODO Auto-generated method stub
+		
+	}
+
+//			String userName = "";
+//			String serverName = "";
+//			
+//			// we assume the username is valid 
+//			boolean isValid = false;
+//			
+//			// keep asking the user for a valid username
+//			while(!isValid)
+//			{
+//				// show a dialog to get the username
+//				userName = JOptionPane.showInputDialog(null, "Player 1 Name:");
+//				
+//				
+//				// if the user click on cancel
+//				if(userName == null)
+//				{
+//					// simply stop asking for username and break the while loop 
+//					isValid = false;
+//					break;
+//				}
+//				else
+//				{
+//					// if the username is at least 1 character long, accept the username
+//					if(userName.length() > 0)
+//					isValid = true;
+//				}
+//			}
+//			
+//			
+//			// if the username supplied is valid, ask about game mode
+//			if(isValid)
+//			{
+//				isValid = false;
+//				// an array of selections
+//				Object []Options = {"Single Player", "Dual Player"};
+//				
+//				// user the array of selections to create a dialog box that asks the user for game mode
+//				int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
+//				
+//				
+//				// if single mode is selected
+//				if (gametype == 0)
+//				{
+//					// show game board
+//					new GameBoardDisplay(user1, "Computer", "Single");
+//					
+//					// close main window
+//					masterFrame.dispose();
+//				}
+//				
+//				// if dual mode is selected
+//				else if (gametype == 1)
+//				{
+//					while(!isValid)
+//					{
+//						// show a dialog to get the username
+//						 user2 = JOptionPane.showInputDialog(null, "Player 2 Name:");
+//						
+//						// if the user click on cancel
+//						if(user2 == null)
+//						{
+//							// simply stop asking for username and break the while loop 
+//							isValid = false;
+//							break;
+//						}
+//						else
+//						{
+//							// if the username is at least 1 character long, accept the username
+//							if(user1.length() > 0)
+//							isValid = true;
+//							
+//							// check if username is already used
+//							if(user2.equals(user1))
+//							{
+//								isValid = false;							
+//								JOptionPane.showMessageDialog(null, "The name you have choosen is already being used by another player");
+//							}
+//						}
+//					}
+//					// show game board if allowed
+//					if(isValid)
+//					new GameBoardDisplay(user1, user2, "Dual");
+//					masterFrame.dispose();
+//				}
+//				
+//				// if cancel button is clicked or if window is closed
+//				else
+//				{
+//					// do nothing
+//				}
+//			}
+//			
+//		}
+//		
+//		// if the scores button is clicked
+//		else if(command.equalsIgnoreCase("Scores"))
+//		{
+//			if(!scoresWindowIsUp)
+//			{
+//				scoresWindowIsUp = true;
+//				new Scores();
+//			}
+//		}
+//		
+//		// if the quit button is clicked
+//
+//		
+//	}
 	
 	/**
 	 * Notifies the main window as soon as the score window is closed.
