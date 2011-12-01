@@ -243,7 +243,26 @@ public class MainWindow extends JPanel implements ActionListener
 
 	private void networkGamePrompts() {
 		// TODO Auto-generated method stub
+		// create a content pane
+		final Lobby contentPane = new Lobby(masterFrame);
 		
+		// set closing option for this window
+		masterFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// set opaque
+		contentPane.setOpaque(true);
+		
+		// attach content pane to the master frame
+		masterFrame.setContentPane(contentPane);
+		
+		// this window will be not resizable
+		masterFrame.setResizable(false);
+		
+		// pack the window (styling issue)
+		masterFrame.pack();
+		
+		// show the window
+		masterFrame.setVisible(true);
 	}
 
 //			String userName = "";
