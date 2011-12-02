@@ -7,9 +7,9 @@ import java.awt.event.*;
 import java.util.*;
 
 /**
- * 
- * @author Chris
- *
+ * A total clusterfuck
+ * @author Mustache Cash Stash
+ * @version 1.0
  */
 //BEGIN CLASS MainWindow
 public class MainWindow extends JPanel implements ActionListener

@@ -13,7 +13,7 @@ import model.*;
 /**
  * The UI for a game session
  * @author Mustache Cash Stash
- * @version 0.9
+ * @version 1.0
  */
 //BEGIN CLASS GameBoardDisplay
 public class GameBoardDisplay extends JPanel implements ActionListener

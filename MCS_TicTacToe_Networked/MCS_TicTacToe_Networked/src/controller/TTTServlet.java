@@ -1,3 +1,4 @@
+//BEGIN FILE TTTServlet.java
 package controller;
 
 import java.io.IOException;
@@ -16,9 +17,13 @@ import model.*;
 
 /**
  * Servlet implementation class TTTServlet
+ * @author Mustache Cash Stash
+ * @version 1.0
  */
 @WebServlet(description = "Servlet for handling tic-tac-toe interactions", urlPatterns = { "/TTTServlet" })
-public class TTTServlet extends HttpServlet {
+//BEGIN CLASS TTTServlet
+public class TTTServlet extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
 	private HashMap<Integer, Game> currentGames;
 	private HashMap<User, HashSet<User>> gameRequests; //Key is player game is requested AGAINST, NOT by
@@ -26,20 +31,25 @@ public class TTTServlet extends HttpServlet {
 	private Random rng;
        
     /**
+     * Starts the HTTPServlet
      * @see HttpServlet#HttpServlet()
      */
-    public TTTServlet() {
+	//BEGIN CONSTRUCTOR public TTTServlet() 
+    public TTTServlet() 
+    {
         super();
     	currentGames = new HashMap<Integer, Game>();
     	users = new HashSet<User>();
     	rng = new Random();
-        // TODO Auto-generated constructor stub
     }
+    //END METHOD public TTTServlet() 
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    //BEGIN METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		PrintWriter writer = response.getWriter();
 		String gameNumString = request.getParameter("GameNumber");
 		String userString = request.getParameter("User");
@@ -67,6 +77,7 @@ public class TTTServlet extends HttpServlet {
 			}
 		}
 	}
+	//END METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -89,19 +100,25 @@ public class TTTServlet extends HttpServlet {
 	 * Request a game against an opponent by including parameter "RequestedOpponent".
 	 * This parameter's value should be a string representation of another user.
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	//BEGIN METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
 		String gameNumString = request.getParameter("GameNumber");
 		String userString = request.getParameter("User");
 		String side = request.getParameter("Side");
 		String resigning = request.getParameter("Resign");
 		String newUserName = request.getParameter("RequestedUserName");
 		String opponentRequest = request.getParameter("RequestedOpponent");
-		if (resigning == null) {
+		
+		if (resigning == null) 
+		{
 			resigning = "false";
 		}
-		if(gameNumString != null){
+		if(gameNumString != null)
+		{
 			int gameNum = Integer.parseInt(gameNumString);
 			Game game = this.currentGames.get(gameNum);
+			
 			if(game != null)
 			{
 				boolean success = false;
@@ -125,7 +142,8 @@ public class TTTServlet extends HttpServlet {
 						break;
 					}
 				}
-				else {
+				else 
+				{
 					int xPos = Integer.parseInt(request.getParameter("xPosition"));
 					int yPos = Integer.parseInt(request.getParameter("yPosition"));
 					switch(piece){
@@ -146,6 +164,7 @@ public class TTTServlet extends HttpServlet {
 							break;
 					}
 				}
+				
 				if(success)
 				{
 					response.getWriter().print("Success");
@@ -155,19 +174,27 @@ public class TTTServlet extends HttpServlet {
 					response.getWriter().print("Failure");
 				}
 			}
-		}else if(newUserName != null){
+		}
+		else if(newUserName != null)
+		{
 			int i;
 			User newUser;
-			do{
+			do
+			{
 				i = rng.nextInt(1000);
 				newUser = new User(newUserName, i);
-			}while(users.contains(newUser));
+			}
+			while(users.contains(newUser));
+			
 			users.add(newUser);
 			response.getWriter().print(newUser);
-		}else if(opponentRequest != null){
+		}
+		else if(opponentRequest != null)
+		{
 			User requestingUser = User.parseUser(userString);
 			User challengedUser = User.parseUser(opponentRequest);
 			HashSet<User> requests = gameRequests.get(requestingUser);
+			
 			if(requests != null)
 			{
 				if(requests.contains(challengedUser))
@@ -178,31 +205,48 @@ public class TTTServlet extends HttpServlet {
 							i = rng.nextInt(8191)+1;
 						}while(!currentGames.containsKey(i));
 						currentGames.put(i, new Game(requestingUser, challengedUser));
-					}else{
-						do{
+					}
+					else
+					{
+						do
+						{
 							i = rng.nextInt(8191)+1;
-						}while(!currentGames.containsKey(i));
+						}
+						while(!currentGames.containsKey(i));
 						currentGames.put(i, new Game(challengedUser, requestingUser));
 					}
 					requests.remove(challengedUser);
 					response.getWriter().print(i);
-				}else{
+				}
+				else
+				{
 					HashSet<User> challengedUserRequests = gameRequests.get(challengedUser);
+					
 					if(challengedUserRequests == null)
 					{
 						gameRequests.put(challengedUser, new HashSet<User>());
 						gameRequests.get(challengedUser).add(requestingUser);
-					}else
+					}
+					else
 					{
 						gameRequests.get(challengedUser).add(requestingUser);
 					}
+					
 					response.getWriter().print("Success");
 				}
 			}
 		}
 	}
+	//END METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	
-	private static String boardToXML(GameboardImp board){
+	/**
+	 * Converts a GameBoard into
+	 * @param board
+	 * @return
+	 */
+	//BEGIN METHOD private static String boardToXML(GameboardImp board)
+	private static String boardToXML(GameboardImp board)
+	{
 		StringBuffer sb = new StringBuffer();
 		sb.append("  <gameState>\n");
 		sb.append("    <gameResult>"+board.getResult().getRepr()+"</gameResult>\n");
@@ -227,5 +271,8 @@ public class TTTServlet extends HttpServlet {
 		sb.append("  </gameState>");
 		return sb.toString();
 	}
+	//END METHOD private static String boardToXML(GameboardImp board)
 
 }
+//END CLASS TTTServlet
+//END FILE TTTServlet.java

@@ -14,7 +14,7 @@ import view.*;
 /**
  * The UI for a Network game session
  * @author Mustache Cash Stash
- * @version 0.9
+ * @version 1.0
  */
 //BEGIN CLASS GameBoardDisplay
 public class NetworkGameBoardDisplay extends JPanel implements ActionListener

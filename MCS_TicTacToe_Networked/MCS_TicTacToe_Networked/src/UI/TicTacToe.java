@@ -4,7 +4,7 @@ package UI;
 /**
  * Entry class into the MCS TTT Game
  * @author Mustache Cash Stash
- * @version 0.9
+ * @version 1.0
  */
 //BEGIN CLASS TicTacToe
 public class TicTacToe 
