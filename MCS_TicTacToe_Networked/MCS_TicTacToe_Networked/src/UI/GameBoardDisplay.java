@@ -20,6 +20,20 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 {
 	public static String initialUser1, initialUser2, initialModeName;
 	
+	static final long serialVersionUID = 0L; // to shut up Eclipse
+	
+	private static Icon xPiece = new ImageIcon("images/X.png");
+	private static Icon oPiece = new ImageIcon("images/O.png");
+	private Gameboard boardModel;
+	private JLabel[][] cells;
+	private JPanel boardPanel;
+	private JFrame boardFrame;
+	private JLabel moveStatus;
+	private JPanel buttonsPanel;
+	private JLabel gameStatus;
+	private String player1;
+	private String player2;
+	
 	/**
 	 * Builds and then draws the UI for a session of TTT
 	 * @param user1 The name of player 1
@@ -207,8 +221,6 @@ public class GameBoardDisplay extends JPanel implements ActionListener
 	}
 	//END METHOD public boolean attemptMove(int xPosition, int yPosition)
 	
-	static final long serialVersionUID = 0L; // to shut up Eclipse
-	
 	/**
 	 * Draws the selected Icon at the selected location on the board.
 	 * Called whenever a new piece is placed
@@ -387,18 +399,6 @@ public class GameBoardDisplay extends JPanel implements ActionListener
         return cellArray;
 	}
 	//END METHOD private JLabel[][] constructCells() 
-	
-	private static Icon xPiece = new ImageIcon("images/X.png");
-	private static Icon oPiece = new ImageIcon("images/O.png");
-	private Gameboard boardModel;
-	private JLabel[][] cells;
-	private JPanel boardPanel;
-	private JFrame boardFrame;
-	private JLabel moveStatus;
-	private JPanel buttonsPanel;
-	private JLabel gameStatus;
-	private String player1;
-	private String player2;
     
 }
 //END CLASS GameBoardDisplay

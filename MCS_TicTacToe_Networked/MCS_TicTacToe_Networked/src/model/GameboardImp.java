@@ -12,6 +12,12 @@ import java.util.LinkedList;
 //BEGIN CLASS GameBoardImp
 public class GameboardImp implements Gameboard, Cloneable {
 	
+	private PlaceValue[][] currentBoard; 
+	private Integer[] rowStates;
+	private boolean xsTurn;	
+	private boolean osTurn;	
+	private GameResult result;
+	
 	/**
 	 * Sets up a GameBoard for a new game.
 	 */
@@ -37,6 +43,10 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END CONSTRUCTOR public GameBoardImp()
 	
+	/**
+	 * Sets up a GameBoard for a new game.
+	 */
+	//BEGIN CONSTRUCTOR public GameboardImp(boolean xsTurn, boolean osTurn, GameResult result, PlaceValue[][] board)
 	public GameboardImp(boolean xsTurn, boolean osTurn, GameResult result, PlaceValue[][] board)
 	{
 		this.currentBoard = board;
@@ -44,7 +54,8 @@ public class GameboardImp implements Gameboard, Cloneable {
 		this.osTurn = osTurn;
 		this.result = result;
 	}
-
+	//END METHOD public GameboardImp(boolean xsTurn, boolean osTurn, GameResult result, PlaceValue[][] board)
+	
 	@Override
 	/**
 	 * Returns a new copy of Gameboard
@@ -66,10 +77,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public Gameboard clone() 
 	
-	/**
-	 * Returns a copy of the underlying array implementation of the GameBoard
-	 * @return A copy the array implementation of the GameBoard
-	 */
 	@Override
 	//BEGIN METHOD public PlaceValue[][] getBoard()
 	public PlaceValue[][] getBoard()
@@ -86,10 +93,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public PlaceValue[][] getBoard()
 	
-	/**
-	 * Returns the current status of the game as an enum value
-	 * @return the current status of the game.
-	 */
 	@Override
 	//BEGIN METHOD public GameResult getResult()
 	public GameResult getResult()
@@ -98,28 +101,15 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public GameResult getResult()
 	
-	/**
-	 * Returns an immutable copy of this Gameboard for use by views to update their model.
-	 * @return An immutable copy of this Gameboard
-	 */
+
 	@Override
-	
 	//BEGIN METHOD public Gameboard getState()
-	
 	public Gameboard getState() 
 	{
 		return this.clone();
 	}
 	//END METHOD public Gameboard getState()
 	
-	/**
-	 * A request from a client to place a piece on the Gameboard at a certain position.
-	 * The Gameboard should check whether the move is in turn and is valid before placing the piece.
-	 * @param xPosition The x (horizontal) coordinate of the requested space to occupy
-	 * @param yPosition The y (vertical) coordinate of the requested space to occupy
-	 * @param pieceToPlace The type of piece to put in the requested location.
-	 * @return Whether the move request was successful in updating the Gameboard.
-	 */
 	@Override
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
@@ -160,12 +150,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
 	
-	/**
-	 * Returns whether it is X player's turn to place a piece.
-	 * @return true if it is X's turn, else false
-	 */
 	@Override
-	
 	//BEGIN METHOD public boolean xsTurn()
 	public boolean xsTurn() 
 	{
@@ -173,10 +158,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 	}
 	//END METHOD public boolean xsTurn()
 	
-	/**
-	 * Returns whether it is O player's turn to place a piece.
-	 * @return true if it is O's turn, else false
-	 */
 	@Override
 	//BEGIN METHOD public boolean osTurn() 
 	public boolean osTurn() 
@@ -315,13 +296,6 @@ public class GameboardImp implements Gameboard, Cloneable {
 		currentBoard[xPosition][yPosition] = piece;
 	}
 	//END METHOD private void forceMove(int xPosition, int yPosition, PlaceValue piece)
-	
-	private PlaceValue[][] currentBoard; 
-	private Integer[] rowStates;
-	private boolean xsTurn;	
-	private boolean osTurn;	
-	private GameResult result;
-
 	
 }
 //END CLASS GameBoardImp

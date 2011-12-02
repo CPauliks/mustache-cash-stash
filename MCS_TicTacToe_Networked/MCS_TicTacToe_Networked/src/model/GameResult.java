@@ -14,16 +14,29 @@ public enum GameResult
 	CAT ("CAT"),
 	PENDING ("PENDING");
 	
-	public String getRepr(){
+	private String repr;
+	
+	/**
+	 * Returns a String representation of this GameResult
+	 * @return String representation of this GameResult
+	 */
+	//BEGIN METHOD public String getRepr()
+	public String getRepr() 
+	{
 		return this.repr;
 	}
+	//END METHOD public String getRepr()
 	
+	/**
+	 * Constructs a GameResult from a String representation
+	 * @param repr String representation of a GameResult
+	 */
+	//BEGIN METHOD private GameResult(String repr)
 	private GameResult(String repr)
 	{
 		this.repr = repr;
 	}
-	
-	private String repr;
+	//END METHOD private GameResult(String repr)
 }
 //END ENUM GameResult
 //END FILE GameResult.java

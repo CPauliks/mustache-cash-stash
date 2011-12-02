@@ -3,14 +3,12 @@ package view;
 
 import model.PlaceValue;
 
-//imports would go here if we had any
-
 /**
  * A simple interface for a TTT client. Clients provide the means of communication between a user (or AI) and the controller.
  * This composes part of the View for the MVC pattern.
  * A UI or AI module is attached to the Client and the clients attach to the controller.
  * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
- * @version 0.0 pending CCR approval
+ * @version 1.0
  */
 //BEGIN INTERFACE Client
 public interface Client 

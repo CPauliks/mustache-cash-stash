@@ -1,6 +1,5 @@
 //BEGIN FILE PlaceValue.java
 package model;
-//imports would go here if we had any
 
 /**
 * The enumerated cases for a space on a Gameboard.
@@ -14,12 +13,35 @@ public enum PlaceValue
 	O ("O"),
 	BLANK ("_");
 	
-	PlaceValue(String repr){
+	private final String repr;
+	
+	/**
+	 * Constructs a PlaceValue from a String representation
+	 * @param repr String representation of a PlaceValue
+	 */
+	//BEGIN METHOD PlaceValue(String repr) 
+	PlaceValue(String repr) 
+	{
 		this.repr = repr;
 	}
-	public String getRepr(){
+	//END METHOD PlaceValue(String repr) 
+	
+	/**
+	 * Returns a String represention of this PlaceValue
+	 * @return a String representation of this PlaceValue
+	 */
+	//BEGIN METHOD public String getRepr() 
+	public String getRepr() 
+	{
 		return this.repr;
 	}
+	//END METHOD public String getRepr() 
+	
+	/**
+	 * Constructs a PlaceValue from a String representation
+	 * @param repr String representation of a PlaceValue
+	 */
+	//BEGIN METHOD public static PlaceValue parsePlaceValue(String repr)
 	public static PlaceValue parsePlaceValue(String repr)
 	{
 		if(repr == "X")
@@ -35,7 +57,8 @@ public enum PlaceValue
 			return PlaceValue.BLANK;
 		}
 	}
-	private final String repr;
+	//END METHOD public static PlaceValue parsePlaceValue(String repr)
+
 }
 //END ENUM PlaceValue
 //END FILE PlaceValue.java

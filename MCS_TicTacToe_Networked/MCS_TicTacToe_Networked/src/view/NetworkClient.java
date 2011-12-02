@@ -1,4 +1,7 @@
+//BEGIN FILE NetworkClient.java
+
 package view;
+
 import java.io.IOException;
 
 import model.GameboardImp;
@@ -16,19 +19,40 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
+/**
+ * Client class for networked Tic Tac Toe games
+ * @author Benjamin Pellittieri for MustacheCashStash
+ * @version 1.0
+ */
+//BEGIN CLASS NetworkClient
 public class NetworkClient implements Client {
 	
+	private HttpClient httpClient;
+	private String serverLocation;
+	private int gameNum;
+	private GameboardImp currentBoard;
+	private User user;
+	
+	/**
+	 * Insanciate a new NetworkClient
+	 * @param serverLocation the Location of the server
+	 * @param gameNum The game number of the current game in progress.
+	 * @param user The user this NetworkClient is representing
+	 */
+	//BEGIN CONSTRUCTOR public NetworkClient(String serverLocation, int gameNum, User user)
 	public NetworkClient(String serverLocation, int gameNum, User user)
 	{
 		httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
 		this.gameNum = gameNum;
-		this.user = user;
-		
+		this.user = user;	
 	}
+	//END CONSTRUCTOR public NetworkClient(String serverLocation, int gameNum, User user)
 
 	@Override
-	public void updateGameboard() {
+	//BEGIN METHOD public void updateGameboard()
+	public void updateGameboard() 
+	{
 		HttpGet getGame = new HttpGet(serverLocation);
 		HttpParams parameters = new BasicHttpParams();
 		parameters.setParameter("User", this.user.toString());
@@ -36,22 +60,32 @@ public class NetworkClient implements Client {
 		getGame.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
-		try {
+		
+		try 
+		{
 			responseBody = httpClient.execute(getGame, responseHandler);
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			//TODO Placeholder catch. Figure out how to handle gracefully.
 			e.printStackTrace();
 		}
 		setCurrentBoard(XMLDOMReader.convert(responseBody));
 	}
+	//END METHOD public void updateGameboard()
 
 	@Override
-	public void updateStatistics() {
+	//BEGIN METHOD public void updateStatistics() 
+	public void updateStatistics() 
+	{
 		//TODO Auto-generated method stub
 	}
+	//END METHOD public void updateStatistics() 
 
 	@Override
-	public boolean requestMove(int xPosition, int yPosition, PlaceValue side) {
+	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue side)
+	public boolean requestMove(int xPosition, int yPosition, PlaceValue side) 
+	{
 		HttpPost sendMove = new HttpPost(serverLocation);
 		HttpParams parameters = new BasicHttpParams();
 		parameters.setParameter("User", this.user.toString());
@@ -62,14 +96,20 @@ public class NetworkClient implements Client {
 		sendMove.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
-		try{
+		try
+		{
 			responseBody = httpClient.execute(sendMove, responseHandler);
-		} catch (HttpResponseException e) {
+		} 
+		catch (HttpResponseException e) 
+		{
 			return false;
-		} catch (IOException ioe) {
+		} 
+		catch (IOException ioe) 
+		{
 			ioe.printStackTrace();
 			return false;
 		}
+		
 		if(responseBody.equals("Success"))
 		{
 			return true;
@@ -79,9 +119,12 @@ public class NetworkClient implements Client {
 			return false;
 		}
 	}
+	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue side)
 
 	@Override
-	public boolean resign(PlaceValue side) {
+	//BEGIN METHOD public boolean resign(PlaceValue side) 
+	public boolean resign(PlaceValue side) 
+	{
 		HttpPost sendResign = new HttpPost(serverLocation);
 		HttpParams parameters = new BasicHttpParams();
 		parameters.setParameter("User", this.user.toString());
@@ -90,14 +133,21 @@ public class NetworkClient implements Client {
 		sendResign.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
-		try{
+		
+		try 
+		{
 			responseBody = httpClient.execute(sendResign, responseHandler);
-		} catch (HttpResponseException e) {
+		} 
+		catch (HttpResponseException e) 
+		{
 			return false;
-		} catch (IOException ioe) {
+		} 
+		catch (IOException ioe) 
+		{
 			ioe.printStackTrace();
 			return false;
 		}
+		
 		if(responseBody.equals("Success"))
 		{
 			return true;
@@ -107,32 +157,38 @@ public class NetworkClient implements Client {
 			return false;
 		}
 	}
-
+	//END METHOD public boolean resign(PlaceValue side) 
+	
 	@Override
-	public void endSession(PlaceValue side) {
-		if( gameNum != 0) {
+	//BEGIN METHOD public void endSession(PlaceValue side)
+	public void endSession(PlaceValue side) 
+	{
+		if( gameNum != 0) 
+		{
 			resign(side);
 		}
 	}
+	//END METHOD public void endSession(PlaceValue side)
 	
 	/**
 	 * @return the currentBoard
 	 */
-	public GameboardImp getCurrentBoard() {
+	//BEGIN METHOD public GameboardImp getCurrentBoard()
+	public GameboardImp getCurrentBoard() 
+	{
 		return currentBoard;
 	}
-
+	//END METHOD public GameboardImp getCurrentBoard()
+	
 	/**
 	 * @param currentBoard the currentBoard to set
 	 */
-	private void setCurrentBoard(GameboardImp currentBoard) {
+	//BEGIN METHOD private void setCurrentBoard(GameboardImp currentBoard)
+	private void setCurrentBoard(GameboardImp currentBoard) 
+	{
 		this.currentBoard = currentBoard;
 	}
-
-	private HttpClient httpClient;
-	private String serverLocation;
-	private int gameNum;
-	private GameboardImp currentBoard;
-	private User user;
-
+	//END METHOD private void setCurrentBoard(GameboardImp currentBoard)
 }
+//END CLASS NetworkClient
+//END FILE NetworkClient.java
