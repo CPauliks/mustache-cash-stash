@@ -15,10 +15,10 @@ import java.util.TimerTask;
  */
 //BEGIN CLASS OnlineUserTracker
 public class OnlineUserTracker {
-	long keepAliveTime;
-	TreeSet<User> currentUsers;
-	HashSet<User> usersKeptAlive;
-	Timer t;
+	private long keepAliveTime;
+	private TreeSet<User> currentUsers;
+	private HashSet<User> usersKeptAlive;
+	private Timer t;
 	
 	/**
 	 * Constructor which sets how long to keep the users alive for.
@@ -26,6 +26,7 @@ public class OnlineUserTracker {
 	//BEGIN CONSTRUCTOR OnlineUserTracker(long keepAliveTime)
 	public OnlineUserTracker(long keepAliveTime)
 	{
+		this.keepAliveTime = keepAliveTime;
 		currentUsers = new TreeSet<User>();
 		usersKeptAlive = new HashSet<User>();
 		t = new Timer(true); //is a daemon. This is why it gets a "true"

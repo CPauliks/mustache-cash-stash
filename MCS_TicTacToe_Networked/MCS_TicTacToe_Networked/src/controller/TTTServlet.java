@@ -29,6 +29,7 @@ public class TTTServlet extends HttpServlet
 	private HashMap<User, HashSet<User>> gameRequests; //Key is player game is requested AGAINST, NOT by
 	private HashSet<User> users;
 	private Random rng;
+	private OnlineUserTracker onlineUsers;
        
     /**
      * Starts the HTTPServlet
@@ -41,6 +42,7 @@ public class TTTServlet extends HttpServlet
     	currentGames = new HashMap<Integer, Game>();
     	users = new HashSet<User>();
     	rng = new Random();
+    	onlineUsers = new OnlineUserTracker(60000);
     }
     //END METHOD public TTTServlet() 
 
@@ -76,6 +78,10 @@ public class TTTServlet extends HttpServlet
 				response.sendError(404, "lol, that's not a game.");
 			}
 		}
+		else
+		{
+			writer.println(onlineUsers.getOnlineUsersInXML());
+		}
 	}
 	//END METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
 
@@ -109,12 +115,21 @@ public class TTTServlet extends HttpServlet
 		String resigning = request.getParameter("Resign");
 		String newUserName = request.getParameter("RequestedUserName");
 		String opponentRequest = request.getParameter("RequestedOpponent");
+		String liveRequest = request.getParameter("UserToKeepAlive");
 		
 		if (resigning == null) 
 		{
 			resigning = "false";
 		}
-		if(gameNumString != null)
+		if(liveRequest != null)
+		{
+			User userToKeepAlive = User.parseUser(liveRequest);
+			if(users.contains(userToKeepAlive))
+			{
+				onlineUsers.keepUserAlive(userToKeepAlive);
+			}
+		}
+		else if(gameNumString != null)
 		{
 			int gameNum = Integer.parseInt(gameNumString);
 			Game game = this.currentGames.get(gameNum);
