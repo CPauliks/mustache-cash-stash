@@ -3,7 +3,7 @@ import java.util.StringTokenizer;
 
 import model.Statistics;
 
-public class User {
+public class User implements Comparable<User>{
 	public User(String uname, int charCode){
 		this.userName = uname;
 		this.characterCode = charCode;
@@ -40,6 +40,15 @@ public class User {
 		{
 			return ((User) obj).getUserName().equals(this.userName) && (((User) obj).getCharacterCode() == this.characterCode);
 		}
+	}
+	public int compareTo(User comp)
+	{
+		int compValue = this.getUserName().compareTo(comp.getUserName());
+		if(compValue == 0)
+		{
+			compValue = this.getCharacterCode() - comp.getCharacterCode();
+		}
+		return compValue;
 	}
 	protected Statistics getUserStatistics(){
 		return userStats;
