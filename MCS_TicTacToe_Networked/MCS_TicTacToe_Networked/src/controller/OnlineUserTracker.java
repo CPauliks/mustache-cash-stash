@@ -102,12 +102,17 @@ public class OnlineUserTracker {
 	}
 	//END public String getOnlineUsersInXML
 	
-	private class RefreshTask extends TimerTask {
+	//BEGIN CLASS RefreshTask
+	private class RefreshTask extends TimerTask 
+	{
+		//BEGIN METHOD public void run()
 		public void run()
 		{
 			dumpInactive();
 		}
+		//END METHOD public void run()
 	}
+	//END CLASS RefreshTask
 }
 //END CLASS OnlineUserTracker
 //END FILE OnlineUserTracker.java

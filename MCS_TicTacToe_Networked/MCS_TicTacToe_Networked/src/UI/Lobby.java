@@ -1,6 +1,5 @@
-package UI;
-
 //BEGIN FILE Lobby.java
+package UI;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,6 +10,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+//BEGIN CLASS Lobby
 public class Lobby extends JPanel implements ActionListener, ListSelectionListener 
 {
 	public static JFrame masterFrame = new JFrame("Lobby"); // the window container
@@ -22,11 +22,11 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	private JLabel stats = new JLabel();
 	private JList list;
 	
-	/*
-	 * Lobby
-	 * Create and show all windows elements
+	/**
+	 * Creates and shows all lobby elements
+	 * @param frame The Frame this lobby is contained in.
 	 */
-	
+	//BEGIN Constructor public Lobby(JFrame frame)
 	public Lobby(JFrame frame)
 	{
 		// create a master panel that holds all the elements
@@ -108,10 +108,12 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
         // Place the window in the middle of the screen
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = frame.getSize();
-        if (frameSize.height > screenSize.height) {
+        if (frameSize.height > screenSize.height) 
+        {
             frameSize.height = screenSize.height;
         }
-        if (frameSize.width > screenSize.width) {
+        if (frameSize.width > screenSize.width) 
+        {
             frameSize.width = screenSize.width;
         }
         frame.setLocation((screenSize.width - frameSize.width) / 2,
@@ -119,49 +121,61 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		
 		
 	}
+	//END CONSTRUCTOR public Lobby(JFrame frame)
 	
 	@Override
-	public void actionPerformed(ActionEvent event) {
+	//BEGIN METHOD public void actionPerformed(ActionEvent event) 
+	public void actionPerformed(ActionEvent event) 
+	{
 		// TODO Auto-generated method stub
 		
 		// get the action of the button
 		String command = event.getActionCommand();
 		
 		// if Start Game is clicked
-		if(command.equalsIgnoreCase("Start Game")) {
+		if(command.equalsIgnoreCase("Start Game")) 
+		{
 			//startGamePrompts();
 			stats.setText("YOU CANNOT QUIT");
 		}
 		
 		// if Refresh Lobby is clicked
-		else if (command.equalsIgnoreCase("Refresh Lobby")) {
+		else if (command.equalsIgnoreCase("Refresh Lobby")) 
+		{
 			//refreshLobby();
 			stats.setText("THERE IS NOTHING TO REFRESH");
 		}
 		
 		// if Quit Game is clicked
-		else if (command.equalsIgnoreCase("Quit Game")) {
+		else if (command.equalsIgnoreCase("Quit Game")) 
+		{
 			//quitGame();
 			stats.setText("GET OUTTA HERE");
 		}
 		
 		//none of the other buttons have been called
-		else {
+		else 
+		{
 			//nothing
 		}
 	}
+	//END METHOD public void actionPerformed(ActionEvent event) 
 	
 	
 	void displayMessage(String prefix, ListSelectionEvent e) {
 	}
 
 	@Override
-	public void valueChanged(ListSelectionEvent event) {
+	//BEGIN METHOD public void valueChanged(ListSelectionEvent event) 
+	public void valueChanged(ListSelectionEvent event) 
+	{
 		// TODO Auto-generated method stub
 		String statistics = event.toString();
 		//list.getSelectedIndex();
 		stats.setText(event.getLastIndex() + "");
 	}
+	//END METHOD public void valueChanged(ListSelectionEvent event) 
 
 }
-
+//END CLASS Lobby
+//END FILE Lobby.java

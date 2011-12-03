@@ -255,9 +255,9 @@ public class TTTServlet extends HttpServlet
 	//END METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	
 	/**
-	 * Converts a GameBoard into
-	 * @param board
-	 * @return
+	 * Converts a GameBoard into an XML String
+	 * @param board the GameBoard to convert
+	 * @return The XML String of this GamebBoard
 	 */
 	//BEGIN METHOD private static String boardToXML(GameboardImp board)
 	private static String boardToXML(GameboardImp board)
