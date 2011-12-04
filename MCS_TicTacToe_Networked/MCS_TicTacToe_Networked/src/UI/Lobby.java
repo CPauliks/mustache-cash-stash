@@ -33,7 +33,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	//BEGIN Constructor public Lobby(JFrame frame)
 	public Lobby(JFrame frame)
 	{
-		lobbyClient = promptLobbyClient();
+		promptLobbyClient();
 		
 		// create a master panel that holds all the elements
 		JPanel masterPanel = new JPanel();
@@ -239,7 +239,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	//END METHOD private String promptPlayerName()
 	
 	//BEGIN METHOD private LobbyClient promptLobbyClient() 
-	private LobbyClient promptLobbyClient() 
+	private void promptLobbyClient() 
 		{
 			
 			String userName = "";
@@ -266,12 +266,13 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			while(!isValid);
 			
 			int needsAUserName = JOptionPane.showConfirmDialog(null,"Do you have a username on this server?", "Question", JOptionPane.YES_NO_OPTION);
+			System.out.println(needsAUserName);
 			
 			if (needsAUserName == 1)
 			{	
 				userName = promptPlayerName();
-				lobbyClient = new LobbyClient(serverName, userName);
-				boolean serverTest = lobbyClient.registerUser();
+				this.lobbyClient = new LobbyClient(serverName, userName);
+				boolean serverTest = this.lobbyClient.registerUser();
 				if (!serverTest)
 				{
 					System.exit(ERROR);
@@ -303,7 +304,6 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 				lobbyClient = new LobbyClient(serverName, new User(userName, Integer.parseInt(cCode)));
 				
 			}
-			return null;
 		}
 		//END METHOD private LobbyClient promptLobbyClient() 
 

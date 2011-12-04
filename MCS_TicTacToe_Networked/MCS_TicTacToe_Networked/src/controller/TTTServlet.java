@@ -84,12 +84,12 @@ public class TTTServlet extends HttpServlet
 		else
 		{
 			StringBuffer sb = new StringBuffer();
-			sb.append("<Server timeout=");
+			sb.append("<Server timeout=\"");
 			sb.append(TIMEOUT_TIME);
-			sb.append(">\n");
+			sb.append("\">\n");
 			sb.append(onlineUsers.getOnlineUsersInXML());
 			sb.append("</Server>");
-			response.getWriter().println(sb.toString());
+			writer.print(sb.toString());
 		}
 	}
 	//END METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)

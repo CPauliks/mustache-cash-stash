@@ -98,7 +98,7 @@ public class OnlineUserTracker
 		{
 			returnSB.append("  <User>"+u+"</User>\n");
 		}
-		returnSB.append("</UsersOnline");
+		returnSB.append("</UsersOnline>");
 		return returnSB.toString();
 	}
 	//END public String getOnlineUsersInXML
