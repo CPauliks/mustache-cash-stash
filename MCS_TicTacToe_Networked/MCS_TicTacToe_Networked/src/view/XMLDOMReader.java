@@ -1,6 +1,8 @@
 //BEGIN FILE XMLDOMReader.java
 package view;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.GameResult;
 import model.GameboardImp;
@@ -9,7 +11,10 @@ import model.PlaceValue;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import controller.User;
 
 /**
  * A class of XML Parsers to reconstruct gamedata after being sent of HTTP
@@ -19,6 +24,28 @@ import org.xml.sax.InputSource;
 //BEGIN CLASS XMLDOMReader
 public class XMLDOMReader 
 {
+	public static List<User> convertUserList(String xml)
+	{
+		ArrayList<User> returnList = new ArrayList<User>();
+		try
+		{
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(new InputSource(new StringReader(xml)));
+			NodeList userNodes = doc.getElementsByTagName("User");
+			for(int i = 0; i < userNodes.getLength(); i++)
+			{
+				returnList.add(User.parseUser(userNodes.item(i).getTextContent()));
+			}
+		}
+		catch(Exception e)
+		{
+			//TODO placehoder exception catch
+			e.printStackTrace();
+		}
+		return returnList;
+	}
+	
 	/**
 	 * A parser for GameBoards represented in XML as constructed by the TTTServlet
 	 * @param xml The XML String to be parsed

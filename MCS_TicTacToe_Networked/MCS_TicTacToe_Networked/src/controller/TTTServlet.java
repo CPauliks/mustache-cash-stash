@@ -105,6 +105,8 @@ public class TTTServlet extends HttpServlet
 	 * 
 	 * Request a game against an opponent by including parameter "RequestedOpponent".
 	 * This parameter's value should be a string representation of another user.
+	 * 
+	 * Keep a user alive by sending the user's string representation in "UserToKeepAlive"
 	 */
 	//BEGIN METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
@@ -127,6 +129,7 @@ public class TTTServlet extends HttpServlet
 			if(users.contains(userToKeepAlive))
 			{
 				onlineUsers.keepUserAlive(userToKeepAlive);
+				response.getWriter().print("Success");
 			}
 		}
 		else if(gameNumString != null)

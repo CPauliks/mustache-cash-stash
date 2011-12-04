@@ -42,7 +42,7 @@ public class NetworkClient implements Client {
 	//BEGIN CONSTRUCTOR public NetworkClient(String serverLocation, int gameNum, User user)
 	public NetworkClient(String serverLocation, int gameNum, User user)
 	{
-		httpClient = new DefaultHttpClient();
+		this.httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
 		this.gameNum = gameNum;
 		this.user = user;	
