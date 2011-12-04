@@ -80,6 +80,7 @@ public class LobbyClient {
 				HttpResponse h = httpClient.execute(postRequest);
 				String s = r.handleResponse(h);
 				this.myUser = User.parseUser(s);
+				this.hasBeenActivated = true;
 				return true;
 			} 
 			catch (Exception e) 
