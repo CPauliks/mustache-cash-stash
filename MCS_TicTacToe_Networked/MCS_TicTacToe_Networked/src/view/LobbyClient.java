@@ -1,16 +1,22 @@
 //BEGIN FILE LobbyClient.java
 package view;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
@@ -68,13 +74,16 @@ public class LobbyClient {
 		if (!this.hasBeenActivated) 
 		{
 			HttpPost postRequest = new HttpPost(serverLocation);
-			HttpParams params = new BasicHttpParams();
-			params.setParameter("RequestedUserName", this.userName);
-			postRequest.setParams(params);
+			List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+			formParams.add(new BasicNameValuePair("RequestedUserName", this.userName));
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try 
 			{
-				this.myUser = User.parseUser(httpClient.execute(postRequest, r));
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, "UTF-8");
+				postRequest.setEntity(entity);
+				HttpResponse h = httpClient.execute(postRequest);
+				String s = r.handleResponse(h);
+				this.myUser = User.parseUser(s);
 				return true;
 			} 
 			catch (Exception e) 
