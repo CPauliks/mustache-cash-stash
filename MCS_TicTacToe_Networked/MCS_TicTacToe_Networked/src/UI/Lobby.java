@@ -127,14 +127,6 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	}
 	//END CONSTRUCTOR public Lobby(JFrame frame)
 	
-	//BEGIN METHOD private LobbyClient promptLobbyClient() 
-	private LobbyClient promptLobbyClient() 
-	{
-		return null;
-	}
-	//END METHOD private LobbyClient promptLobbyClient() 
-
-	
 	@Override
 	//BEGIN METHOD public void actionPerformed(ActionEvent event) 
 	public void actionPerformed(ActionEvent event) 
@@ -203,6 +195,115 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		stats.setText(event.getLastIndex() + "");
 	}
 	//END METHOD public void valueChanged(ListSelectionEvent event) 
+	
+	/**
+	 * Checks whether a userName is valid.  Less than 25 characters, no punctuation.
+	 * @param userName
+	 * @return if the username is valid.
+	 */
+	//BEGIN METHOD private boolean isAValidPlayerName(String input)  
+	private boolean isAValidPlayerName(String input) 
+	{
+		int nameLength = input.length();
+		if (nameLength > 0 && nameLength < 26)
+		{
+			return !input.contains(".");
+		}
+		return false;
+	}
+	//END METHOD private boolean isAValidPlayerName(String input) 
+	
+	//BEGIN METHOD private String promptPlayerName()
+	private String promptPlayerName()
+	{
+		boolean isValid = false;
+		String name;
+		do
+		{
+			// show a dialog to get the username
+			name = JOptionPane.showInputDialog(null, "Enter the name you would like to use:");
+			
+			// if the user clicks on cancel
+			if(name == null)
+			{
+				//We need a username to continue. End the program.
+				System.exit(0);
+			}
+			else
+			{
+				// If the username is valid, accept it.
+				isValid = isAValidPlayerName(name);
+			}
+		}
+		while(!isValid);
+		return name;
+		
+	}
+	//END METHOD private String promptPlayerName()
+	
+	//BEGIN METHOD private LobbyClient promptLobbyClient() 
+	private LobbyClient promptLobbyClient() 
+		{
+			
+			String userName = "";
+			String serverName = "";
+			
+			boolean isValid = false;
+			
+			do
+			{
+				// show a dialog to get the username
+				serverName = JOptionPane.showInputDialog(null, "Enter the server name:");
+				
+				// if the user clicks on cancel
+				if(serverName == null)
+				{
+					//We need a Server to continue. End the program.
+					System.exit(0);
+				}
+				else
+				{
+					isValid = true;
+				}
+			}
+			while(!isValid);
+			
+			int needsAUserName = JOptionPane.showConfirmDialog(null,"Do you have a username on this server?", "Question", JOptionPane.YES_NO_OPTION);
+			
+			if (needsAUserName == 1)
+			{	
+				userName = promptPlayerName();
+				
+			}
+			else
+			{
+				userName = promptPlayerName();
+				isValid = false;
+				String cCode;
+				do
+				{
+					// show a dialog to get the username
+					cCode = JOptionPane.showInputDialog(null, "Enter your Character Code:");
+					
+					// if the user clicks on cancel
+					if(cCode == null)
+					{
+						//We need a Character Code to continue. End the program.
+						System.exit(0);
+					}
+					else
+					{
+						// If the username is valid, accept it.
+						isValid = cCode.matches("\\d{3}");
+					}
+				}
+				while(!isValid);
+				
+			}
+			return null;
+		}
+		//END METHOD private LobbyClient promptLobbyClient() 
+
 
 }
 //END CLASS Lobby

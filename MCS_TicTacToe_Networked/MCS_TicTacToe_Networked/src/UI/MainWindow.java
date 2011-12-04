@@ -242,7 +242,7 @@ public class MainWindow extends JPanel implements ActionListener
 		int nameLength = input.length();
 		if (nameLength > 0 && nameLength < 26)
 		{
-			return (input.split("\\W").length == 1);
+			return !input.contains(".");
 		}
 		return false;
 	}
@@ -251,6 +251,7 @@ public class MainWindow extends JPanel implements ActionListener
 	//BEGIN METHOD private void networkGamePrompts() 
 	private void networkGamePrompts() 
 	{
+		
 		// create a content pane
 		final Lobby contentPane = new Lobby(masterFrame);
 		

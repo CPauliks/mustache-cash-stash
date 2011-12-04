@@ -56,7 +56,8 @@ public class TTTServlet extends HttpServlet
 		PrintWriter writer = response.getWriter();
 		String gameNumString = request.getParameter("GameNumber");
 		String userString = request.getParameter("User");
-		if(gameNumString != null){
+		if(gameNumString != null)
+		{
 			int gameNum = Integer.parseInt(gameNumString);
 			Game game = this.currentGames.get(gameNum);
 			if(game != null)
