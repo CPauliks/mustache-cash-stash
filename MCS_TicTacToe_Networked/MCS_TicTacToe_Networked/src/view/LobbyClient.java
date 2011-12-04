@@ -16,6 +16,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import controller.User;
+import controller.OnlineUserTracker;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 //BEGIN CLASS LobbyClient
 public class LobbyClient {
@@ -25,6 +29,8 @@ public class LobbyClient {
 	private User myUser;
 	private HttpClient httpClient;
 	private String serverLocation;
+	private Timer t;
+	private final long keepAliveTime = 30000L;
 	
 	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
 	public LobbyClient(String serverLocation, String newUserName)
@@ -33,6 +39,8 @@ public class LobbyClient {
 		this.serverLocation = serverLocation;
 		this.userName = newUserName;
 		this.hasBeenActivated = false;
+		t = new Timer(true); //is a daemon. This is why it gets a "true"
+		t.schedule(new RefreshTask(), keepAliveTime, keepAliveTime);
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
 	
@@ -43,6 +51,8 @@ public class LobbyClient {
 		this.serverLocation = serverLocation;
 		this.myUser = oldUser;
 		this.hasBeenActivated = false;
+		t = new Timer(true); //is a daemon. This is why it gets a "true"
+		t.schedule(new RefreshTask(), keepAliveTime, keepAliveTime);
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
 	
@@ -157,6 +167,26 @@ public class LobbyClient {
 		return -1;
 	}
 	//END METHOD public boolean registerUser()
+	
+	//BEGIN METHOD public User getUser()
+	public User getUser()
+	{
+		return myUser;
+	}
+	//END METHOD public User getUser()
+	
+	//BEGIN CLASS RefreshTask
+	private class RefreshTask extends TimerTask 
+	{
+		@Override
+		//BEGIN METHOD public void run()
+		public void run()
+		{
+			keepAlive();
+		}
+		//END METHOD public void run()
+	}
+	//END CLASS RefreshTask
 	
 }
 //END CLASS LobbyClient

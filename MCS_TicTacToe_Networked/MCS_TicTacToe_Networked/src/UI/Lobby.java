@@ -135,8 +135,22 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// if Start Game is clicked
 		if(command.equalsIgnoreCase("Request Game")) 
 		{
-			//startGamePrompts();
-			stats.setText("YOU CANNOT QUIT");
+			User otherPlayer = (User) list.getSelectedValue();
+			if(otherPlayer != null)
+			{
+				if(lobbyClient.getUser().equals(otherPlayer))
+				{
+					stats.setText("You cannot challenge yourself.");
+				}
+				else
+				{
+					lobbyClient.requestGame(otherPlayer);
+				}
+			}
+			else
+			{
+				stats.setText("Please select a player if you wish to request a game.");
+			}
 		}
 		
 		// if Refresh Lobby is clicked
@@ -147,6 +161,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			{
 				this.userList = newUserList;
 				list.setListData(newUserList.toArray());
+				stats.setText("Lobby refreshed!");
 			}
 			else
 			{
@@ -187,9 +202,9 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	public void valueChanged(ListSelectionEvent event) 
 	{
 		// TODO Auto-generated method stub
-		String statistics = event.toString();
-		//list.getSelectedIndex();
-		stats.setText(event.getLastIndex() + "");
+		//String statistics = event.toString();
+		//list.getSelectedValue();
+		stats.setText(((User)list.getSelectedValue()).toString());
 	}
 	//END METHOD public void valueChanged(ListSelectionEvent event) 
 	
