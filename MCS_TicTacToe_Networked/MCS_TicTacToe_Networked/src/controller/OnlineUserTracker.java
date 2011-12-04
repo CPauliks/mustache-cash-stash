@@ -14,7 +14,8 @@ import java.util.TimerTask;
  *
  */
 //BEGIN CLASS OnlineUserTracker
-public class OnlineUserTracker {
+public class OnlineUserTracker 
+{
 	private long keepAliveTime;
 	private TreeSet<User> currentUsers;
 	private HashSet<User> usersKeptAlive;

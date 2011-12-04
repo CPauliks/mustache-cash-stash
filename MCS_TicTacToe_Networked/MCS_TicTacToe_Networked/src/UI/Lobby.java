@@ -161,9 +161,11 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	}
 	//END METHOD public void actionPerformed(ActionEvent event) 
 	
-	
-	void displayMessage(String prefix, ListSelectionEvent e) {
+	//BEGIN METHOD void displayMessage(String prefix, ListSelectionEvent e) 
+	void displayMessage(String prefix, ListSelectionEvent e) 
+	{
 	}
+	//END METHOD void displayMessage(String prefix, ListSelectionEvent e) 
 
 	@Override
 	//BEGIN METHOD public void valueChanged(ListSelectionEvent event) 

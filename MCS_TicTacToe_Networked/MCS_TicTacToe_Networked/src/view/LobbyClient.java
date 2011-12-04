@@ -1,3 +1,4 @@
+//BEGIN FILE LobbyClient.java
 package view;
 
 import java.util.List;
@@ -15,13 +16,16 @@ import org.apache.http.params.HttpParams;
 
 import controller.User;
 
+//BEGIN CLASS LobbyClient
 public class LobbyClient {
+	
 	private boolean hasBeenActivated;
 	private String userName;
 	private User myUser;
 	private HttpClient httpClient;
 	private String serverLocation;
 	
+	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
 	public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
 	{
 		this.httpClient = new DefaultHttpClient();
@@ -29,7 +33,9 @@ public class LobbyClient {
 		this.userName = newUserName;
 		this.hasBeenActivated = false;
 	}
+	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
 	
+	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
 	public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
 	{
 		this.httpClient = new DefaultHttpClient();
@@ -37,32 +43,42 @@ public class LobbyClient {
 		this.myUser = oldUser;
 		this.hasBeenActivated = false;
 	}
+	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
 	
+	//BEGIN METHOD public List<User> getUserList()
 	public List<User> getUserList()
 	{
 		HttpGet getRequest = new HttpGet(serverLocation);
 		ResponseHandler<String> r = new BasicResponseHandler();
-		try{
+		try
+		{
 			return XMLDOMReader.convertUserList(this.httpClient.execute(getRequest, r));
-		}catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		return null;
 	}
+	//END METHOD public List<User> getUserList()
 	
+	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()
 	{
-		if (!this.hasBeenActivated) {
+		if (!this.hasBeenActivated) 
+		{
 			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("RequestedUserName", this.userName);
 			postRequest.setParams(params);
 			ResponseHandler<String> r = new BasicResponseHandler();
-			try {
+			try 
+			{
 				this.myUser = User.parseUser(httpClient.execute(postRequest, r));
 				return true;
-			} catch (Exception e) {
+			} 
+			catch (Exception e) 
+			{
 				return false;
 			}
 		}
@@ -71,18 +87,24 @@ public class LobbyClient {
 			return false;
 		}
 	}
+	//END METHOD public boolean registerUser()
 	
+	//BEGIN METHOD public boolean registerUser()
 	public boolean keepAlive()
 	{
-		if (this.hasBeenActivated) {
+		if (this.hasBeenActivated) 
+		{
 			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("UserToKeepAlive", this.myUser.toString());
 			postRequest.setParams(params);
 			ResponseHandler<String> r = new BasicResponseHandler();
-			try {
+			try 
+			{
 				return httpClient.execute(postRequest, r).equals("Success");
-			} catch (Exception e) {
+			} 
+			catch (Exception e) 
+			{
 				return false;
 			}
 		}
@@ -91,7 +113,9 @@ public class LobbyClient {
 			return false;
 		}
 	}
+	//END METHOD public boolean registerUser()
 	
+	//BEGIN METHOD public boolean registerUser()
 	public int requestGame(User requestee)
 	{
 		if(this.hasBeenActivated)
@@ -102,7 +126,8 @@ public class LobbyClient {
 			params.setParameter("RequestedUserName", requestee.toString());
 			postRequest.setParams(params);
 			ResponseHandler<String> r = new BasicResponseHandler();
-			try {
+			try 
+			{
 				String response = httpClient.execute(postRequest, r);
 				if (response.equals("Success"))
 				{
@@ -120,5 +145,8 @@ public class LobbyClient {
 		}
 		return -1;
 	}
+	//END METHOD public boolean registerUser()
 	
 }
+//END CLASS LobbyClient
+//END FILE LobbyClient.java

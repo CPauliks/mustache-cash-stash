@@ -110,12 +110,14 @@ public class MainWindow extends JPanel implements ActionListener
 		String command = event.getActionCommand();
 		
 		// If the Network Game button is clicked.
-		if(command.equalsIgnoreCase("Network Game")) {
+		if(command.equalsIgnoreCase("Network Game")) 
+		{
 			networkGamePrompts();
 		}
 		
 		// If the Local Game button is clicked.
-		else if (command.equalsIgnoreCase("Local Game")) {
+		else if (command.equalsIgnoreCase("Local Game")) 
+		{
 			localGamePrompts();
 		}
 		
@@ -134,7 +136,8 @@ public class MainWindow extends JPanel implements ActionListener
 		}
 	}
 	
-	private void localGamePrompts() {
+	private void localGamePrompts() 
+	{
 		String user1 = "";
 		String user2 = "";
 		
@@ -163,29 +166,29 @@ public class MainWindow extends JPanel implements ActionListener
 		}
 		
 		
-		// if the username supplied is valid, ask about game mode
-		if(isValid)
-		{
-			isValid = false;
-			// an array of selections
-			Object []Options = {"Single Player", "Dual Player"};
-			
-			// user the array of selections to create a dialog box that asks the user for game mode
-			int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
-			
-			// if single mode is selected
-			if (gametype == 0)
-			{
-				// show game board
-				new GameBoardDisplay(user1, "Computer", "Single");
-				
-				// close main window
-				masterFrame.dispose();
-			}
-			
-			// if dual mode is selected
-			else if (gametype == 1)
-			{
+//		// if the username supplied is valid, ask about game mode
+//		if(isValid)
+//		{
+//			isValid = false;
+//			// an array of selections
+//			Object []Options = {"Single Player", "Dual Player"};
+//			
+//			// user the array of selections to create a dialog box that asks the user for game mode
+//			int gametype = JOptionPane.showOptionDialog(null, "Ok " + user1 + ", what game type do you want?", "Game Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,null, Options, Options[0]);
+//			
+//			// if single mode is selected
+//			if (gametype == 0)
+//			{
+//				// show game board
+//				new GameBoardDisplay(user1, "Computer", "Single");
+//				
+//				// close main window
+//				masterFrame.dispose();
+//			}
+//			
+//			// if dual mode is selected
+//			else if (gametype == 1)
+//			{
 				while(!isValid)
 				{
 					// show a dialog to get the username
@@ -212,17 +215,19 @@ public class MainWindow extends JPanel implements ActionListener
 					}
 				}
 				// show game board if allowed
-				if(isValid)
-				new GameBoardDisplay(user1, user2, "Dual");
-				masterFrame.dispose();
-			}
-			
-			// if cancel button is clicked or if window is closed
-			else
-			{
-				// do nothing
-			}
-		}
+				if(isValid) {
+					new GameBoardDisplay(user1, user2, "Dual");
+					masterFrame.dispose();
+				}
+
+//			}
+//			
+//			// if cancel button is clicked or if window is closed
+//			else
+//			{
+//				// do nothing
+//			}
+//		}
 		
 	}
 	
@@ -231,18 +236,21 @@ public class MainWindow extends JPanel implements ActionListener
 	 * @param userName
 	 * @return if the username is valid.
 	 */
-	private boolean isAValidUserName(String input) {
+	//BEGIN METHOD private boolean isAValidUserName(String input) 
+	private boolean isAValidUserName(String input) 
+	{
 		int nameLength = input.length();
-		if (nameLength > 0 && nameLength < 26){
-			
+		if (nameLength > 0 && nameLength < 26)
+		{
 			return (input.split("\\W").length == 1);
-
 		}
 		return false;
 	}
+	//END METHOD private boolean isAValidUserName(String input) 
 
-	private void networkGamePrompts() {
-		// TODO Auto-generated method stub
+	//BEGIN METHOD private void networkGamePrompts() 
+	private void networkGamePrompts() 
+	{
 		// create a content pane
 		final Lobby contentPane = new Lobby(masterFrame);
 		
@@ -264,6 +272,7 @@ public class MainWindow extends JPanel implements ActionListener
 		// show the window
 		masterFrame.setVisible(true);
 	}
+	//END METHOD private void networkGamePrompts() 
 
 //			String userName = "";
 //			String serverName = "";
@@ -377,14 +386,17 @@ public class MainWindow extends JPanel implements ActionListener
 	/**
 	 * Notifies the main window as soon as the score window is closed.
 	 */
+	//BEGIN METHOD public static void scoresWindowIsClosed()
 	public static void scoresWindowIsClosed()
 	{
 		scoresWindowIsUp = false;
 	}
+	//END METHOD public static void scoresWindowIsClosed()
 	
 	/**
 	 * Called by the main function to display the main window.
 	 */
+	//BEGIN METHOD public static void showMainWindow() 
 	public static void showMainWindow() 
 	{
 		// create a content pane
@@ -408,7 +420,7 @@ public class MainWindow extends JPanel implements ActionListener
 		// show the window
 		masterFrame.setVisible(true);
 	}
-	
+	//END METHOD public static void showMainWindow() 
 	
 }
 //END CLASS MainWindow
