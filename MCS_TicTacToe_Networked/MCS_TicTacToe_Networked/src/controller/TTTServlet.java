@@ -256,63 +256,64 @@ public class TTTServlet extends HttpServlet
 			User challengedUser = User.parseUser(opponentRequest);
 			HashSet<User> requests = gameRequests.get(requestingUser);
 			
-			if(requests != null)
+			if(requests == null)
 			{
-				if(requests.contains(challengedUser))
-				{
-					int i;
-					if(rng.nextBoolean()){
-						do{
-							i = rng.nextInt(8191)+1;
-						}while(!currentGames.containsKey(i));
-						currentGames.put(i, new Game(requestingUser, challengedUser));
-					}
-					else
-					{
-						do
-						{
-							i = rng.nextInt(8191)+1;
-						}
-						while(!currentGames.containsKey(i));
-						currentGames.put(i, new Game(challengedUser, requestingUser));
-					}
-					requests.remove(challengedUser);
-					if(openGames.get(requestingUser)== null)
-					{
-						openGames.put(requestingUser, new HashSet<Integer>());
-						openGames.get(requestingUser).add(i);
-					}
-					else
-					{
-						openGames.get(challengedUser).add(i);
-					}
-					if(openGames.get(challengedUser)== null)
-					{
-						openGames.put(challengedUser, new HashSet<Integer>());
-						openGames.get(challengedUser).add(i);
-					}
-					else
-					{
-						openGames.get(challengedUser).add(i);
-					}
-					response.getWriter().print(i);
+				gameRequests.put(requestingUser, new HashSet<User>());
+			}
+			if(requests.contains(challengedUser))
+			{
+				int i;
+				if(rng.nextBoolean()){
+					do{
+						i = rng.nextInt(8191)+1;
+					}while(!currentGames.containsKey(i));
+					currentGames.put(i, new Game(requestingUser, challengedUser));
 				}
 				else
 				{
-					HashSet<User> challengedUserRequests = gameRequests.get(challengedUser);
-					
-					if(challengedUserRequests == null)
+					do
 					{
-						gameRequests.put(challengedUser, new HashSet<User>());
-						gameRequests.get(challengedUser).add(requestingUser);
+						i = rng.nextInt(8191)+1;
 					}
-					else
-					{
-						gameRequests.get(challengedUser).add(requestingUser);
-					}
-					
-					response.getWriter().print("Success");
+					while(!currentGames.containsKey(i));
+					currentGames.put(i, new Game(challengedUser, requestingUser));
 				}
+				requests.remove(challengedUser);
+				if(openGames.get(requestingUser)== null)
+				{
+					openGames.put(requestingUser, new HashSet<Integer>());
+					openGames.get(requestingUser).add(i);
+				}
+				else
+				{
+					openGames.get(challengedUser).add(i);
+				}
+				if(openGames.get(challengedUser)== null)
+				{
+					openGames.put(challengedUser, new HashSet<Integer>());
+					openGames.get(challengedUser).add(i);
+				}
+				else
+				{
+					openGames.get(challengedUser).add(i);
+				}
+				response.getWriter().print(i);
+			}
+			else
+			{
+				HashSet<User> challengedUserRequests = gameRequests.get(challengedUser);
+				
+				if(challengedUserRequests == null)
+				{
+					gameRequests.put(challengedUser, new HashSet<User>());
+					gameRequests.get(challengedUser).add(requestingUser);
+				}
+				else
+				{
+					gameRequests.get(challengedUser).add(requestingUser);
+				}
+				
+				response.getWriter().print("Success");
 			}
 		}
 	}
