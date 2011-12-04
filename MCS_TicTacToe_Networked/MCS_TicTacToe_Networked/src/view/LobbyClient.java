@@ -30,7 +30,7 @@ public class LobbyClient {
 		this.hasBeenActivated = false;
 	}
 	
-	public LobbyClient(String serverLocaiton, User oldUser, long keepAliveTime)
+	public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
 	{
 		this.httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
@@ -54,13 +54,13 @@ public class LobbyClient {
 	public boolean registerUser()
 	{
 		if (!this.hasBeenActivated) {
-			HttpPost putRequest = new HttpPost(serverLocation);
+			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("RequestedUserName", this.userName);
-			putRequest.setParams(params);
+			postRequest.setParams(params);
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try {
-				this.myUser = User.parseUser(httpClient.execute(putRequest, r));
+				this.myUser = User.parseUser(httpClient.execute(postRequest, r));
 				return true;
 			} catch (Exception e) {
 				return false;
@@ -75,12 +75,13 @@ public class LobbyClient {
 	public boolean keepAlive()
 	{
 		if (this.hasBeenActivated) {
-			HttpPost putRequest = new HttpPost(serverLocation);
+			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("UserToKeepAlive", this.myUser.toString());
+			postRequest.setParams(params);
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try {
-				return httpClient.execute(putRequest, r).equals("Success");
+				return httpClient.execute(postRequest, r).equals("Success");
 			} catch (Exception e) {
 				return false;
 			}
@@ -89,6 +90,35 @@ public class LobbyClient {
 		{
 			return false;
 		}
+	}
+	
+	public int requestGame(User requestee)
+	{
+		if(this.hasBeenActivated)
+		{
+			HttpPost postRequest = new HttpPost(serverLocation);
+			HttpParams params = new BasicHttpParams();
+			params.setParameter("User", this.myUser.toString());
+			params.setParameter("RequestedUserName", requestee.toString());
+			postRequest.setParams(params);
+			ResponseHandler<String> r = new BasicResponseHandler();
+			try {
+				String response = httpClient.execute(postRequest, r);
+				if (response.equals("Success"))
+				{
+					return 0;
+				}
+				else
+				{
+					return Integer.parseInt(response);
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return -1;
 	}
 	
 }
