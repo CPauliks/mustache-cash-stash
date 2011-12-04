@@ -1,25 +1,54 @@
+//BEGIN FILE User.java
 package controller;
 import java.util.StringTokenizer;
 
 import model.Statistics;
 
-public class User implements Comparable<User>{
-	public User(String uname, int charCode){
+//BEGIN CLASS User
+public class User implements Comparable<User>
+{
+	private String userName;
+	private int characterCode;
+	private Statistics userStats;
+	
+	//BEGIN CONSTRUCTOR public User(String uname, int charCode)
+	public User(String uname, int charCode)
+	{
 		this.userName = uname;
 		this.characterCode = charCode;
 	}
-	public String getUserName(){
+	//END CONSTRUCTOR public User(String uname, int charCode)
+	
+	//BEGIN METHOD public String getUserName()
+	public String getUserName()
+	{
 		return userName;
 	}
-	public int getCharacterCode(){
+	//END METHOD public String getUserName()
+	
+	//BEGIN METHOD public int getCharacterCode()
+	public int getCharacterCode()
+	{
 		return characterCode;
 	}
-	public Statistics getUserRecord(){
+	//END METHOD public int getCharacterCode()
+	
+	//BEGIN METHOD public Statistics getUserRecord()
+	public Statistics getUserRecord()
+	{
 		return userStats.getState();
 	}
-	public String toString(){
+	//END METHOD public Statistics getUserRecord()
+	
+	@Override
+	//BEGIN METHOD public String toString()
+	public String toString()
+	{
 		return this.userName+"."+this.characterCode;
 	}
+	//END METHOD public String toString()
+	
+	//BEGIN METHOD public static User parseUser(String userString)
 	public static User parseUser(String userString)
 	{
 		StringTokenizer tkizer = new StringTokenizer(userString, ".");
@@ -27,7 +56,12 @@ public class User implements Comparable<User>{
 		String codeString = tkizer.nextToken();
 		return new User(uname, Integer.parseInt(codeString));
 	}
-	public boolean equals(Object obj){
+	//END METHOD public static User parseUser(String userString)
+	
+	@Override
+	//BEGIN METHOD public boolean equals(Object obj)
+	public boolean equals(Object obj)
+	{
 		if(this == obj)
 		{
 			return true;
@@ -41,6 +75,10 @@ public class User implements Comparable<User>{
 			return ((User) obj).getUserName().equals(this.userName) && (((User) obj).getCharacterCode() == this.characterCode);
 		}
 	}
+	//END METHOD public boolean equals(Object obj)
+	
+	@Override
+	//BEGIN METHOD public int compareTo(User comp)
 	public int compareTo(User comp)
 	{
 		int compValue = this.getUserName().compareTo(comp.getUserName());
@@ -50,10 +88,14 @@ public class User implements Comparable<User>{
 		}
 		return compValue;
 	}
-	protected Statistics getUserStatistics(){
+	//END METHOD public int compareTo(User comp)
+	
+	//BEGIN METHOD protected Statistics getUserStatistics()
+	protected Statistics getUserStatistics()
+	{
 		return userStats;
 	}
-	private String userName;
-	private int characterCode;
-	private Statistics userStats;
+	//END METHOD protected Statistics getUserStatistics()
 }
+//END CLASS User
+//END FILE User.java

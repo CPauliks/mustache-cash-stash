@@ -49,6 +49,7 @@ public class TTTServlet extends HttpServlet
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    @Override
     //BEGIN METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -108,6 +109,7 @@ public class TTTServlet extends HttpServlet
 	 * 
 	 * Keep a user alive by sending the user's string representation in "UserToKeepAlive"
 	 */
+    @Override
 	//BEGIN METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -141,8 +143,10 @@ public class TTTServlet extends HttpServlet
 			{
 				boolean success = false;
 				PlaceValue piece = PlaceValue.parsePlaceValue(side);
-				if(resigning.equals("true")) {
-					switch(piece){
+				if(resigning.equals("true")) 
+				{
+					switch(piece)
+					{
 					case X:
 						if(game.hasXPlayer(User.parseUser(userString)))
 						{

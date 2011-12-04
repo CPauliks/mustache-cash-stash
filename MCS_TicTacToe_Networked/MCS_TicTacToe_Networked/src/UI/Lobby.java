@@ -6,9 +6,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import controller.User;
+import view.LobbyClient;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.util.List;
 
 //BEGIN CLASS Lobby
 public class Lobby extends JPanel implements ActionListener, ListSelectionListener 
@@ -21,6 +25,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	//private JTextArea display = new JTextArea();
 	private JLabel stats = new JLabel();
 	private JList list;
+	private LobbyClient lobbyClient;
 	
 	/**
 	 * Creates and shows all lobby elements
@@ -29,6 +34,8 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	//BEGIN Constructor public Lobby(JFrame frame)
 	public Lobby(JFrame frame)
 	{
+		lobbyClient = promptLobbyClient();
+		
 		// create a master panel that holds all the elements
 		JPanel masterPanel = new JPanel();
 		
@@ -65,7 +72,6 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		stats = new JLabel("Ready to play!");
         stats.setForeground(Color.CYAN);
         stats.setBorder(new EmptyBorder(10, 10, 10, 10));
-		
 		
 		// add the list to the header
 		header.add(list);
@@ -118,10 +124,16 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
         }
         frame.setLocation((screenSize.width - frameSize.width) / 2,
                           (screenSize.height - frameSize.height) / 2); 
-		
-		
 	}
 	//END CONSTRUCTOR public Lobby(JFrame frame)
+	
+	//BEGIN METHOD private LobbyClient promptLobbyClient() 
+	private LobbyClient promptLobbyClient() 
+	{
+		return null;
+	}
+	//END METHOD private LobbyClient promptLobbyClient() 
+
 	
 	@Override
 	//BEGIN METHOD public void actionPerformed(ActionEvent event) 
@@ -142,8 +154,15 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// if Refresh Lobby is clicked
 		else if (command.equalsIgnoreCase("Refresh Lobby")) 
 		{
-			//refreshLobby();
-			stats.setText("THERE IS NOTHING TO REFRESH");
+			List<User> newUserList = lobbyClient.getUserList();
+			if(newUserList != null) 
+			{
+				refreshLobby(newUserList);
+			}
+			else
+			{
+				stats.setText("THERE IS NOTHING TO REFRESH");
+			}
 		}
 		
 		// if Quit Game is clicked
@@ -159,7 +178,14 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			//nothing
 		}
 	}
-	//END METHOD public void actionPerformed(ActionEvent event) 
+	
+	//BEGIN METHOD private void refreshLobby(List<User> userList) 
+	private void refreshLobby(List<User> userList) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	//END METHOD private void refreshLobby(List<User> userList) 
 	
 	//BEGIN METHOD void displayMessage(String prefix, ListSelectionEvent e) 
 	void displayMessage(String prefix, ListSelectionEvent e) 
