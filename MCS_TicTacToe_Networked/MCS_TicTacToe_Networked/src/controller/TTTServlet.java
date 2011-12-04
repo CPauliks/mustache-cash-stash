@@ -24,6 +24,7 @@ import model.*;
 //BEGIN CLASS TTTServlet
 public class TTTServlet extends HttpServlet 
 {
+	public static final long TIMEOUT_TIME = 60000; //In milliseconds
 	private static final long serialVersionUID = 1L;
 	private HashMap<Integer, Game> currentGames;
 	private HashMap<User, HashSet<User>> gameRequests; //Key is player game is requested AGAINST, NOT by
@@ -42,7 +43,7 @@ public class TTTServlet extends HttpServlet
     	currentGames = new HashMap<Integer, Game>();
     	users = new HashSet<User>();
     	rng = new Random();
-    	onlineUsers = new OnlineUserTracker(60000);
+    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
     }
     //END METHOD public TTTServlet() 
 
@@ -82,7 +83,12 @@ public class TTTServlet extends HttpServlet
 		}
 		else
 		{
-			writer.println(onlineUsers.getOnlineUsersInXML());
+			StringBuffer sb = new StringBuffer();
+			sb.append("<Server timeout=");
+			sb.append(TIMEOUT_TIME);
+			sb.append(">\n");
+			sb.append(onlineUsers.getOnlineUsersInXML());
+			sb.append("</Server>");
 		}
 	}
 	//END METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
