@@ -89,6 +89,7 @@ public class TTTServlet extends HttpServlet
 			sb.append(">\n");
 			sb.append(onlineUsers.getOnlineUsersInXML());
 			sb.append("</Server>");
+			response.getWriter().println(sb.toString());
 		}
 	}
 	//END METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
