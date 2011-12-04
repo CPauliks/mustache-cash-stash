@@ -25,6 +25,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	private JLabel stats = new JLabel();
 	private JList list;
 	private LobbyClient lobbyClient;
+	private List<User> userList;
 	
 	/**
 	 * Creates and shows all lobby elements
@@ -141,11 +142,10 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// if Refresh Lobby is clicked
 		else if (command.equalsIgnoreCase("Refresh Lobby")) 
 		{
-			System.err.println("We're here!");
 			List<User> newUserList = lobbyClient.getUserList();
 			if(newUserList != null) 
 			{
-				System.err.println("Are we still here?");
+				this.userList = newUserList;
 				list.setListData(newUserList.toArray());
 			}
 			else
