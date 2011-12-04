@@ -65,10 +65,8 @@ public class LobbyClient {
 	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()
 	{
-		System.err.println("In registerUser");
 		if (!this.hasBeenActivated) 
 		{
-			System.err.println("In registerUser");
 			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("RequestedUserName", this.userName);
