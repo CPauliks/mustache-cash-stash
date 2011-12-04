@@ -106,12 +106,13 @@ public class LobbyClient {
 		if (this.hasBeenActivated) 
 		{
 			HttpPost postRequest = new HttpPost(serverLocation);
-			HttpParams params = new BasicHttpParams();
-			params.setParameter("UserToKeepAlive", this.myUser.toString());
-			postRequest.setParams(params);
+			List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+			formParams.add(new BasicNameValuePair("UserToKeepAlive", this.myUser.toString()));
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try 
 			{
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, "UTF-8");
+				postRequest.setEntity(entity);
 				return httpClient.execute(postRequest, r).equals("Success");
 			} 
 			catch (Exception e) 
@@ -132,13 +133,14 @@ public class LobbyClient {
 		if(this.hasBeenActivated)
 		{
 			HttpPost postRequest = new HttpPost(serverLocation);
-			HttpParams params = new BasicHttpParams();
-			params.setParameter("User", this.myUser.toString());
-			params.setParameter("RequestedUserName", requestee.toString());
-			postRequest.setParams(params);
+			List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+			formParams.add(new BasicNameValuePair("User", this.myUser.toString()));
+			formParams.add(new BasicNameValuePair("RequestedUserName", requestee.toString()));
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try 
 			{
+				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, "UTF-8");
+				postRequest.setEntity(entity);
 				String response = httpClient.execute(postRequest, r);
 				if (response.equals("Success"))
 				{
