@@ -18,7 +18,6 @@ import java.util.List;
 public class Lobby extends JPanel implements ActionListener, ListSelectionListener 
 {
 	public static JFrame masterFrame = new JFrame("Lobby"); // the window container
-	public static Vector<String> users = new Vector<String>(); // a collection of users
 	static final long serialVersionUID = 0L; // just because :]
 	public static Color backgroundColor = new Color(0, 0, 0); // color of the background
 	protected static boolean statsWindowIsPopulated = false; //monitor the stats window
@@ -58,14 +57,10 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		middle.setLayout(new GridLayout(1, 1));
 		
 		// temporary for testing layout
-		users.add("David");
-		users.add("Ben");
-		users.add("Chris");
-		users.add("Dushyant");
 		
 		//create a list of users for the lobby
 		
-		JList list = new JList(users);
+		list = new JList(lobbyClient.getUserList().toArray());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.addListSelectionListener(this);
 		
@@ -149,7 +144,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			List<User> newUserList = lobbyClient.getUserList();
 			if(newUserList != null) 
 			{
-				refreshLobby(newUserList);
+				list.setListData(newUserList.toArray());
 			}
 			else
 			{
