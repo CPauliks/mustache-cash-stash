@@ -35,6 +35,7 @@ public class TTTServlet extends HttpServlet
 	private Set<User> users;
 	private Random rng;
 	private OnlineUserTracker onlineUsers;
+	private DatabaseBuddy serverDB;
        
     /**
      * Starts the HTTPServlet
@@ -48,7 +49,8 @@ public class TTTServlet extends HttpServlet
     	users = Collections.synchronizedSet(new HashSet<User>());
     	openGames = new HashMap<User, HashSet<Integer>>();
     	rng = new Random();
-    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);        
+    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
+    	serverDB = new DatabaseBuddy("derby://localhost:1527/TTTDB");
     }
     //END METHOD public TTTServlet() 
 
@@ -242,13 +244,19 @@ public class TTTServlet extends HttpServlet
 				i = rng.nextInt(1000);
 				newUser = new User(newUserName, i);
 			}
-			while(users.contains(newUser));
+			while(!serverDB.containsUser(newUser));
 			
-			if(users.add(newUser))
+			boolean successfull = serverDB.addUser(newUser);
+			
+			if(successfull)
 			{
-				if(users.contains(newUser))	response.getWriter().print(newUser);
+				response.getWriter().print(newUser);
 			}
-			else{response.getWriter().print("FFUU");}
+			else
+			{
+				response.getWriter().print("FFUU");
+				
+			}
 		}
 		else if(opponentRequest != null)
 		{
