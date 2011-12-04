@@ -25,25 +25,25 @@ public class LobbyClient {
 	private HttpClient httpClient;
 	private String serverLocation;
 	
-	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
-	public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
+	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
+	public LobbyClient(String serverLocation, String newUserName)
 	{
 		this.httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
 		this.userName = newUserName;
 		this.hasBeenActivated = false;
 	}
-	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName, long keepAliveTime)
+	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
 	
-	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
-	public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
+	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
+	public LobbyClient(String serverLocation, User oldUser)
 	{
 		this.httpClient = new DefaultHttpClient();
 		this.serverLocation = serverLocation;
 		this.myUser = oldUser;
 		this.hasBeenActivated = false;
 	}
-	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser, long keepAliveTime)
+	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
 	
 	//BEGIN METHOD public List<User> getUserList()
 	public List<User> getUserList()
@@ -65,8 +65,10 @@ public class LobbyClient {
 	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()
 	{
+		System.err.println("In registerUser");
 		if (!this.hasBeenActivated) 
 		{
+			System.err.println("In registerUser");
 			HttpPost postRequest = new HttpPost(serverLocation);
 			HttpParams params = new BasicHttpParams();
 			params.setParameter("RequestedUserName", this.userName);
@@ -79,11 +81,13 @@ public class LobbyClient {
 			} 
 			catch (Exception e) 
 			{
+				System.err.println(e.getMessage());
 				return false;
 			}
 		}
 		else
 		{
+			System.err.println("Nothing?");
 			return false;
 		}
 	}

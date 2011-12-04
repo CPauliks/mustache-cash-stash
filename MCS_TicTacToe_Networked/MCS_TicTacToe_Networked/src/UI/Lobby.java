@@ -227,7 +227,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			if(name == null)
 			{
 				//We need a username to continue. End the program.
-				System.exit(0);
+				System.exit(ERROR);
 			}
 			else
 			{
@@ -259,7 +259,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 				if(serverName == null)
 				{
 					//We need a Server to continue. End the program.
-					System.exit(0);
+					System.exit(ERROR);
 				}
 				else
 				{
@@ -273,7 +273,12 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 			if (needsAUserName == 1)
 			{	
 				userName = promptPlayerName();
-				
+				lobbyClient = new LobbyClient(serverName, userName);
+				boolean serverTest = lobbyClient.registerUser();
+				if (!serverTest)
+				{
+					System.exit(ERROR);
+				}
 			}
 			else
 			{
@@ -289,7 +294,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 					if(cCode == null)
 					{
 						//We need a Character Code to continue. End the program.
-						System.exit(0);
+						System.exit(ERROR);
 					}
 					else
 					{
@@ -298,6 +303,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 					}
 				}
 				while(!isValid);
+				lobbyClient = new LobbyClient(serverName, new User(userName, Integer.parseInt(cCode)));
 				
 			}
 			return null;
