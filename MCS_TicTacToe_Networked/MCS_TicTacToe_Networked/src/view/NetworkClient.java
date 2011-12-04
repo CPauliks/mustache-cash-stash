@@ -3,19 +3,23 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.GameboardImp;
 import model.PlaceValue;
 import controller.User;
 
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
@@ -87,17 +91,18 @@ public class NetworkClient implements Client {
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue side) 
 	{
 		HttpPost sendMove = new HttpPost(serverLocation);
-		HttpParams parameters = new BasicHttpParams();
-		parameters.setParameter("User", this.user.toString());
-		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
-		parameters.setParameter("xPosition", Integer.toString(xPosition));
-		parameters.setParameter("yPosition", Integer.toString(yPosition));
-		parameters.setParameter("Side", side.getRepr());
-		sendMove.setParams(parameters);
+		List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+		formParams.add(new BasicNameValuePair("User", this.user.toString()));
+		formParams.add(new BasicNameValuePair("GameNumber", Integer.toString(this.gameNum)));
+		formParams.add(new BasicNameValuePair("xPosition", Integer.toString(xPosition)));
+		formParams.add(new BasicNameValuePair("yPosition", Integer.toString(yPosition)));
+		formParams.add(new BasicNameValuePair("Side", side.getRepr()));
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
 		try
 		{
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, "UTF-8");
+			sendMove.setEntity(entity);
 			responseBody = httpClient.execute(sendMove, responseHandler);
 		} 
 		catch (HttpResponseException e) 
@@ -126,16 +131,16 @@ public class NetworkClient implements Client {
 	public boolean resign(PlaceValue side) 
 	{
 		HttpPost sendResign = new HttpPost(serverLocation);
-		HttpParams parameters = new BasicHttpParams();
-		parameters.setParameter("User", this.user.toString());
-		parameters.setParameter("GameNumber", Integer.toString(this.gameNum));
-		parameters.setParameter("Resign", "true");
-		sendResign.setParams(parameters);
+		List<NameValuePair> formParams = new ArrayList<NameValuePair>();
+		formParams.add(new BasicNameValuePair("User", this.user.toString()));
+		formParams.add(new BasicNameValuePair("GameNumber", Integer.toString(this.gameNum)));
+		formParams.add(new BasicNameValuePair("Resign", "true"));
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
-		
 		try 
 		{
+			UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formParams, "UTF-8");
+			sendResign.setEntity(entity);
 			responseBody = httpClient.execute(sendResign, responseHandler);
 		} 
 		catch (HttpResponseException e) 
