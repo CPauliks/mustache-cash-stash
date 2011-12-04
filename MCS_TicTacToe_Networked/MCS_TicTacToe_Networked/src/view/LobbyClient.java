@@ -14,6 +14,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 
 import controller.User;
 
@@ -72,6 +74,26 @@ public class LobbyClient {
 		return null;
 	}
 	//END METHOD public List<User> getUserList()
+	
+	public List<User> getRequestList()
+	{
+		HttpGet getRequest = new HttpGet(serverLocation);
+		ResponseHandler<String> r = new BasicResponseHandler();
+		HttpParams params = new BasicHttpParams();
+		System.out.println(this.myUser);
+		params.setParameter("User", this.myUser.toString());
+		getRequest.setParams(params);
+		try
+		{
+			String s = this.httpClient.execute(getRequest, r);
+			System.out.println(s);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()

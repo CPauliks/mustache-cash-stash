@@ -23,7 +23,8 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	protected static boolean statsWindowIsPopulated = false; //monitor the stats window
 	//private JTextArea display = new JTextArea();
 	private JLabel stats = new JLabel();
-	private JList list;
+	private JList onlineUsersList;
+	private JList requestedGamesList;
 	private LobbyClient lobbyClient;
 	private List<User> userList;
 	
@@ -61,16 +62,21 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		
 		//create a list of users for the lobby
 		
-		list = new JList();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.addListSelectionListener(this);
+		onlineUsersList = new JList();
+		onlineUsersList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		onlineUsersList.addListSelectionListener(this);
+		
+		requestedGamesList = new JList();
+		requestedGamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		requestedGamesList.addListSelectionListener(this);
 		
 		stats = new JLabel("Ready to play!");
         stats.setForeground(Color.CYAN);
         stats.setBorder(new EmptyBorder(10, 10, 10, 10));
 		
 		// add the list to the header
-		header.add(list);
+		header.add(onlineUsersList);
+		header.add(requestedGamesList);
 		
 		middle.add(stats);
 		//treat footer as a grid with 1 column and 3 rows
@@ -135,7 +141,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// if Start Game is clicked
 		if(command.equalsIgnoreCase("Request Game")) 
 		{
-			User otherPlayer = (User) list.getSelectedValue();
+			User otherPlayer = (User) onlineUsersList.getSelectedValue();
 			if(otherPlayer != null)
 			{
 				if(lobbyClient.getUser().equals(otherPlayer))
@@ -157,10 +163,11 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		else if (command.equalsIgnoreCase("Refresh Lobby")) 
 		{
 			List<User> newUserList = lobbyClient.getUserList();
+			lobbyClient.getRequestList();
 			if(newUserList != null) 
 			{
 				this.userList = newUserList;
-				list.setListData(newUserList.toArray());
+				onlineUsersList.setListData(newUserList.toArray());
 				stats.setText("Lobby refreshed!");
 			}
 			else
@@ -204,7 +211,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// TODO Auto-generated method stub
 		//String statistics = event.toString();
 		//list.getSelectedValue();
-		stats.setText(((User)list.getSelectedValue()).toString());
+		stats.setText(((User)onlineUsersList.getSelectedValue()).toString());
 	}
 	//END METHOD public void valueChanged(ListSelectionEvent event) 
 	
