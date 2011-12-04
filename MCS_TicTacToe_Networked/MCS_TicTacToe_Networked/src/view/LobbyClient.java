@@ -16,7 +16,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import controller.User;
-import controller.OnlineUserTracker;
 
 import java.util.Timer;
 import java.util.TimerTask;
