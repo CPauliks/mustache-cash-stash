@@ -259,6 +259,7 @@ public class TTTServlet extends HttpServlet
 			if(requests == null)
 			{
 				gameRequests.put(requestingUser, new HashSet<User>());
+				requests = gameRequests.get(requestingUser);
 			}
 			if(requests.contains(challengedUser))
 			{
