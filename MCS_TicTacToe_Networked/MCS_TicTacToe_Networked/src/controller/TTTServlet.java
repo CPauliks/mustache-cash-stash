@@ -6,12 +6,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Collections;
 
 import model.*;
 
@@ -28,7 +31,8 @@ public class TTTServlet extends HttpServlet
 	private static final long serialVersionUID = 1L;
 	private HashMap<Integer, Game> currentGames;
 	private HashMap<User, HashSet<User>> gameRequests; //Key is player game is requested AGAINST, NOT by
-	private HashSet<User> users;
+	private HashMap<User, HashSet<Integer>> openGames;
+	private Set<User> users;
 	private Random rng;
 	private OnlineUserTracker onlineUsers;
        
@@ -39,11 +43,12 @@ public class TTTServlet extends HttpServlet
 	//BEGIN CONSTRUCTOR public TTTServlet() 
     public TTTServlet() 
     {
-        super();
     	currentGames = new HashMap<Integer, Game>();
-    	users = new HashSet<User>();
+    	gameRequests = new HashMap<User, HashSet<User>>();
+    	users = Collections.synchronizedSet(new HashSet<User>());
+    	openGames = new HashMap<User, HashSet<Integer>>();
     	rng = new Random();
-    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
+    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);        
     }
     //END METHOD public TTTServlet() 
 
@@ -76,10 +81,33 @@ public class TTTServlet extends HttpServlet
 					response.sendError(403, "You shouldn't be looking at other people's games. Cheater.");
 				}
 			}
+			
 			else
 			{
 				response.sendError(404, "lol, that's not a game.");
 			}
+		}
+		else if(userString != null)
+		{
+			StringBuffer sb = new StringBuffer();
+			User user = User.parseUser(userString);
+			sb.append("<User userName=\""+userString+"\">");
+			if(this.gameRequests.get(user) != null)
+			{
+				for(User u:this.gameRequests.get(user))
+				{
+					sb.append("<requestingUser>"+u+"</requestingUser>\n");
+				}
+			}
+			if(this.currentGames.get(user) != null)
+			{
+				for(Integer i:this.openGames.get(user))
+				{
+					sb.append("<openGame>"+i+"</openGame>\n");
+				}
+			}
+			sb.append("</User>");
+			writer.println(sb);
 		}
 		else
 		{
@@ -136,11 +164,11 @@ public class TTTServlet extends HttpServlet
 		if(liveRequest != null)
 		{
 			User userToKeepAlive = User.parseUser(liveRequest);
-			if(users.contains(userToKeepAlive))
-			{
+			//if(users.contains(userToKeepAlive))
+			//{
 				onlineUsers.keepUserAlive(userToKeepAlive);
 				response.getWriter().print("Success");
-			}
+			//}
 		}
 		else if(gameNumString != null)
 		{
@@ -216,8 +244,11 @@ public class TTTServlet extends HttpServlet
 			}
 			while(users.contains(newUser));
 			
-			users.add(newUser);
-			response.getWriter().print(newUser);
+			if(users.add(newUser))
+			{
+				if(users.contains(newUser))	response.getWriter().print(newUser);
+			}
+			else{response.getWriter().print("FFUU");}
 		}
 		else if(opponentRequest != null)
 		{
@@ -246,6 +277,24 @@ public class TTTServlet extends HttpServlet
 						currentGames.put(i, new Game(challengedUser, requestingUser));
 					}
 					requests.remove(challengedUser);
+					if(openGames.get(requestingUser)== null)
+					{
+						openGames.put(requestingUser, new HashSet<Integer>());
+						openGames.get(requestingUser).add(i);
+					}
+					else
+					{
+						openGames.get(challengedUser).add(i);
+					}
+					if(openGames.get(challengedUser)== null)
+					{
+						openGames.put(challengedUser, new HashSet<Integer>());
+						openGames.get(challengedUser).add(i);
+					}
+					else
+					{
+						openGames.get(challengedUser).add(i);
+					}
 					response.getWriter().print(i);
 				}
 				else

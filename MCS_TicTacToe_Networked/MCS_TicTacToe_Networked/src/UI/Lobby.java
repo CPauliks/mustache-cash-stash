@@ -76,12 +76,12 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		footer.setLayout(new GridLayout(1, 3));
 		
 		//create 3 buttons
-		JButton button1 = new JButton("Start Game");
+		JButton button1 = new JButton("Request Game");
 		JButton button2 = new JButton("Refresh Lobby");
 		JButton button3 = new JButton("Quit Game");
 		
 		// set action command to buttons
-		button1.setActionCommand("Start Game");
+		button1.setActionCommand("Request Game");
 		button2.setActionCommand("Refresh Lobby");
 		button3.setActionCommand("Quit Game");
 		
@@ -132,7 +132,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		String command = event.getActionCommand();
 		
 		// if Start Game is clicked
-		if(command.equalsIgnoreCase("Start Game")) 
+		if(command.equalsIgnoreCase("Request Game")) 
 		{
 			//startGamePrompts();
 			stats.setText("YOU CANNOT QUIT");

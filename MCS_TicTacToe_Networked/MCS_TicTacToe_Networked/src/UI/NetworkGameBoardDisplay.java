@@ -8,6 +8,8 @@ import static java.lang.Math.abs;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+
+import controller.User;
 import model.*;
 import view.*;
 
@@ -28,14 +30,16 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 	 * @param modeName The mode to display on the window.
 	 */
 	//BEGIN CONSTRUCTOR public GameBoardDisplay(String user1, String user2, String modeName)
-    public NetworkGameBoardDisplay(String user1, String user2, String modeName)
+    public NetworkGameBoardDisplay(String serverLocation, int gameNum, User user, String user1, String user2, String modeName)
     {
+    	networkClient = new NetworkClient(serverLocation, gameNum, user);
+    	
     	// keep track of the initial usernames and game mode in case if we to restart the game
     	initialUser1 = user1;
     	initialUser2 = user2;
     	initialModeName = modeName;
     	
-    	boardModel = new GameboardImp();
+    	boardModel = networkClient.getCurrentBoard();
     	setLayout(new BorderLayout());
     	
        // This is the window that will be shown
@@ -353,15 +357,42 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
         cellArray[2][2] = cell_22;
         
         // create a listener for all cells
-        MouseListener listener00 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener01 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener02 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(0,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener10 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener11 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener12 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(1,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener20 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,0))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener21 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,1))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
-        MouseListener listener22 = new MouseAdapter(){@Override public void mouseClicked(MouseEvent event){if(attemptMove(2,2))displayNewMoveStatus("Good move!"); else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener00 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(0,0))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener01 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(0,1))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener02 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(0,2))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener10 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(1,0))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener11 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(1,1))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener12 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(1,2))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener20 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(2,0))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener21 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(2,1))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
+        MouseListener listener22 = new MouseAdapter(){
+        	@Override public void mouseClicked(MouseEvent event){
+        		if(networkClient.requestMove(2,2))displayNewMoveStatus("Good move!"); 
+        		else displayNewMoveStatus("Can't place a piece there!");}};
         
         // link listeners to cells
         cell_00.addMouseListener(listener00);
@@ -400,6 +431,8 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 	private JLabel gameStatus;
 	private String player1;
 	private String player2;
+	
+	private NetworkClient networkClient;
     
 }
 //END CLASS GameBoardDisplay

@@ -79,6 +79,7 @@ public class LobbyClient {
 				postRequest.setEntity(entity);
 				HttpResponse h = httpClient.execute(postRequest);
 				String s = r.handleResponse(h);
+				System.out.println(s);
 				this.myUser = User.parseUser(s);
 				this.hasBeenActivated = true;
 				return true;
@@ -132,7 +133,7 @@ public class LobbyClient {
 			HttpPost postRequest = new HttpPost(serverLocation);
 			List<NameValuePair> formParams = new ArrayList<NameValuePair>();
 			formParams.add(new BasicNameValuePair("User", this.myUser.toString()));
-			formParams.add(new BasicNameValuePair("RequestedUserName", requestee.toString()));
+			formParams.add(new BasicNameValuePair("RequestedOpponent", requestee.toString()));
 			ResponseHandler<String> r = new BasicResponseHandler();
 			try 
 			{
