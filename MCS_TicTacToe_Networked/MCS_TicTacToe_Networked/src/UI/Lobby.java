@@ -60,7 +60,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		
 		//create a list of users for the lobby
 		
-		list = new JList(lobbyClient.getUserList().toArray());
+		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.addListSelectionListener(this);
 		
@@ -141,9 +141,11 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		// if Refresh Lobby is clicked
 		else if (command.equalsIgnoreCase("Refresh Lobby")) 
 		{
+			System.err.println("We're here!");
 			List<User> newUserList = lobbyClient.getUserList();
 			if(newUserList != null) 
 			{
+				System.err.println("Are we still here?");
 				list.setListData(newUserList.toArray());
 			}
 			else

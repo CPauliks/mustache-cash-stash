@@ -53,7 +53,9 @@ public class LobbyClient {
 		ResponseHandler<String> r = new BasicResponseHandler();
 		try
 		{
-			return XMLDOMReader.convertUserList(this.httpClient.execute(getRequest, r));
+			String s = this.httpClient.execute(getRequest, r);
+			System.err.println(s);
+			return XMLDOMReader.convertUserList(s);
 		}
 		catch (Exception e)
 		{
