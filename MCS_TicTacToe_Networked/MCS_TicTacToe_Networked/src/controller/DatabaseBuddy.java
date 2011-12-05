@@ -1,3 +1,4 @@
+//BEGIN FILE DatabaseBuddy.java
 package controller;
 
 import java.sql.Connection;
@@ -10,11 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//BEGIN CLASS DatabaseBuddy
 public class DatabaseBuddy {
 	
-	Connection conn;
-	Random rng;
+	private Connection conn;
+	private Random rng;
 	
+	//BEGIN CONSTRUCTOR DatabaseBuddy(String databaseURI)
 	public DatabaseBuddy(String databaseURI)
 	{
 		try{
@@ -29,7 +32,9 @@ public class DatabaseBuddy {
 		}
 		rng = new Random();
 	}
+	//END CONSTRUCTOR DatabaseBuddy(String databaseURI)
 	
+	//BEGIN METHOD boolean addUser(User u)
 	public boolean addUser(User u)
 	{
 		String query = "INSERT INTO users(characterName, characterCode, isOnline) VALUES('"+u.getUserName()+"', "+u.getCharacterCode()+", FALSE)";
@@ -42,7 +47,9 @@ public class DatabaseBuddy {
 		}
 		return true;
 	}
+	//END METHOD addUser(User U)
 	
+	//BEGIN METHOD boolean keepAlive(User u)
 	public boolean keepAlive(User u)
 	{
 		try
@@ -55,7 +62,9 @@ public class DatabaseBuddy {
 		}
 		return false;
 	}
+	//BEGIN METHOD keepAlive(User u)
 	
+	//BEGIN METHOD List<User> getLiveUsers(long timeToKeepAlive)
 	public List<User> getLiveUsers(long timeToKeepAlive)
 	{
 		Timestamp ts;
@@ -77,6 +86,7 @@ public class DatabaseBuddy {
 		}
 		return returnList;
 	}
+	//END METHOD List<User> getLiveUsers(long timeToKeepAlive)
 	
 	/**
 	 * Requests a game from requester to requestee. If there is a pending reciprocal request, a game is created and the game number is returned.
@@ -87,6 +97,7 @@ public class DatabaseBuddy {
 	 * @return
 	 */
 	//TODO needs guards
+	//BEGIN int requestGame(User requester, User requestee)
 	public int requestGame(User requester, User requestee)
 	{
 		String queryRecipRequest = "SELECT requesteeName, requesteeCode, requesterName, requesterCode FROM requests WHERE"
@@ -124,9 +135,14 @@ public class DatabaseBuddy {
 		}
 		return -1;
 	}
+	//END METHOD int requestGame(User requester, User requestee)
 
+	//BEGIN METHOD boolean containsUser(User NewUser)
 	public boolean containsUser(User newUser) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	//END METHOD boolean containsUser(User NewUser)
 }
+//END CLASS DatabaseBuddy
+//END FILE DatabaseBuddy.java
