@@ -3,23 +3,24 @@ package UI;
 
 /**
  * Entry class into the MCS TTT Game
+ * 
  * @author Mustache Cash Stash
  * @version 1.0
  */
-//BEGIN CLASS TicTacToe
-public class TicTacToe 
-{
+// BEGIN CLASS TicTacToe
+public class TicTacToe {
 	/**
 	 * Entry point into the MCS TTT Game
-	 * @param args Unused
+	 * 
+	 * @param args
+	 *            Unused
 	 */
-	//BEGIN METHOD public static void main(String[] args) 
-	public static void main(String[] args) 
-	{
+	// BEGIN METHOD public static void main(String[] args)
+	public static void main(String[] args) {
 		MainWindow.showMainWindow();
 	}
-	//END METHOD public static void main(String[] args) 
+	// END METHOD public static void main(String[] args)
 
 }
-//END CLass TicTacToe
-//END FILE TicTacToe.java
+// END CLass TicTacToe
+// END FILE TicTacToe.java

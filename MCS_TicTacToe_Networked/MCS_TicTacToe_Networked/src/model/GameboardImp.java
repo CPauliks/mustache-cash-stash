@@ -4,20 +4,20 @@ package model;
 import java.util.LinkedList;
 
 /**
-* An implementation for the gameboard model for the TTT system.
-* Keeps track of the board and what pieces are where
-* @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
-* @version 0.0 pending CCR approval
-*/
+ * An implementation for the gameboard model for the TTT system.
+ * Keeps track of the board and what pieces are where
+ * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
+ * @version 0.0 pending CCR approval
+ */
 //BEGIN CLASS GameBoardImp
 public class GameboardImp implements Gameboard, Cloneable {
-	
+
 	private PlaceValue[][] currentBoard; 
 	private Integer[] rowStates;
 	private boolean xsTurn;	
 	private boolean osTurn;	
 	private GameResult result;
-	
+
 	/**
 	 * Sets up a GameBoard for a new game.
 	 */
@@ -42,7 +42,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		result = GameResult.PENDING;
 	}
 	//END CONSTRUCTOR public GameBoardImp()
-	
+
 	/**
 	 * Sets up a GameBoard for a new game.
 	 */
@@ -55,7 +55,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		this.result = result;
 	}
 	//END METHOD public GameboardImp(boolean xsTurn, boolean osTurn, GameResult result, PlaceValue[][] board)
-	
+
 	@Override
 	/**
 	 * Returns a new copy of Gameboard
@@ -76,7 +76,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return cloneBoard;
 	}
 	//END METHOD public Gameboard clone() 
-	
+
 	@Override
 	//BEGIN METHOD public PlaceValue[][] getBoard()
 	public PlaceValue[][] getBoard()
@@ -92,7 +92,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return currentBoard;
 	}
 	//END METHOD public PlaceValue[][] getBoard()
-	
+
 	@Override
 	//BEGIN METHOD public GameResult getResult()
 	public GameResult getResult()
@@ -100,7 +100,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return this.result;
 	}
 	//END METHOD public GameResult getResult()
-	
+
 
 	@Override
 	//BEGIN METHOD public Gameboard getState()
@@ -109,7 +109,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return this.clone();
 	}
 	//END METHOD public Gameboard getState()
-	
+
 	@Override
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
@@ -120,7 +120,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		}
 		if((currentBoard[xPosition][yPosition] == PlaceValue.BLANK)&&
 				((pieceToPlace == PlaceValue.X && this.xsTurn())||
-				 (pieceToPlace == PlaceValue.O && this.osTurn()))) 
+						(pieceToPlace == PlaceValue.O && this.osTurn()))) 
 		{
 			for(Integer rowNum:coordToRows(xPosition, yPosition))
 			{
@@ -149,7 +149,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return false;
 	}
 	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace) 
-	
+
 	@Override
 	//BEGIN METHOD public boolean xsTurn()
 	public boolean xsTurn() 
@@ -157,7 +157,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return xsTurn;
 	}
 	//END METHOD public boolean xsTurn()
-	
+
 	@Override
 	//BEGIN METHOD public boolean osTurn() 
 	public boolean osTurn() 
@@ -165,7 +165,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return osTurn;
 	}
 	//END METHOD public boolean osTurn()
-	
+
 	@Override
 	//BEGIN METHOD public boolean resign(PlaceValue pieceResigning)
 	public boolean resign(PlaceValue pieceResigning) {
@@ -182,7 +182,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		}
 	}
 	//BEGIN METHOD public boolean resign(PlaceValue pieceResigning)
-	
+
 	/**
 	 * Returns a List of the rows the requested space is part of.
 	 * Rows numbers are as follows, corresponding to the same rows in the rowStates array;
@@ -201,53 +201,53 @@ public class GameboardImp implements Gameboard, Cloneable {
 		LinkedList<Integer> returnRows = new LinkedList<Integer>();
 		switch(switchTrick)
 		{
-			case 0:  //0,0
-				returnRows.add(0);
-				returnRows.add(3);
-				returnRows.add(6);
-				break;
-			case 1: //0,1
-				returnRows.add(0);
-				returnRows.add(4);
-				break;
-			case 2: //0,2
-				returnRows.add(0);
-				returnRows.add(5);
-				returnRows.add(7);
-				break;
-			case 10: //1,0
-				returnRows.add(1);
-				returnRows.add(3);
-				break;
-			case 11: //1,1
-				returnRows.add(1);
-				returnRows.add(4);
-				returnRows.add(6);
-				returnRows.add(7);
-				break;
-			case 12: //1,2
-				returnRows.add(1);
-				returnRows.add(5);
-				break;
-			case 20: //2,0
-				returnRows.add(2);
-				returnRows.add(3);
-				returnRows.add(7);
-				break;
-			case 21: //2,1
-				returnRows.add(2);
-				returnRows.add(4);
-				break;
-			case 22: //2,2
-				returnRows.add(2);
-				returnRows.add(5);
-				returnRows.add(6);
-				break;
+		case 0:  //0,0
+			returnRows.add(0);
+			returnRows.add(3);
+			returnRows.add(6);
+			break;
+		case 1: //0,1
+			returnRows.add(0);
+			returnRows.add(4);
+			break;
+		case 2: //0,2
+			returnRows.add(0);
+			returnRows.add(5);
+			returnRows.add(7);
+			break;
+		case 10: //1,0
+			returnRows.add(1);
+			returnRows.add(3);
+			break;
+		case 11: //1,1
+			returnRows.add(1);
+			returnRows.add(4);
+			returnRows.add(6);
+			returnRows.add(7);
+			break;
+		case 12: //1,2
+			returnRows.add(1);
+			returnRows.add(5);
+			break;
+		case 20: //2,0
+			returnRows.add(2);
+			returnRows.add(3);
+			returnRows.add(7);
+			break;
+		case 21: //2,1
+			returnRows.add(2);
+			returnRows.add(4);
+			break;
+		case 22: //2,2
+			returnRows.add(2);
+			returnRows.add(5);
+			returnRows.add(6);
+			break;
 		}
 		return returnRows;
 	}
 	//END METHOD private LinkedList<Integer> coordToRows(int x, int y)
-	
+
 	/**
 	 * Checks the status of the game and updates it, if necessary.
 	 * @return the current status of the game
@@ -282,7 +282,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		return this.result;
 	}
 	//END METHOD private GameResult checkResult()
-	
+
 	/**
 	 * Private version of RequestMove.
 	 * Actually places the piece on the board.
@@ -296,7 +296,7 @@ public class GameboardImp implements Gameboard, Cloneable {
 		currentBoard[xPosition][yPosition] = piece;
 	}
 	//END METHOD private void forceMove(int xPosition, int yPosition, PlaceValue piece)
-	
+
 }
 //END CLASS GameBoardImp
 //END FILE GameBoardImp.java

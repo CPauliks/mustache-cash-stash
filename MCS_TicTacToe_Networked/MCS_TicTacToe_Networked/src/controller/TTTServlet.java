@@ -37,29 +37,29 @@ public class TTTServlet extends HttpServlet
 	private Random rng;
 	private OnlineUserTracker onlineUsers;
 	private DatabaseBuddy serverDB;
-       
-    /**
-     * Starts the HTTPServlet
-     * @see HttpServlet#HttpServlet()
-     */
+
+	/**
+	 * Starts the HTTPServlet
+	 * @see HttpServlet#HttpServlet()
+	 */
 	//BEGIN CONSTRUCTOR public TTTServlet() 
-    public TTTServlet() 
-    {
-    	currentGames = new HashMap<Integer, Game>();
-    	gameRequests = new HashMap<User, HashSet<User>>();
-    	users = Collections.synchronizedSet(new HashSet<User>());
-    	openGames = new HashMap<User, HashSet<Integer>>();
-    	rng = new Random();
-    	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
-    	serverDB = new DatabaseBuddy("jdbc:derby://localhost/TTTDB");
-    }
-    //END METHOD public TTTServlet() 
+	public TTTServlet() 
+	{
+		currentGames = new HashMap<Integer, Game>();
+		gameRequests = new HashMap<User, HashSet<User>>();
+		users = Collections.synchronizedSet(new HashSet<User>());
+		openGames = new HashMap<User, HashSet<Integer>>();
+		rng = new Random();
+		onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
+		serverDB = new DatabaseBuddy("jdbc:derby://localhost/TTTDB");
+	}
+	//END METHOD public TTTServlet() 
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    @Override
-    //BEGIN METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	@Override
+	//BEGIN METHOD protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		PrintWriter writer = response.getWriter();
@@ -84,7 +84,7 @@ public class TTTServlet extends HttpServlet
 					response.sendError(403, "You shouldn't be looking at other people's games. Cheater.");
 				}
 			}
-			
+
 			else
 			{
 				response.sendError(404, "lol, that's not a game.");
@@ -154,7 +154,7 @@ public class TTTServlet extends HttpServlet
 	 * 
 	 * Keep a user alive by sending the user's string representation in "UserToKeepAlive"
 	 */
-    @Override
+	@Override
 	//BEGIN METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -165,7 +165,7 @@ public class TTTServlet extends HttpServlet
 		String newUserName = request.getParameter("RequestedUserName");
 		String opponentRequest = request.getParameter("RequestedOpponent");
 		String liveRequest = request.getParameter("UserToKeepAlive");
-		
+
 		if (resigning == null) 
 		{
 			resigning = "false";
@@ -175,15 +175,15 @@ public class TTTServlet extends HttpServlet
 			User userToKeepAlive = User.parseUser(liveRequest);
 			//if(users.contains(userToKeepAlive))
 			//{
-				onlineUsers.keepUserAlive(userToKeepAlive);
-				response.getWriter().print("Success");
+			onlineUsers.keepUserAlive(userToKeepAlive);
+			response.getWriter().print("Success");
 			//}
 		}
 		else if(gameNumString != null)
 		{
 			int gameNum = Integer.parseInt(gameNumString);
 			Game game = this.currentGames.get(gameNum);
-			
+
 			if(game != null)
 			{
 				boolean success = false;
@@ -214,24 +214,24 @@ public class TTTServlet extends HttpServlet
 					int xPos = Integer.parseInt(request.getParameter("xPosition"));
 					int yPos = Integer.parseInt(request.getParameter("yPosition"));
 					switch(piece){
-						case X:
-							if(game.hasXPlayer(User.parseUser(userString)))
-							{
-								success = game.requestMove(xPos, yPos, piece);
-							}
-							break;
-						case O:
-							if(game.hasOPlayer(User.parseUser(userString)))
-							{
-								success = game.requestMove(xPos, yPos, piece);
-							}
-							break;
-						default:
-							success = false;
-							break;
+					case X:
+						if(game.hasXPlayer(User.parseUser(userString)))
+						{
+							success = game.requestMove(xPos, yPos, piece);
+						}
+						break;
+					case O:
+						if(game.hasOPlayer(User.parseUser(userString)))
+						{
+							success = game.requestMove(xPos, yPos, piece);
+						}
+						break;
+					default:
+						success = false;
+						break;
 					}
 				}
-				
+
 				if(success)
 				{
 					response.getWriter().print("Success");
@@ -252,9 +252,9 @@ public class TTTServlet extends HttpServlet
 				newUser = new User(newUserName, i);
 			}
 			while(!serverDB.containsUser(newUser));
-			
+
 			boolean successfull = serverDB.addUser(newUser);
-			
+
 			if(successfull)
 			{
 				response.getWriter().print(newUser);
@@ -262,7 +262,7 @@ public class TTTServlet extends HttpServlet
 			else
 			{
 				response.getWriter().print("FFUU");
-				
+
 			}
 		}
 		else if(opponentRequest != null)
@@ -270,7 +270,7 @@ public class TTTServlet extends HttpServlet
 			User requestingUser = User.parseUser(userString);
 			User challengedUser = User.parseUser(opponentRequest);
 			HashSet<User> requests = gameRequests.get(requestingUser);
-			
+
 			if(requests == null)
 			{
 				gameRequests.put(requestingUser, new HashSet<User>());
@@ -318,7 +318,7 @@ public class TTTServlet extends HttpServlet
 			else
 			{
 				HashSet<User> challengedUserRequests = gameRequests.get(challengedUser);
-				
+
 				if(challengedUserRequests == null)
 				{
 					gameRequests.put(challengedUser, new HashSet<User>());
@@ -328,13 +328,13 @@ public class TTTServlet extends HttpServlet
 				{
 					gameRequests.get(challengedUser).add(requestingUser);
 				}
-				
+
 				response.getWriter().print("Success");
 			}
 		}
 	}
 	//END METHOD protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	
+
 	/**
 	 * Converts a GameBoard into an XML String
 	 * @param board the GameBoard to convert

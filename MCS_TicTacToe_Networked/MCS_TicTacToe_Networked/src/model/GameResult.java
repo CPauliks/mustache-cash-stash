@@ -2,10 +2,10 @@
 package model;
 
 /**
-* The enumerated cases for the current status of a Game
-* @author Benjamin Pellittieri for Mustache Cash Stash
-* @version 0.0 pending CCR approval
-*/
+ * The enumerated cases for the current status of a Game
+ * @author Benjamin Pellittieri for Mustache Cash Stash
+ * @version 0.0 pending CCR approval
+ */
 //BEGIN ENUM GameResult
 public enum GameResult
 {
@@ -13,9 +13,9 @@ public enum GameResult
 	OWIN ("OWIN"),
 	CAT ("CAT"),
 	PENDING ("PENDING");
-	
+
 	private String repr;
-	
+
 	/**
 	 * Returns a String representation of this GameResult
 	 * @return String representation of this GameResult
@@ -26,7 +26,7 @@ public enum GameResult
 		return this.repr;
 	}
 	//END METHOD public String getRepr()
-	
+
 	/**
 	 * Constructs a GameResult from a String representation
 	 * @param repr String representation of a GameResult

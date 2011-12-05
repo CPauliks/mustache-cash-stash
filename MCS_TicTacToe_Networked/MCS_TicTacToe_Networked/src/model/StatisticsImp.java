@@ -9,9 +9,9 @@ import java.util.Map;
 
 //BEGIN CLASS StatisticsImp
 public class StatisticsImp implements Statistics, Cloneable{
-	
+
 	private Map<String, List<Integer>> sessionStatistics;
-	
+
 	/**
 	 * Generates a new Statistics class gives session data for a game going on
 	 */
@@ -21,13 +21,13 @@ public class StatisticsImp implements Statistics, Cloneable{
 		this.sessionStatistics = new HashMap<String, List<Integer>>();
 	}
 	//END CONSTRUCTOR StatisticsImp	
-	
+
 	//BEGIN CONSTRUCTOR StatisticsImp
 	public StatisticsImp(Map<String, List<Integer>> stats){
 		this.sessionStatistics = stats;
 	}
 	//END CONSTRUCTOR StatisticsImp
-	
+
 	@Override
 	/**
 	 * Returns an immutable copy of this Statistics for use by views to update their model.
@@ -88,7 +88,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 	//BEGIN METHOD public int getTies()
 	public int getGameCount(String playerName) {
 		// TODO Auto-generated method stub
-		
+
 		return sessionStatistics.get(playerName).get(3);
 	}
 	//END METHOD public int getTies()
@@ -119,7 +119,7 @@ public class StatisticsImp implements Statistics, Cloneable{
 		this.sessionStatistics.put(playerName,  stats);
 	}
 	//END METHOD public addLoss()
-	
+
 	@Override
 	/**
 	 * Adds a tie for the given player's record.
@@ -128,36 +128,36 @@ public class StatisticsImp implements Statistics, Cloneable{
 	//BEGIN METHOD public addTie()
 	public void addTie(String playerName) {
 		// TODO Auto-generated method stub
-		
+
 		List<Integer> stats = this.sessionStatistics.get(playerName);
 		stats.set(2, stats.get(2) + 1);
 		this.sessionStatistics.put(playerName, stats);
 	}
 	//END METHOD public addTie()
-	
+
 	//BEGIN METHOD public getSessionStatistics
 	public Map<String, List<Integer>> getSessionStatistics() {
 		return this.sessionStatistics;
 	}
 	//END METHOD getSessionStatistics
-	
+
 	//BEGIN METHOD public setSessionStatistics()
 	public void setSessionStatistics(Map<String, List<Integer>> sessionStatistics) {
 		this.sessionStatistics = sessionStatistics;
 	}
 	//END METHOD getSessionStatistics
-	
+
 	//BEGIN METHOD public Statistics clone()
 	@Override
 	public Statistics clone(){
-		
+
 		Statistics c = new StatisticsImp(sessionStatistics);
-		
+
 		return c;
-		
+
 	}
 	//END METHOD public Statistics clone()
-	
+
 	//BEGIN METHOD public addPlayer()
 	@Override
 	public void addPlayer(String playerName){
@@ -168,6 +168,6 @@ public class StatisticsImp implements Statistics, Cloneable{
 		this.sessionStatistics.put(playerName, stats);
 	}
 	//BEGIN METHOD public addPlayer()
-	
+
 }
 //END CLASS StatisticsImp

@@ -20,7 +20,7 @@ public class OnlineUserTracker
 	private TreeSet<User> currentUsers;
 	private HashSet<User> usersKeptAlive;
 	private Timer t;
-	
+
 	/**
 	 * Constructor which sets how long to keep the users alive for.
 	 */
@@ -34,7 +34,7 @@ public class OnlineUserTracker
 		t.schedule(new RefreshTask(), keepAliveTime, keepAliveTime);
 	}
 	//END CONSTRUCTOR OnlineUserTracker(long keepAliveTime)
-	
+
 	/**
 	 * Simply adds a user to the set of users who have been kept alive this period.
 	 * @param userToKeepAlive who has requested to be kept alive
@@ -45,7 +45,7 @@ public class OnlineUserTracker
 		usersKeptAlive.add(userToKeepAlive);
 	}
 	//END METHOD public void keepUserAlive(User userToKeepAlive)
-	
+
 	/**
 	 * Removes everyone from the structure except those who have requested to be kept alive this period.
 	 */
@@ -57,7 +57,7 @@ public class OnlineUserTracker
 		usersKeptAlive.clear();
 	}
 	//END METHOD public void dumpInactive()
-	
+
 	/**
 	 * Checks if the given user is active. If she is, return true. Else false.
 	 * @param test Who you want to know about.
@@ -69,7 +69,7 @@ public class OnlineUserTracker
 		return currentUsers.contains(test) || usersKeptAlive.contains(test);
 	}
 	//END METHOD public boolean isUserOnline(User test)
-	
+
 	/**
 	 * Returns a set containing all of the users currently online.
 	 * @return a Set of Users currently online
@@ -81,7 +81,7 @@ public class OnlineUserTracker
 		return currentUsers;
 	}
 	//END METHOD public Set<User> getOnlineUsers()
-	
+
 	/**
 	 * Returns an XML representation of the users currently online.
 	 * Root node is <UsersOnline>.
@@ -102,7 +102,7 @@ public class OnlineUserTracker
 		return returnSB.toString();
 	}
 	//END public String getOnlineUsersInXML
-	
+
 	//BEGIN CLASS RefreshTask
 	private class RefreshTask extends TimerTask 
 	{

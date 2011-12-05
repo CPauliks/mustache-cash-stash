@@ -13,10 +13,10 @@ import java.util.Random;
 
 //BEGIN CLASS DatabaseBuddy
 public class DatabaseBuddy {
-	
+
 	private Connection conn;
 	private Random rng;
-	
+
 	//BEGIN CONSTRUCTOR DatabaseBuddy(String databaseURI)
 	public DatabaseBuddy(String databaseURI)
 	{
@@ -26,14 +26,14 @@ public class DatabaseBuddy {
 			conn.createStatement().execute("CREATE TABLE users(userName VARCHAR(25) NOT NULL,characterCode INT NOT NULL,lastKeptAlive TIMESTAMP)");
 			conn.createStatement().execute("CREATE TABLE requests(requesteeName VARCHAR(25) NOT NULL,requesteeCode INT NOT NULL,requesterName VARCHAR(25) NOT NULL,requesterCode INT NOT NULL)");
 			conn.createStatement().execute("CREATE TABLE activeGames(gameNum INT NOT NULL,XName VARCHAR(25) NOT NULL,XCode INT NOT NULL,OName VARCHAR(25) NOT NULL,OCode INT NOT NULL)");
-			*/
+			 */
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		rng = new Random();
 	}
 	//END CONSTRUCTOR DatabaseBuddy(String databaseURI)
-	
+
 	//BEGIN METHOD boolean addUser(User u)
 	public boolean addUser(User u)
 	{
@@ -48,7 +48,7 @@ public class DatabaseBuddy {
 		return true;
 	}
 	//END METHOD addUser(User U)
-	
+
 	//BEGIN METHOD boolean keepAlive(User u)
 	public boolean keepAlive(User u)
 	{
@@ -63,7 +63,7 @@ public class DatabaseBuddy {
 		return false;
 	}
 	//BEGIN METHOD keepAlive(User u)
-	
+
 	//BEGIN METHOD List<User> getLiveUsers(long timeToKeepAlive)
 	public List<User> getLiveUsers(long timeToKeepAlive)
 	{
@@ -87,7 +87,7 @@ public class DatabaseBuddy {
 		return returnList;
 	}
 	//END METHOD List<User> getLiveUsers(long timeToKeepAlive)
-	
+
 	/**
 	 * Requests a game from requester to requestee. If there is a pending reciprocal request, a game is created and the game number is returned.
 	 * If the request is successful, 0 is returned.

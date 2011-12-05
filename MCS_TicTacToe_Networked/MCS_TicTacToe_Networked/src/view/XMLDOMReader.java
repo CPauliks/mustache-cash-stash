@@ -45,7 +45,7 @@ public class XMLDOMReader
 		}
 		return returnList;
 	}
-	
+
 	/**
 	 * A parser for GameBoards represented in XML as constructed by the TTTServlet
 	 * @param xml The XML String to be parsed
@@ -64,7 +64,7 @@ public class XMLDOMReader
 			boolean osTurn = (turn.equals("O"));
 			String resultString = getContentByTag(doc, "gameResult");
 			GameResult result;
-			
+
 			if(resultString.equals("XWIN"))
 			{
 				result = GameResult.XWIN;
@@ -78,11 +78,11 @@ public class XMLDOMReader
 			{
 				result = GameResult.PENDING;
 			}
-			
+
 			String rowValue;
 			char c;
 			PlaceValue[][] board = new PlaceValue[3][3];
-			
+
 			for(int i = 0; i < 3; i++)
 			{
 				rowValue = doc.getElementById("row"+i).getNodeValue();
@@ -113,7 +113,7 @@ public class XMLDOMReader
 		}
 	}
 	//END METHOD public static GameboardImp convert(String xml)
-	
+
 	/**
 	 * Returns the contents of a specific XML tag within the file
 	 * @param doc the XML document

@@ -10,7 +10,7 @@ public class User implements Comparable<User>
 	private String userName;
 	private int characterCode;
 	private Statistics userStats;
-	
+
 	//BEGIN CONSTRUCTOR public User(String uname, int charCode)
 	public User(String uname, int charCode)
 	{
@@ -18,28 +18,28 @@ public class User implements Comparable<User>
 		this.characterCode = charCode;
 	}
 	//END CONSTRUCTOR public User(String uname, int charCode)
-	
+
 	//BEGIN METHOD public String getUserName()
 	public String getUserName()
 	{
 		return userName;
 	}
 	//END METHOD public String getUserName()
-	
+
 	//BEGIN METHOD public int getCharacterCode()
 	public int getCharacterCode()
 	{
 		return characterCode;
 	}
 	//END METHOD public int getCharacterCode()
-	
+
 	//BEGIN METHOD public Statistics getUserRecord()
 	public Statistics getUserRecord()
 	{
 		return userStats.getState();
 	}
 	//END METHOD public Statistics getUserRecord()
-	
+
 	@Override
 	//BEGIN METHOD public String toString()
 	public String toString()
@@ -47,7 +47,7 @@ public class User implements Comparable<User>
 		return this.userName+"."+this.characterCode;
 	}
 	//END METHOD public String toString()
-	
+
 	//BEGIN METHOD public static User parseUser(String userString)
 	public static User parseUser(String userString)
 	{
@@ -57,7 +57,7 @@ public class User implements Comparable<User>
 		return new User(uname, Integer.parseInt(codeString));
 	}
 	//END METHOD public static User parseUser(String userString)
-	
+
 	@Override
 	//BEGIN METHOD public boolean equals(Object obj)
 	public boolean equals(Object obj)
@@ -76,7 +76,7 @@ public class User implements Comparable<User>
 		}
 	}
 	//END METHOD public boolean equals(Object obj)
-	
+
 	@Override
 	//BEGIN METHOD public int compareTo(User comp)
 	public int compareTo(User comp)
@@ -89,7 +89,7 @@ public class User implements Comparable<User>
 		return compValue;
 	}
 	//END METHOD public int compareTo(User comp)
-	
+
 	//BEGIN METHOD protected Statistics getUserStatistics()
 	protected Statistics getUserStatistics()
 	{

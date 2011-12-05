@@ -30,13 +30,13 @@ import org.apache.http.params.HttpParams;
  */
 //BEGIN CLASS NetworkClient
 public class NetworkClient implements Client {
-	
+
 	private HttpClient httpClient;
 	private String serverLocation;
 	private int gameNum;
 	private GameboardImp currentBoard;
 	private User user;
-	
+
 	/**
 	 * Insanciate a new NetworkClient
 	 * @param serverLocation the Location of the server
@@ -64,7 +64,7 @@ public class NetworkClient implements Client {
 		getGame.setParams(parameters);
 		ResponseHandler<String> responseHandler = new BasicResponseHandler();
 		String responseBody = "";
-		
+
 		try 
 		{
 			responseBody = httpClient.execute(getGame, responseHandler);
@@ -114,7 +114,7 @@ public class NetworkClient implements Client {
 			ioe.printStackTrace();
 			return false;
 		}
-		
+
 		if(responseBody.equals("Success"))
 		{
 			return true;
@@ -152,7 +152,7 @@ public class NetworkClient implements Client {
 			ioe.printStackTrace();
 			return false;
 		}
-		
+
 		if(responseBody.equals("Success"))
 		{
 			return true;
@@ -163,7 +163,7 @@ public class NetworkClient implements Client {
 		}
 	}
 	//END METHOD public boolean resign(PlaceValue side) 
-	
+
 	@Override
 	//BEGIN METHOD public void endSession(PlaceValue side)
 	public void endSession(PlaceValue side) 
@@ -174,7 +174,7 @@ public class NetworkClient implements Client {
 		}
 	}
 	//END METHOD public void endSession(PlaceValue side)
-	
+
 	/**
 	 * @return the currentBoard
 	 */
@@ -184,7 +184,7 @@ public class NetworkClient implements Client {
 		return currentBoard;
 	}
 	//END METHOD public GameboardImp getCurrentBoard()
-	
+
 	/**
 	 * @param currentBoard the currentBoard to set
 	 */

@@ -24,7 +24,7 @@ import java.util.TimerTask;
 
 //BEGIN CLASS LobbyClient
 public class LobbyClient {
-	
+
 	private boolean hasBeenActivated;
 	private String userName;
 	private User myUser;
@@ -32,7 +32,7 @@ public class LobbyClient {
 	private String serverLocation;
 	private Timer t;
 	private final long keepAliveTime = 30000L;
-	
+
 	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
 	public LobbyClient(String serverLocation, String newUserName)
 	{
@@ -44,7 +44,7 @@ public class LobbyClient {
 		t.schedule(new RefreshTask(), keepAliveTime, keepAliveTime);
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
-	
+
 	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
 	public LobbyClient(String serverLocation, User oldUser)
 	{
@@ -56,7 +56,7 @@ public class LobbyClient {
 		t.schedule(new RefreshTask(), keepAliveTime, keepAliveTime);
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
-	
+
 	//BEGIN METHOD public List<User> getUserList()
 	public List<User> getUserList()
 	{
@@ -74,7 +74,7 @@ public class LobbyClient {
 		return null;
 	}
 	//END METHOD public List<User> getUserList()
-	
+
 	public List<User> getRequestList()
 	{
 		HttpGet getRequest = new HttpGet(serverLocation);
@@ -94,7 +94,7 @@ public class LobbyClient {
 		}
 		return null;
 	}
-	
+
 	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()
 	{
@@ -128,7 +128,7 @@ public class LobbyClient {
 		}
 	}
 	//END METHOD public boolean registerUser()
-	
+
 	//BEGIN METHOD public boolean registerUser()
 	public boolean keepAlive()
 	{
@@ -155,7 +155,7 @@ public class LobbyClient {
 		}
 	}
 	//END METHOD public boolean registerUser()
-	
+
 	//BEGIN METHOD public boolean registerUser()
 	public int requestGame(User requestee)
 	{
@@ -188,14 +188,14 @@ public class LobbyClient {
 		return -1;
 	}
 	//END METHOD public boolean registerUser()
-	
+
 	//BEGIN METHOD public User getUser()
 	public User getUser()
 	{
 		return myUser;
 	}
 	//END METHOD public User getUser()
-	
+
 	//BEGIN CLASS RefreshTask
 	private class RefreshTask extends TimerTask 
 	{
@@ -208,7 +208,7 @@ public class LobbyClient {
 		//END METHOD public void run()
 	}
 	//END CLASS RefreshTask
-	
+
 }
 //END CLASS LobbyClient
 //END FILE LobbyClient.java

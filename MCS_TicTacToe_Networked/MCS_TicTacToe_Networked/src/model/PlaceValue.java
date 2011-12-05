@@ -2,19 +2,19 @@
 package model;
 
 /**
-* The enumerated cases for a space on a Gameboard.
-* @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
-* @version 0.0 pending CCR approval
-*/
+ * The enumerated cases for a space on a Gameboard.
+ * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
+ * @version 0.0 pending CCR approval
+ */
 //BEGIN ENUM PlaceValue
 public enum PlaceValue 
 {
 	X ("X"),
 	O ("O"),
 	BLANK ("_");
-	
+
 	private final String repr;
-	
+
 	/**
 	 * Constructs a PlaceValue from a String representation
 	 * @param repr String representation of a PlaceValue
@@ -25,7 +25,7 @@ public enum PlaceValue
 		this.repr = repr;
 	}
 	//END METHOD PlaceValue(String repr) 
-	
+
 	/**
 	 * Returns a String represention of this PlaceValue
 	 * @return a String representation of this PlaceValue
@@ -36,7 +36,7 @@ public enum PlaceValue
 		return this.repr;
 	}
 	//END METHOD public String getRepr() 
-	
+
 	/**
 	 * Constructs a PlaceValue from a String representation
 	 * @param repr String representation of a PlaceValue

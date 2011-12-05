@@ -13,7 +13,7 @@ import model.PlaceValue;
 //BEGIN INTERFACE Client
 public interface Client 
 {
-	
+
 	/**
 	 * Instructs a Client to update its Gameboard model.
 	 * A client receiving this call should attempt to retrieve a new Gameboard and update any relevant info,
@@ -22,7 +22,7 @@ public interface Client
 	//BEGIN METHOD public void updateGameboard()
 	public void updateGameboard();
 	//END METHOD public void updateGameboard()
-	
+
 	/**
 	 * Instructs a Client to update its Statistics model. 
 	 * A client receiving this call should attempt to retrieve a new Statistics item and update any relevant info.
@@ -30,7 +30,7 @@ public interface Client
 	//BEGIN METHOD public void updateStatistics()
 	public void updateStatistics();
 	//END METHOD public void updateStatistics()
-	
+
 	/**
 	 * Requests a move on the behalf of the client's attached user.
 	 * A client receiving this call should pass the call towards the controller along with it's relevant piece information.
@@ -41,7 +41,7 @@ public interface Client
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition)
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue side);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition)
-	
+
 	/**
 	 * Requests to forfeit the current game on behalf of the client's attached user.
 	 * A client receiving this call should pass the call towards the controller along with itself.
@@ -50,7 +50,7 @@ public interface Client
 	//BEGIN METHOD public boolean resign()
 	public boolean resign(PlaceValue side);
 	//END METHOD public boolean resign()
-	
+
 	/**
 	 * Requests to quit the game entirely on behalf of the client's attached user.
 	 * This should also forfeit the current game (if any).

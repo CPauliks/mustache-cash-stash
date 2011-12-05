@@ -24,7 +24,7 @@ public interface Controller
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace);
 	//END METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
-	
+
 	/**
 	 * Allows a Client to ask whether it is their turn.
 	 * @param thisClient The Client asking the question.
@@ -33,7 +33,7 @@ public interface Controller
 	//BEGIN METHOD public boolean isClientsTurn(Client thisClient)
 	public boolean isClientsTurn(Client thisClient);
 	//END METHOD public boolean isClientsTurn(Client thisClient)
-	
+
 	/**
 	 * Begins a new game with the given clients.
 	 * @param xPlayer The player controlling X pieces
@@ -42,7 +42,7 @@ public interface Controller
 	//BEGIN METHOD public void newGame(Client xPlayer, Client oPlayer)
 	public void newGame(Client xPlayer, Client oPlayer);
 	//END METHOD public void newGame(Client xPlayer, Client oPlayer)
-	
+
 	/**
 	 * Allows a Client to request to forfeit the current game.
 	 * @param resigningClient The Client requesting to forfeit the game.
@@ -51,7 +51,7 @@ public interface Controller
 	//BEGIN METHOD public boolean resign(Client resigningClient)
 	public boolean resign(Client resigningClient);
 	//END METHOD public boolean resign(Client resigningClient)
-	
+
 	/**
 	 * Requests to quit the game entirely.
 	 * This should also forfeit the current game (if any).
@@ -60,7 +60,7 @@ public interface Controller
 	//BEGIN METHOD public void endSession(Client quittingClient)
 	public void endSession(Client quittingClient);
 	//END METHOD public void endSession(Client quittingClient)
-	
+
 	/**
 	 * Allows a client to request a copy of the Gameboard
 	 * This request should be passed to the Gameboard
@@ -69,7 +69,7 @@ public interface Controller
 	//BEGIN METHOD public Gameboard getGameboardState()
 	public Gameboard getGameboardState();
 	//END METHOD public Gameboard getGameboardState()
-	
+
 	/**
 	 * Allows a client to request a copy of the Statistics
 	 * This request should be passed to the Statistics
