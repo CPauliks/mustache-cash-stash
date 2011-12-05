@@ -38,7 +38,7 @@ public class NetworkClient implements Client {
 	private User user;
 
 	/**
-	 * Insanciate a new NetworkClient
+	 * Instantiate a new NetworkClient
 	 * @param serverLocation the Location of the server
 	 * @param gameNum The game number of the current game in progress.
 	 * @param user The user this NetworkClient is representing
@@ -194,6 +194,12 @@ public class NetworkClient implements Client {
 		this.currentBoard = currentBoard;
 	}
 	//END METHOD private void setCurrentBoard(GameboardImp currentBoard)
+	
+	//BEGIN METHOD public User getCurrentUser()
+	public User getCurrentUser()
+	{
+		return user;
+	}
 }
 //END CLASS NetworkClient
 //END FILE NetworkClient.java

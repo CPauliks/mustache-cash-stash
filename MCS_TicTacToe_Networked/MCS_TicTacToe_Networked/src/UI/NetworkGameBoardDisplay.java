@@ -34,6 +34,7 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 	{
 		networkClient = new NetworkClient(serverLocation, gameNum, user);
 
+
 		// keep track of the initial usernames and game mode in case if we to restart the game
 		initialUser1 = user1;
 		initialUser2 = user2;
@@ -133,12 +134,16 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 			GameResult status = boardModel.getResult();
 			if (status == GameResult.XWIN) //X gets to be X next game
 			{
-				new NetworkGameBoardDisplay(player1, player2, initialModeName);
+				//new NetworkGameBoardDisplay(player1, player2, initialModeName);
+				
+				//update stats
 			}
 
 			else if (status == GameResult.OWIN) //O gets to be X next game
 			{
-				new NetworkGameBoardDisplay(player2, player1, initialModeName);
+				//new NetworkGameBoardDisplay(player2, player1, initialModeName);
+				
+				//update stats
 			}
 
 			else //Pending or tie, randomly select who is first next game.
@@ -146,7 +151,7 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 				Random rng = new Random();
 				int p1index = rng.nextInt(2);
 				int p2index = abs(p1index-1);
-				new NetworkGameBoardDisplay(names[p1index], names[p2index], initialModeName);
+				//new NetworkGameBoardDisplay(names[p1index], names[p2index], initialModeName);
 			}
 
 		} //Else case is quit was selected, in which case we do nothing. In either case we have to delete this GBD.
@@ -169,7 +174,8 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 		{
 			if(boardModel.xsTurn())
 			{
-				result = boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
+				//result = boardModel.requestMove(xPosition, yPosition, PlaceValue.X);
+				result = networkClient.requestMove(xPosition, yPosition, PlaceValue.X);
 				if(result)
 				{
 					displayNewPiece(xPosition, yPosition, xPiece);
@@ -177,7 +183,8 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 			}
 			else if(boardModel.osTurn())
 			{
-				result = boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
+				//result = boardModel.requestMove(xPosition, yPosition, PlaceValue.O);
+				result = networkClient.requestMove(xPosition, yPosition, PlaceValue.O);
 				if(result)
 				{
 					displayNewPiece(xPosition, yPosition, oPiece);
@@ -359,40 +366,79 @@ public class NetworkGameBoardDisplay extends JPanel implements ActionListener
 		// create a listener for all cells
 		MouseListener listener00 = new MouseAdapter(){
 			@Override public void mouseClicked(MouseEvent event){
-				if(networkClient.requestMove(0,0))displayNewMoveStatus("Good move!"); 
+				if(attemptMove(0,0))displayNewMoveStatus("Good move!"); 
 				else displayNewMoveStatus("Can't place a piece there!");}};
 				MouseListener listener01 = new MouseAdapter(){
 					@Override public void mouseClicked(MouseEvent event){
-						if(networkClient.requestMove(0,1))displayNewMoveStatus("Good move!"); 
+						if(attemptMove(0,1))displayNewMoveStatus("Good move!"); 
 						else displayNewMoveStatus("Can't place a piece there!");}};
 						MouseListener listener02 = new MouseAdapter(){
 							@Override public void mouseClicked(MouseEvent event){
-								if(networkClient.requestMove(0,2))displayNewMoveStatus("Good move!"); 
+								if(attemptMove(0,2))displayNewMoveStatus("Good move!"); 
 								else displayNewMoveStatus("Can't place a piece there!");}};
 								MouseListener listener10 = new MouseAdapter(){
 									@Override public void mouseClicked(MouseEvent event){
-										if(networkClient.requestMove(1,0))displayNewMoveStatus("Good move!"); 
+										if(attemptMove(1,0))displayNewMoveStatus("Good move!"); 
 										else displayNewMoveStatus("Can't place a piece there!");}};
 										MouseListener listener11 = new MouseAdapter(){
 											@Override public void mouseClicked(MouseEvent event){
-												if(networkClient.requestMove(1,1))displayNewMoveStatus("Good move!"); 
+												if(attemptMove(1,1))displayNewMoveStatus("Good move!"); 
 												else displayNewMoveStatus("Can't place a piece there!");}};
 												MouseListener listener12 = new MouseAdapter(){
 													@Override public void mouseClicked(MouseEvent event){
-														if(networkClient.requestMove(1,2))displayNewMoveStatus("Good move!"); 
+														if(attemptMove(1,2))displayNewMoveStatus("Good move!"); 
 														else displayNewMoveStatus("Can't place a piece there!");}};
 														MouseListener listener20 = new MouseAdapter(){
 															@Override public void mouseClicked(MouseEvent event){
-																if(networkClient.requestMove(2,0))displayNewMoveStatus("Good move!"); 
+																if(attemptMove(2,0))displayNewMoveStatus("Good move!"); 
 																else displayNewMoveStatus("Can't place a piece there!");}};
 																MouseListener listener21 = new MouseAdapter(){
 																	@Override public void mouseClicked(MouseEvent event){
-																		if(networkClient.requestMove(2,1))displayNewMoveStatus("Good move!"); 
+																		if(attemptMove(2,1))displayNewMoveStatus("Good move!"); 
 																		else displayNewMoveStatus("Can't place a piece there!");}};
 																		MouseListener listener22 = new MouseAdapter(){
 																			@Override public void mouseClicked(MouseEvent event){
-																				if(networkClient.requestMove(2,2))displayNewMoveStatus("Good move!"); 
+																				if(attemptMove(2,2))displayNewMoveStatus("Good move!"); 
 																				else displayNewMoveStatus("Can't place a piece there!");}};
+		
+		
+//		// create a listener for all cells
+//		MouseListener listener00 = new MouseAdapter(){
+//			@Override public void mouseClicked(MouseEvent event){
+//				if(networkClient.requestMove(0,0))displayNewMoveStatus("Good move!"); 
+//				else displayNewMoveStatus("Can't place a piece there!");}};
+//				MouseListener listener01 = new MouseAdapter(){
+//					@Override public void mouseClicked(MouseEvent event){
+//						if(networkClient.requestMove(0,1))displayNewMoveStatus("Good move!"); 
+//						else displayNewMoveStatus("Can't place a piece there!");}};
+//						MouseListener listener02 = new MouseAdapter(){
+//							@Override public void mouseClicked(MouseEvent event){
+//								if(networkClient.requestMove(0,2))displayNewMoveStatus("Good move!"); 
+//								else displayNewMoveStatus("Can't place a piece there!");}};
+//								MouseListener listener10 = new MouseAdapter(){
+//									@Override public void mouseClicked(MouseEvent event){
+//										if(networkClient.requestMove(1,0))displayNewMoveStatus("Good move!"); 
+//										else displayNewMoveStatus("Can't place a piece there!");}};
+//										MouseListener listener11 = new MouseAdapter(){
+//											@Override public void mouseClicked(MouseEvent event){
+//												if(networkClient.requestMove(1,1))displayNewMoveStatus("Good move!"); 
+//												else displayNewMoveStatus("Can't place a piece there!");}};
+//												MouseListener listener12 = new MouseAdapter(){
+//													@Override public void mouseClicked(MouseEvent event){
+//														if(networkClient.requestMove(1,2))displayNewMoveStatus("Good move!"); 
+//														else displayNewMoveStatus("Can't place a piece there!");}};
+//														MouseListener listener20 = new MouseAdapter(){
+//															@Override public void mouseClicked(MouseEvent event){
+//																if(networkClient.requestMove(2,0))displayNewMoveStatus("Good move!"); 
+//																else displayNewMoveStatus("Can't place a piece there!");}};
+//																MouseListener listener21 = new MouseAdapter(){
+//																	@Override public void mouseClicked(MouseEvent event){
+//																		if(networkClient.requestMove(2,1))displayNewMoveStatus("Good move!"); 
+//																		else displayNewMoveStatus("Can't place a piece there!");}};
+//																		MouseListener listener22 = new MouseAdapter(){
+//																			@Override public void mouseClicked(MouseEvent event){
+//																				if(networkClient.requestMove(2,2))displayNewMoveStatus("Good move!"); 
+//																				else displayNewMoveStatus("Can't place a piece there!");}};
 
 																				// link listeners to cells
 																				cell_00.addMouseListener(listener00);
