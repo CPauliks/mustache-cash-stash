@@ -19,6 +19,11 @@ public class DatabaseBuddy {
 	{
 		try{
 			conn = DriverManager.getConnection(databaseURI);
+			/*
+			conn.createStatement().execute("CREATE TABLE users(userName VARCHAR(25) NOT NULL,characterCode INT NOT NULL,lastKeptAlive TIMESTAMP)");
+			conn.createStatement().execute("CREATE TABLE requests(requesteeName VARCHAR(25) NOT NULL,requesteeCode INT NOT NULL,requesterName VARCHAR(25) NOT NULL,requesterCode INT NOT NULL)");
+			conn.createStatement().execute("CREATE TABLE activeGames(gameNum INT NOT NULL,XName VARCHAR(25) NOT NULL,XCode INT NOT NULL,OName VARCHAR(25) NOT NULL,OCode INT NOT NULL)");
+			*/
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -30,7 +35,7 @@ public class DatabaseBuddy {
 		String query = "INSERT INTO users(characterName, characterCode, isOnline) VALUES('"+u.getUserName()+"', "+u.getCharacterCode()+", FALSE)";
 		try{
 			Statement stmt = conn.createStatement();
-			stmt.executeQuery(query);
+			stmt.execute(query);
 		}catch(SQLException sqle)
 		{
 			sqle.printStackTrace();
@@ -60,7 +65,8 @@ public class DatabaseBuddy {
 			ResultSet rs = conn.createStatement().executeQuery("VALUES CURRENT_TIMESTAMP");
 			rs.next();
 			ts = new Timestamp(rs.getTimestamp(1).getTime()-timeToKeepAlive);
-			rs = conn.createStatement().executeQuery("SELECT userName,characterCode WHERE lastKeptAlive>="+ts.toString());
+			String tsString = ts.toString();
+			rs = conn.createStatement().executeQuery("SELECT userName,characterCode FROM users WHERE lastKeptAlive>={ts '"+tsString+"'}");
 			while(rs.next())
 			{
 				returnList.add(new User(rs.getString("userName"), rs.getInt("characterCode")));

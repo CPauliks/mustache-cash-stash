@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ public class TTTServlet extends HttpServlet
     	openGames = new HashMap<User, HashSet<Integer>>();
     	rng = new Random();
     	onlineUsers = new OnlineUserTracker(TIMEOUT_TIME);
-    	serverDB = new DatabaseBuddy("derby://localhost:1527/TTTDB");
+    	serverDB = new DatabaseBuddy("jdbc:derby://localhost/TTTDB");
     }
     //END METHOD public TTTServlet() 
 
@@ -117,7 +118,13 @@ public class TTTServlet extends HttpServlet
 			sb.append("<Server timeout=\"");
 			sb.append(TIMEOUT_TIME);
 			sb.append("\">\n");
-			sb.append(onlineUsers.getOnlineUsersInXML());
+			List<User> activeUsers = serverDB.getLiveUsers(TIMEOUT_TIME);
+			sb.append("<OnlineUsers>\n");
+			for(User u:activeUsers)
+			{
+				sb.append("  <User>"+u+"</user>\n");
+			}
+			sb.append("</OnlineUsers>\n");
 			sb.append("</Server>");
 			writer.print(sb.toString());
 		}
