@@ -11,12 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A database adapter for the TTTServlet
+ * @author Mustache Cash Stash
+ * @version 1.0
+ *
+ */
 //BEGIN CLASS DatabaseBuddy
 public class DatabaseBuddy {
 	
 	private Connection conn;
 	private Random rng;
 	
+	/**
+	 * Constructs an adapter to to the specified database
+	 * @param databaseURI The location of the database to use for this Servlet
+	 */
 	//BEGIN CONSTRUCTOR DatabaseBuddy(String databaseURI)
 	public DatabaseBuddy(String databaseURI)
 	{
@@ -32,12 +42,21 @@ public class DatabaseBuddy {
 	}
 	//END CONSTRUCTOR DatabaseBuddy(String databaseURI)
 	
+	/**
+	 * Empties the entire database
+	 */
+	//BEGIN METHOD public void deleteAll()
 	public void deleteAll()
 	{
 		this.deleteAllUsers();
 		this.deleteAllRequests();
 	}
+	//END METHOD public void deleteAll()
 	
+	/**
+	 * Removes all users from the database.
+	 */
+	//BEGIN METHOD public void deleteAllUsers()
 	public void deleteAllUsers()
 	{
 		try{
@@ -47,7 +66,12 @@ public class DatabaseBuddy {
 			e.printStackTrace();
 		}
 	}
+	//END METHOD public void deleteAllUsers()
 	
+	/**
+	 * Deletes all game requests from the database.
+	 */
+	//BEGIN METHOD public void deleteAllRequests()
 	public void deleteAllRequests()
 	{
 		try{
@@ -57,7 +81,13 @@ public class DatabaseBuddy {
 			e.printStackTrace();
 		}
 	}
+	//END METHOD public void deleteAllRequests()
 	
+	/**
+	 * Adds a User to the database, returning whether this was successfull.
+	 * @param u The User to add
+	 * @return Whether adding the user was successful
+	 */
 	//BEGIN METHOD boolean addUser(User u)
 	public boolean addUser(User u)
 	{
@@ -77,6 +107,11 @@ public class DatabaseBuddy {
 	}
 	//END METHOD addUser(User U)
 	
+	/**
+	 * Ensures a user continues to be listed as online and available to play
+	 * @param u The User to keep alive
+	 * @return Whether the request was successful
+	 */
 	//BEGIN METHOD boolean keepAlive(User u)
 	public boolean keepAlive(User u)
 	{
@@ -92,6 +127,12 @@ public class DatabaseBuddy {
 	}
 	//BEGIN METHOD keepAlive(User u)
 	
+	/**
+	 * Constructs a list of currently online players
+	 * The Servlet can pass this data back to a client to display a Lobby
+	 * @param timeToKeepAlive How recently a user has to have sent a request in order to be considered online
+	 * @return A List of currently online Users
+	 */
 	//BEGIN METHOD List<User> getLiveUsers(long timeToKeepAlive)
 	public List<User> getLiveUsers(long timeToKeepAlive)
 	{
@@ -164,7 +205,12 @@ public class DatabaseBuddy {
 		return -1;
 	}
 	//END METHOD int requestGame(User requester, User requestee)
-
+	
+	/**
+	 * Returns whether the database has a record of this User
+	 * @param newUser The User in question
+	 * @return Whether the database contains this user.
+	 */
 	//BEGIN METHOD boolean containsUser(User NewUser)
 	public boolean containsUser(User newUser) {
 		ResultSet rs;
