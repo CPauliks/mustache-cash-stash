@@ -11,7 +11,7 @@ import java.util.TimerTask;
  * A class that tracks which users are online by clearing all users who are not kept alive
  * over a certain period of time.
  * @author Benjamin Pellittieri for Mustache Cash Stash
- *
+ * @version 1.0
  */
 //BEGIN CLASS OnlineUserTracker
 public class OnlineUserTracker 
