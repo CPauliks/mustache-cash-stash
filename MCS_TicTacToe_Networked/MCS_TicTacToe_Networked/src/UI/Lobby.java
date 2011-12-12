@@ -232,7 +232,7 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 
 	/**
 	 * Checks whether a userName is valid.  Less than 25 characters, no punctuation.
-	 * @param userName
+	 * @param input whether The userName is valid
 	 * @return if the username is valid.
 	 */
 	//BEGIN METHOD private boolean isAValidPlayerName(String input)  

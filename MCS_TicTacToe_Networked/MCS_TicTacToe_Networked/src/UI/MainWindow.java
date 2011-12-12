@@ -23,7 +23,7 @@ public class MainWindow extends JPanel implements ActionListener
 
 	/**
 	 * Creates the Main Window
-	 * @param the frame in which this window is placed.
+	 * @param frame The frame in which this window is placed.
 	 */
 	public MainWindow(JFrame frame)
 	{
@@ -205,7 +205,7 @@ public class MainWindow extends JPanel implements ActionListener
 
 	/**
 	 * Checks whether a userName is valid.  Less than 25 characters, no punctuation.
-	 * @param userName
+	 * @param input The requested username
 	 * @return if the username is valid.
 	 */
 	//BEGIN METHOD private boolean isAValidUserName(String input) 

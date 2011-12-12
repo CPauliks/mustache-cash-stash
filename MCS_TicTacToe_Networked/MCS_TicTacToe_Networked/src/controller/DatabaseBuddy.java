@@ -163,7 +163,7 @@ public class DatabaseBuddy {
 	 * If every thing goes pear-shaped, you get a -1.
 	 * @param requestee
 	 * @param requester
-	 * @return
+	 * @return This game's ID as an integer code.
 	 */
 	//TODO needs guards
 	//BEGIN int requestGame(User requester, User requestee)
