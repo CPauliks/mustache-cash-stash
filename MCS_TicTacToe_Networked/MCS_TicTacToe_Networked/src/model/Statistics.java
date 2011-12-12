@@ -6,7 +6,7 @@ package model;
  * An interface for the statistics model for the TTT system.
  * Keeps track of wins, losses, and ties for each player in a game.
  * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
- * @version 0.0 pending CCR approval
+ * @version 1.0
  */
 //BEGIN INTERFACE Statistics
 public interface Statistics 

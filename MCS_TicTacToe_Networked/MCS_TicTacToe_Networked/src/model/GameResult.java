@@ -4,7 +4,7 @@ package model;
 /**
  * The enumerated cases for the current status of a Game
  * @author Benjamin Pellittieri for Mustache Cash Stash
- * @version 1.0 pending CCR approval
+ * @version 1.0
  */
 //BEGIN ENUM GameResult
 public enum GameResult

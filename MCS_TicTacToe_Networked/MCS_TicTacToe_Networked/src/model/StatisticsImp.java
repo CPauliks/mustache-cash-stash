@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Implemented class for Statistics interface
+ * @see Statistics
+ * @author Mustache Cash Stash
+ * @version 1.0
+ */
 //BEGIN CLASS StatisticsImp
 public class StatisticsImp implements Statistics, Cloneable{
 
