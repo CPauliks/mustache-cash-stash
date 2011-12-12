@@ -164,6 +164,9 @@ public class MainWindow extends JPanel implements ActionListener
 				isValid = isAValidUserName(user1);
 			}
 		}
+		
+		isValid = false;
+		
 		while(!isValid)
 		{
 			// show a dialog to get the username
