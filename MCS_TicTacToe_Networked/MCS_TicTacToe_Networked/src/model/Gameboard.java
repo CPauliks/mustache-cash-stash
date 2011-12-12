@@ -6,7 +6,7 @@ package model;
  * An interface for the gameboard model for the TTT system.
  * Keeps track of the board and what pieces are where
  * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
- * @version 0.0 pending CCR approval
+ * @version 1.0 pending CCR approval
  */
 
 //BEGIN INTERFACE Gameboard

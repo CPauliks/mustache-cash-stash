@@ -22,6 +22,14 @@ import controller.User;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * LobbyClient implementation.
+ * This composes part of the view for the MVC pattern.
+ * Interfaces with the Lobby UI element.
+ * @author Mustache Cash Stash
+ * @version 1.0
+ */
+
 //BEGIN CLASS LobbyClient
 public class LobbyClient {
 
@@ -45,6 +53,9 @@ public class LobbyClient {
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, String newUserName)
 
+	/**
+	 * Instructs a client to update 
+	 */
 	//BEGIN CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
 	public LobbyClient(String serverLocation, User oldUser)
 	{
@@ -57,6 +68,10 @@ public class LobbyClient {
 	}
 	//END CONSTRUCTOR public LobbyClient(String serverLocation, User oldUser)
 
+	/**
+	 * Get a list of current users connected
+	 * @return users connected
+	 */
 	//BEGIN METHOD public List<User> getUserList()
 	public List<User> getUserList()
 	{
@@ -75,6 +90,11 @@ public class LobbyClient {
 	}
 	//END METHOD public List<User> getUserList()
 
+	/**
+	 * Gets list of current game requests
+	 * @return list of users requesting
+	 */
+	//BEGIN METHOD public List<User> getRequestList()
 	public List<User> getRequestList()
 	{
 		HttpGet getRequest = new HttpGet(serverLocation);
@@ -94,7 +114,13 @@ public class LobbyClient {
 		}
 		return null;
 	}
-
+	//END METHOD public List<User> getRequestList()
+	
+	/**
+	 * 
+	 * Attempts to register a user with HttpClient
+	 * @return whether registration is successful
+	 */
 	//BEING METHOD public boolean registerUser()
 	public boolean registerUser()
 	{
@@ -128,8 +154,12 @@ public class LobbyClient {
 		}
 	}
 	//END METHOD public boolean registerUser()
-
-	//BEGIN METHOD public boolean registerUser()
+	
+	/**
+	 * Prevents user from disconnecting
+	 * @return success or failure
+	 */
+	//BEGIN METHOD public boolean keepAlive()
 	public boolean keepAlive()
 	{
 		if (this.hasBeenActivated) 
@@ -154,9 +184,14 @@ public class LobbyClient {
 			return false;
 		}
 	}
-	//END METHOD public boolean registerUser()
-
-	//BEGIN METHOD public boolean registerUser()
+	//END METHOD public boolean keepAlive()
+	
+	/**
+	 * Requests to initiate a game with another user.
+	 * @param requestee 
+	 * @return success response
+	 */
+	//BEGIN METHOD public boolean requestGame()
 	public int requestGame(User requestee)
 	{
 		if(this.hasBeenActivated)
@@ -187,8 +222,12 @@ public class LobbyClient {
 		}
 		return -1;
 	}
-	//END METHOD public boolean registerUser()
-
+	//END METHOD public boolean requestGame()
+	
+	/**
+	 * Request current user.
+	 * @return my User
+	 */
 	//BEGIN METHOD public User getUser()
 	public User getUser()
 	{
@@ -196,6 +235,11 @@ public class LobbyClient {
 	}
 	//END METHOD public User getUser()
 
+	/**
+	 * 
+	 * Keeps user from timing out.
+	 *
+	 */
 	//BEGIN CLASS RefreshTask
 	private class RefreshTask extends TimerTask 
 	{

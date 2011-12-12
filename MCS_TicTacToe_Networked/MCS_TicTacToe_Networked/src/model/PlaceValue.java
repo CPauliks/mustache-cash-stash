@@ -4,7 +4,7 @@ package model;
 /**
  * The enumerated cases for a space on a Gameboard.
  * @author Benjamin Pellittieri and Christopher Pauliks for Mustache Cash Stash
- * @version 0.0 pending CCR approval
+ * @version 1.0 pending CCR approval
  */
 //BEGIN ENUM PlaceValue
 public enum PlaceValue 
