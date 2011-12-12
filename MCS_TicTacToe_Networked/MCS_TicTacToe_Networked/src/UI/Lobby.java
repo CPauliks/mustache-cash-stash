@@ -14,6 +14,13 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * A Network Lobby for TicTacToe games
+ * Displays information from the server and allows users to place requests to the servlet
+ * such as setting up games with other players.
+ * @author Mustache Cash Stash
+ * @version 1.0
+ */
 //BEGIN CLASS Lobby
 public class Lobby extends JPanel implements ActionListener, ListSelectionListener 
 {
@@ -190,6 +197,10 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 		}
 	}
 
+	/**
+	 * 
+	 * @param userList
+	 */
 	//BEGIN METHOD private void refreshLobby(List<User> userList) 
 	private void refreshLobby(List<User> userList) 
 	{
@@ -198,6 +209,11 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	}
 	//END METHOD private void refreshLobby(List<User> userList) 
 
+	/**
+	 * Display a message in the Lobby
+	 * @param prefix
+	 * @param e
+	 */
 	//BEGIN METHOD void displayMessage(String prefix, ListSelectionEvent e) 
 	void displayMessage(String prefix, ListSelectionEvent e) 
 	{
@@ -208,7 +224,6 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	//BEGIN METHOD public void valueChanged(ListSelectionEvent event) 
 	public void valueChanged(ListSelectionEvent event) 
 	{
-		// TODO Auto-generated method stub
 		//String statistics = event.toString();
 		//list.getSelectedValue();
 		stats.setText(((User)onlineUsersList.getSelectedValue()).toString());
@@ -232,6 +247,10 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	}
 	//END METHOD private boolean isAValidPlayerName(String input) 
 
+	/**
+	 * Before the lobby is setup, prompt the player for a Username to request from the servlet
+	 * @return The string the user entered.
+	 */
 	//BEGIN METHOD private String promptPlayerName()
 	private String promptPlayerName()
 	{
@@ -260,6 +279,9 @@ public class Lobby extends JPanel implements ActionListener, ListSelectionListen
 	}
 	//END METHOD private String promptPlayerName()
 
+	/**
+	 * Creates the LobbyClient after asking the user for a server address and a User
+	 */
 	//BEGIN METHOD private LobbyClient promptLobbyClient() 
 	private void promptLobbyClient() 
 	{

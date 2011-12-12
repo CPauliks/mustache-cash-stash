@@ -7,7 +7,8 @@ import java.awt.event.*;
 import java.util.*;
 
 /**
- * A total clusterfuck
+ * UI for Network Games
+ * @see GameBoardDisplay
  * @author Mustache Cash Stash
  * @version 1.0
  */
@@ -20,10 +21,9 @@ public class MainWindow extends JPanel implements ActionListener
 	public static Color backgroundColor = new Color(0,0,0); // the black color of background
 	protected static boolean scoresWindowIsUp = false; // monitor the scores window
 
-	/*
-	 *  MainWindow
-	 *  
-	 *  Create and show all elements
+	/**
+	 * Creates the Main Window
+	 * @param the frame in which this window is placed.
 	 */
 	public MainWindow(JFrame frame)
 	{
@@ -136,6 +136,9 @@ public class MainWindow extends JPanel implements ActionListener
 		}
 	}
 
+	/**
+	 * Prompt series for a local (non networked) game
+	 */
 	private void localGamePrompts() 
 	{
 		String user1 = "";
@@ -217,6 +220,9 @@ public class MainWindow extends JPanel implements ActionListener
 	}
 	//END METHOD private boolean isAValidUserName(String input) 
 
+	/**
+	 * Series of prompts for a networked game.  Creates the Lobby
+	 */
 	//BEGIN METHOD private void networkGamePrompts() 
 	private void networkGamePrompts() 
 	{

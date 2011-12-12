@@ -100,7 +100,7 @@ public class Game {
 
 	/**
 	 * Requests a move to this Game
-	 * @see model.Gameboard.requestMove
+	 * @see model.Gameboard#requestMove
 	 */
 	//BEGIN METHOD public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
 	public boolean requestMove(int xPosition, int yPosition, PlaceValue pieceToPlace)
@@ -111,7 +111,7 @@ public class Game {
 
 	/**
 	 * Requests a resignation from this game
-	 * @see model.Gameboard.resign
+	 * @see model.Gameboard#resign
 	 */
 	//BEGIN METHOD public boolean resign(PlaceValue piece) 
 	public boolean resign(PlaceValue piece) 

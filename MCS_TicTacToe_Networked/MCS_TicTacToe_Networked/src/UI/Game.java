@@ -1,6 +1,11 @@
 //BEGIN FILE Game.java
 package UI;
 
+/**
+ * A utility class for GameBoardDisplay 
+ * @author Mustache Cash Stash
+ * @version 1.0
+ */
 //BEGIN CLASS Game
 public class Game
 {
